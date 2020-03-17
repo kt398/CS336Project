@@ -19,8 +19,9 @@
 </head>
 
 <body>
-	
+
 	<%
+		//test
 		String newName = request.getParameter("username");
 		String newPwd = request.getParameter("password");
 		
