@@ -13,15 +13,14 @@
 <html>
 
 <head>
-	<title>Creating new user...</title>
-	<link rel="stylsheet" href="css/newUser.css"/>
+	<title>Checking user credentials</title>
+	<link rel="stylsheet" href="css/checkUser.css"/>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 </head>
 
 <body>
-
+	
 	<%
-		//test
 		String newName = request.getParameter("username");
 		String newPwd = request.getParameter("password");
 		

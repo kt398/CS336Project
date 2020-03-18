@@ -6,8 +6,6 @@
 
 <!DOCTYPE html>
 <html>
-
-//Why does github suck
     <head>
     	<title>Rutgers cs336 Project</title>
     	<link rel="stylesheet" type="text/css" href="css/login.css">
@@ -31,6 +29,7 @@
 				<input type="password" placeholder="password" name="password"/>
 				<button>login</button>
 				<p class="message">Not registered? <a href="#">Create an account</a></p>
+				<p class="message">System Admin? <a href="adminLogin.jsp">Sign in as Admin</a>
 			</form>
 		</div>
 	</div>
