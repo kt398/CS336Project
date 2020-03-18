@@ -6,6 +6,8 @@
 
 <!DOCTYPE html>
 <html>
+
+//Why does github suck
     <head>
     	<title>Rutgers cs336 Project</title>
     	<link rel="stylesheet" type="text/css" href="css/login.css">
