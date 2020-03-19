@@ -19,7 +19,39 @@
 
 <body>
 	<%
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		System.out.println(username+","+password);
+		DbManager db = new DbManager();
+		Connection con = db.getConnection();
 		
+		int status = db.adminExists(username);
+		
+		switch(status){
+		case -2:
+			%>
+			<script>
+				alert("Databse connection issue.");
+				window.location.href="adminLogin.jsp";
+			</script>
+			<%
+			break;
+		case 1:
+			%>
+			<script>
+				alert("Login Successful!");
+			</script>
+			<%
+			break;
+		default:
+			%>
+			<script>
+				alert("Login information is incorrect");
+				window.location.href="adminLogin.jsp";
+			</script>
+			<%
+			break;
+		}	
 	%>
 </body>
 </html>

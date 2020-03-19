@@ -8,7 +8,7 @@
  java.sql.ResultSet,
  java.sql.SQLException,
  java.sql.Statement"%>
-0
+
 
 <!DOCTYPE html>
 <html>
@@ -26,7 +26,7 @@
 		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
 		DbManager db = new DbManager();
-		int status = db.newUser(newName, newPwd);
+		int status = db.newUser(newName, newPwd,newEmail);
 
 		switch (status) {
 			case 1 :
