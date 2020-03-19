@@ -11,11 +11,19 @@ public class DbManager {
 	public Connection getConnection() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Travel_Reservations", "root", "adminadmin");
+			Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/Travel_Reservations", "root", "test123");
 			return con;
 		}catch(Exception e) {
 			System.out.println(e);
 			return null;
+		}
+	}
+	public void closeConnection(Connection con) {
+		try {
+			con.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	/**
@@ -27,23 +35,29 @@ public class DbManager {
 	 * @return 0 if a field is empty, -1 if username or password is incorrect,-2 for database connection issues, 1 if success
 	 *
 	 */
-	public int checkUserPass(Connection con,String username,String password) {
+	public int checkUserPass(String username,String password) {
+		Connection con=getConnection();
+		if(con==null) {
+			return -2;
+		}
 		if(username.equals("")||password.equals("")){
+			closeConnection(con);
 			return 0;
 		}
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs=stmt.executeQuery("Select password from Accounts where username='"+username+"'");
 			if(!rs.next()) {
+				closeConnection(con);
 				return -1;
 			}
-			do {
 				String s=rs.getString("Password");
 				if(s.equals(password)) {
+					closeConnection(con);
 					return 1;
 				}
+				closeConnection(con);
 				return -1;
-			}while(rs.next());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,22 +65,36 @@ public class DbManager {
 		}
 	}
 	
-	
-	public int newUser(Connection con,String username,String password) {
+	/**
+	 * 
+	 * @param username New Username
+	 * @param password New Password
+	 * @return -2 if problem connecting to the database, -1 the username exists, 0 if a field is empty, and 1 if successfully created
+	 */
+	public int newUser(String username,String password) {
+		Connection con=getConnection();
+		if(con==null) {
+			return -2;
+		}
 		if(username.equals("") || password.equals("")){
+			closeConnection(con);
 			return 0;
 		}
 		try {
-			int userExists = userExists(con,username);
-			if(userExists == -1 || userExists == -2)
+			int userExists = userExists(username);
+			if(userExists == -1 || userExists == -2) {
+				closeConnection(con);
 				return -1;
+			}
 			Statement stmt = con.createStatement();
 			//ResultSet rs= stmt.executeQuery("Select password from Accounts where username='"+username+"'");
 			stmt.executeUpdate("insert into Accounts (username, accountNumber, password) values ('"+username+"',0,'"+password+"')");
+			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			closeConnection(con);
 			return -2; 
 		}
 	}
@@ -78,7 +106,11 @@ public class DbManager {
      * @param username User inputted username
      * @return 1 if the username exists, -1 if it doesn't exist, and -2 if there is a database connection error
      */
-    public int userExists(Connection con,String username) {
+    public int userExists(String username) {
+    	Connection con=getConnection();
+    	if(con==null) {
+    		return -2;
+    	}
         try {
             Statement stmt = con.createStatement();
             ResultSet rs=stmt.executeQuery("Select * from Accounts where username='"+username+"'");
@@ -93,5 +125,5 @@ public class DbManager {
             return -2; 
         }
     }
-	
+	//public int 
 }

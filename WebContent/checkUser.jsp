@@ -23,13 +23,9 @@
 	<%
 		String newName = request.getParameter("username");
 		String newPwd = request.getParameter("password");
-		
 		System.out.println(newName+","+newPwd);
-		
-		DbManager test = new DbManager();
-		Connection con = test.getConnection();
-		
-		int status = test.checkUserPass(con,newName,newPwd);
+		DbManager db = new DbManager();
+		int status = db.checkUserPass(newName,newPwd);
 		
 		switch(status){
 		case -2:
