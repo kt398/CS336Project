@@ -98,7 +98,7 @@ public class DbManager {
 			ResultSet rs = stmt.executeQuery("select accountNumber from Accounts where username='" + username + ";");
 			rs.next();
 			int accountNum = rs.getInt(1);
-			stmt.executeUpdate("insert into owns (email, accountNum) values (email," + accountNum + ")");
+			stmt.executeUpdate("insert into owns (email, accountNum) values ('"+email+"',"+ accountNum + ")");
 			if (emailExists(con, email)) {
 				closeConnection(con);
 				return 1;
@@ -192,7 +192,26 @@ public class DbManager {
 		if (con == null) {
 			return -2;
 		}
-		return -1;
+		if (username.equals("") || password.equals("")) {
+			closeConnection(con);
+			return 0;
+		}
+		try {
+			int adminExists = userExists(con, username);
+			if (adminExists == -1 || adminExists == -2) {
+				closeConnection(con);
+				return -1;
+			}
+			Statement stmt = con.createStatement();
+			stmt.executeUpdate("insert into Manager (employeeNumber, password, username) values (0,'"+password+"','"+username+"')");
+			closeConnection(con);
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			closeConnection(con);
+			return -2;
+		}
 	}
 
 	public int adminUserPass(String username, String password) {

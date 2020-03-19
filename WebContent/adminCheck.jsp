@@ -40,6 +40,7 @@
 			%>
 			<script>
 				alert("Login Successful!");
+				window.location.href="adminHome.jsp";
 			</script>
 			<%
 			break;
