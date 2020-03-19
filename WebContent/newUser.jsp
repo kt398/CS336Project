@@ -25,10 +25,8 @@
 		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
 		
-		DbManager test = new DbManager();
-		Connection con = test.getConnection();
-		
-		int status = test.newUser(con,newName,newPwd);
+		DbManager db = new DbManager();		
+		int status = db.newUser(newName,newPwd);
 		
 		switch(status){
 		case 1:
