@@ -28,7 +28,6 @@ public class DbManager {
 	}
 	/**
 	 * Checks if the inputted username and password is in the database
-	 * @param con Connection to the database
 	 * @param username User inputted username
 	 * @param password User inputted password
 	 * @throws e if there was a problem retreiving data from the database
@@ -102,7 +101,6 @@ public class DbManager {
 	
     /**
      * 
-     * @param con Connection to database
      * @param username User inputted username
      * @return 1 if the username exists, -1 if it doesn't exist, and -2 if there is a database connection error
      */
@@ -125,5 +123,28 @@ public class DbManager {
             return -2; 
         }
     }
-	//public int 
+    /**
+     * 
+     * @param username User inputted username
+     * @return 1 if the username exists, -1 if it doesn't exist, and -2 if there is a database connection error
+     */
+    public int adminExists(String username) {
+    	Connection con=getConnection();
+    	if(con==null) {
+    		return -2;
+    	}
+        try {
+            Statement stmt = con.createStatement();
+            ResultSet rs=stmt.executeQuery("Select * from Manager where username='"+username+"'");
+            if(rs.next()) {
+                return -1;
+            }
+            return 1;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return -2; 
+        }
+    }
+
 }
