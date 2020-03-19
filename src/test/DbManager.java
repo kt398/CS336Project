@@ -195,4 +195,33 @@ public class DbManager {
 		return -1;
 	}
 
+	public int adminUserPass(String username, String password) {
+		Connection con = getConnection();
+		if (con == null) {
+			return -2;
+		}
+		if (username.equals("") || password.equals("")) {
+			closeConnection(con);
+			return 0;
+		}
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery("Select password from Manager where username='" + username + "'");
+			if (!rs.next()) {
+				closeConnection(con);
+				return -1;
+			}
+			String s = rs.getString("Password");
+			if (s.equals(password)) {
+				closeConnection(con);
+				return 1;
+			}
+			closeConnection(con);
+			return -1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return -2;
+		}
+	}
 }

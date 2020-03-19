@@ -25,7 +25,7 @@
 		DbManager db = new DbManager();
 		Connection con = db.getConnection();
 		
-		int status = db.adminExists(username);
+		int status = db.adminUserPass(username,password);
 		
 		switch(status){
 		case -2:
