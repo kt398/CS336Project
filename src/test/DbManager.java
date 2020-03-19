@@ -146,5 +146,18 @@ public class DbManager {
             return -2; 
         }
     }
+/**
+ * 
+ * @param username User inputted username
+ * @param password User inputted password
+ * @return	-2 if there is a database connection error, - if username exists, and 
+ */
+    public int newAdmin(String username, String password) {
+    	Connection con=getConnection();
+    	if(con==null) {
+    		return -2;
+    	}
+    	return -1;
+    }
 
 }
