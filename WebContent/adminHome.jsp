@@ -23,6 +23,10 @@
 		</ul>
 	</nav>
 	
+	<div class="welcome">
+		<p>Welcome!</p>
+	</div>
+	
 	<div class="newAdmin">
 		<p>Create a new administrative account</p>
 		<form class="newAdmin" method="post" action="newAdmin.jsp">
@@ -63,6 +67,10 @@
 	
 </body>
 
-
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});	
+</script>
 
 </html>
