@@ -11,6 +11,7 @@ create table if not exists Airports
     primary key(airportID)
 );
 
+
 create table if not exists Accounts
 (
 	username text not null,
@@ -21,16 +22,25 @@ create table if not exists Accounts
 
 create table if not exists Customers
 (
-	firstName text,
-    lastName text,
-    email text not null,
+    firstName text(15),
+    lastName text(15),
+    email text(15) not null,
     creationDate DATE,
     creditCard integer,
-    address text,
-    city text,
-    state text,
+    address text(15),
+    city text(15),
+    state text(15),
     zip integer,
-    phone integer
+    phone integer,
+    primary key(email)
+);
+create table if not exists Owns
+(
+	email text(15) not null,
+    accountNum integer not null,
+    primary key(email(15),accountNum),
+    foreign key(email(15)) references Customers(email),
+    foreign key(accountNum) references Accounts(accountNumber)
 );
 
 create table if not exists Manager

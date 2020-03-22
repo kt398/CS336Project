@@ -95,7 +95,7 @@ public class DbManager {
 			Statement stmt = con.createStatement();
 			stmt.executeUpdate("insert into Accounts (username, accountNumber, password) values ('" + username + "',0,'"
 					+ password + "')");
-			ResultSet rs = stmt.executeQuery("select accountNumber from Accounts where username='" + username + ";");
+			ResultSet rs = stmt.executeQuery("select accountNumber from Accounts where username='" + username + "'");
 			rs.next();
 			int accountNum = rs.getInt(1);
 			stmt.executeUpdate("insert into owns (email, accountNum) values ('"+email+"',"+ accountNum + ")");
