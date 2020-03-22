@@ -26,24 +26,32 @@
 		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
 		DbManager db = new DbManager();
-		int status = db.newUser(newName, newPwd,newEmail);
+		int status = db.newUser(newName, newPwd, newEmail);
 
 		switch (status) {
 			case 1 :
 	%>
 	<script>
-		alert("New user successfully created!");
+		alert("New account successfully created!");//Customer exists
 	</script>
 	<%
 		break;
-			case -1 :
+			case 2 :
+	%>
+	<script>
+		alert("New account successfully created!TESTESTESTE");//Customer doesn't exist
+		window.location.href = "newCustomer.jsp";
+	</script>
+	<%
+		break;
+		case -1 :
 	%>
 	<script>
 		alert("Username already exists");
 		window.location.href = "login.jsp";
 	</script>
 	<%
-		default :
+		case -2 :
 	%>
 	<script>
 		alert("Database connection issue, failed to create account");

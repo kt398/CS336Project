@@ -75,15 +75,17 @@ public class DbManager {
 	 * @param password New Password
 	 * @return -2 if problem connecting to the database, -1 the username exists, 0
 	 *         if a field is empty, 1 if successfully created and customer exists,
-	 *         and if successfully created and customer does not exist
+	 *         and 2 if successfully created and customer does not exist
 	 */
 	public int newUser(String username, String password, String email) {
+
 		Connection con = getConnection();
 		if (con == null) {
 			return -2;
 		}
 		if (username.equals("") || password.equals("")) {
 			closeConnection(con);
+
 			return 0;
 		}
 		try {
@@ -98,7 +100,9 @@ public class DbManager {
 			ResultSet rs = stmt.executeQuery("select accNum from Accounts where username='" + username + "'");
 			rs.next();
 			int accountNum = rs.getInt(1);
-			stmt.executeUpdate("insert into owns (email, accNum) values ('"+email+"',"+ accountNum + ")");
+			stmt.executeQuery("set foreign_key_checks=0");
+			stmt.executeUpdate("insert into owns (cEmail, accNum) values ('"+email+"',"+ accountNum + ")");
+
 			if (emailExists(con, email)) {
 				closeConnection(con);
 				return 1;
@@ -109,7 +113,7 @@ public class DbManager {
 			// ResultSet rs= stmt.executeQuery("Select password from Accounts where
 			// username='"+username+"'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			// TODO Auto-generated catch block			
 			e.printStackTrace();
 			closeConnection(con);
 			return -2;
@@ -117,12 +121,14 @@ public class DbManager {
 	}
 
 	private boolean emailExists(Connection con, String email) {
+		System.out.println("email exists");
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from Customers where email='" + email + "'");
 			if (!rs.next()) {
 				return false;
 			}
+			System.out.println("true");
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
