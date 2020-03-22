@@ -93,12 +93,12 @@ public class DbManager {
 				return -1;
 			}
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("insert into Accounts (username, accountNumber, password) values ('" + username + "',0,'"
+			stmt.executeUpdate("insert into Accounts (username, accNum, password) values ('" + username + "',0,'"
 					+ password + "')");
-			ResultSet rs = stmt.executeQuery("select accountNumber from Accounts where username='" + username + "'");
+			ResultSet rs = stmt.executeQuery("select accNum from Accounts where username='" + username + "'");
 			rs.next();
 			int accountNum = rs.getInt(1);
-			stmt.executeUpdate("insert into owns (email, accountNum) values ('"+email+"',"+ accountNum + ")");
+			stmt.executeUpdate("insert into owns (email, accNum) values ('"+email+"',"+ accountNum + ")");
 			if (emailExists(con, email)) {
 				closeConnection(con);
 				return 1;
@@ -203,7 +203,7 @@ public class DbManager {
 				return -1;
 			}
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("insert into Manager (employeeNumber, password, username) values (0,'"+password+"','"+username+"')");
+			stmt.executeUpdate("insert into Manager (employeeNum, password, username) values (0,'"+password+"','"+username+"')");
 			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
