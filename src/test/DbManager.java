@@ -121,14 +121,12 @@ public class DbManager {
 	}
 
 	private boolean emailExists(Connection con, String email) {
-		System.out.println("email exists");
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery("select * from Customers where email='" + email + "'");
 			if (!rs.next()) {
 				return false;
 			}
-			System.out.println("true");
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

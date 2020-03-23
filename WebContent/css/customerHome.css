@@ -1,0 +1,53 @@
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: black;
+	background-color: #6699CC;
+}
+
+h1 {
+	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif
+}
+
+.navbar {
+	height: auto;
+	border-radius: 15px;
+	box-shadow: 0 0 10px 0 #000;
+	background-color: #f1f1f1;
+	width: 200px;
+}
+
+.navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar li {
+	color: #000;
+}
+
+.navbar li a {
+	padding: 8px 16px;
+	display: block;
+}
+
+.navbar li a:hover {
+	background-color: #555;
+}
+
+.navbar a.active {
+	border-radius: 15px;
+	background-color: #4CAF50;
+	color: white;
+}
+
+.navbar a:hover:not: (.active ){
+	border-radius: 15px;
+	background-color: #555;
+	color: white;
+}
+
+.active {
+	background-color: #4CAF50;
+	color: white;
+}
