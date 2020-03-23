@@ -247,4 +247,8 @@ public class DbManager {
 			return -2;
 		}
 	}
+	public int newCustomer(String name, String password) {
+		
+		return 0;
+	}
 }

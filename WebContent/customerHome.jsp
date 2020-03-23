@@ -11,12 +11,12 @@
 <body>
 	<nav class="navbar">
 		<ul>
-			<li><a class="active" href="#home">Home</a></li>
+			<li><a class="top" href="#home">Home</a></li>
 			<li><a href="#myReservations">My Reservations</a></li>
 			<li><a href="#makeReservations">Make Reservation</a></li>
 			<li><a href="#personalInformation">Personal Information</a></li>
 			<li><a href="#flightPreferences">Flight Preferences</a></li>
-			<li><a href="#logout">Logout</a></li>
+			<li><a class="bot"href="#logout">Logout</a></li>
 		</ul>
 	</nav>
 

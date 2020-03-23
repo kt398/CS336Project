@@ -41,6 +41,7 @@
 	%>
 	<script>
 		alert("Login Successful!");
+		window.location.href="customerHome.jsp"
 	</script>
 	<%
 		break;

@@ -13,7 +13,7 @@ h1 {
 	border-radius: 15px;
 	box-shadow: 0 0 10px 0 #000;
 	background-color: #f1f1f1;
-	width: 200px;
+	width: 180px;
 }
 
 .navbar ul {
@@ -35,19 +35,12 @@ h1 {
 	background-color: #555;
 }
 
-.navbar a.active {
-	border-radius: 15px;
-	background-color: #4CAF50;
-	color: white;
-}
-
-.navbar a:hover:not: (.active ){
-	border-radius: 15px;
+.navbar a.bot:hover {
+	border-radius: 0 0 15px 15px;
 	background-color: #555;
-	color: white;
 }
 
-.active {
-	background-color: #4CAF50;
-	color: white;
+.navbar a.top:hover {
+	border-radius: 15px 15px 0 0;
+	background-color: #555;
 }

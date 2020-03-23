@@ -18,9 +18,7 @@
 <link rel="stylsheet" href="css/newUser.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
-
 <body>
-
 	<%
 		String newName = request.getParameter("username");
 		String newEmail = request.getParameter("email");
