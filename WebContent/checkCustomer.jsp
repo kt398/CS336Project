@@ -8,8 +8,8 @@
  java.sql.ResultSet,
  java.sql.SQLException,
  java.sql.Statement"%>
- 
- <!DOCTYPE html>
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -21,37 +21,30 @@
 <body>
 
 	<%
-		String email= (String)(session.getAttribute("email"));
+		String email = (String) (session.getAttribute("email"));
 		String fname = request.getParameter("firstName");
-		String lname= request.getParameter("lastName");
-		String address=request.getParameter("address");
-		String city=request.getParameter("city");
-		String state=request.getParameter("state");
-		int zip=Integer.parseInt((String)(request.getParameter("zip")));
-		int phone=Integer.parseInt(request.getParameter("phone"));
+		String lname = request.getParameter("lastName");
+		String address = request.getParameter("address");
+		String city = request.getParameter("city");
+		String state = request.getParameter("state");
+		int zip = Integer.parseInt((String) (request.getParameter("zip")));
+		int phone = Integer.parseInt(request.getParameter("phone"));
 		DbManager db = new DbManager();
-		int status = db.newCustomer(fname, lname,address,0,city,state,zip,phone);
+		int status = db.newCustomer(fname, lname, email, 0, address, city, state, zip, phone);
 
 		switch (status) {
 			case 1 :
 	%>
 	<script>
-		alert("New Admin successfully created!");
+		alert("New customer successfully created!");
 	</script>
 	<%
 		break;
-			case -1 :
+			default :
 	%>
 	<script>
-		alert("Username already exists");
-		window.location.href = "adminLogin.jsp";
-	</script>
-	<%
-		default :
-	%>
-	<script>
-		alert("Databse connection issue, failed to create account");
-		window.location.href = "adminLogin.jsp";
+		alert("Databse connection issue, failed to create customer");
+		window.location.href = "newCustomer.jsp";
 	</script>
 	<%
 		break;

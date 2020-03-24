@@ -257,9 +257,9 @@ public class DbManager {
         try {            
             LocalDate timeOfCreation = LocalDate.now();
             Statement stmt = con.createStatement();
-            String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone, integer) values ('"
+            String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone) values ('"
                     + fname + "','" + lname + "','" + email + "','" + timeOfCreation +  "','" + ccNum + "','" + address + "','" + city + "','" + state
-                    + "','" + zip + "','" + phone + ")";
+                    + "','" + zip + "','" + phone + "')";
             System.out.println(statement);
             stmt.executeUpdate(statement);
             closeConnection(con);
