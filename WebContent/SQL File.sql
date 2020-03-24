@@ -47,10 +47,8 @@ create table if not exists Manager
 (
 	employeeNum integer not null auto_increment,
     password char(15) not null,
-    accountNum integer not null,
     username char(15) not null,
     primary key (employeeNum)
-	
 );
 
 create table if not exists Airlines
