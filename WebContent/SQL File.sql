@@ -5,18 +5,18 @@ USE Travel_Reservations;
 create table if not exists Airports
 (
 	id integer not null,
-	aName char,
-	city char,
-    country char,
+	aName char(15),
+	city char(15),
+    country char(15),
     primary key(id)
 );
 
 
 create table if not exists Accounts
 (
-	username char not null,
+	username char(15) not null,
     accNum integer not null auto_increment,
-    password char not null,
+    password char(15) not null,
     primary key (accNum)
 );
 
@@ -36,19 +36,19 @@ create table if not exists Customers
 );
 create table if not exists Owns
 (
-	customerEmail char(15) not null,
+	cEmail char(30) not null,
     accNum integer not null,
     foreign key(accNum) references accounts(accNum),
-	foreign key(customerEmail) references customers(email),
-    primary key(customerEmail,accNum)
+	foreign key(cEmail) references customers(email),
+    primary key(cEmail(30),accNum)
 );
 
 create table if not exists Manager
 (
 	employeeNum integer not null auto_increment,
-    password char not null,
+    password char(15) not null,
     accountNum integer not null,
-    username char not null,
+    username char(15) not null,
     primary key (employeeNum)
 	
 );
@@ -56,15 +56,15 @@ create table if not exists Manager
 create table if not exists Airlines
 (
 	id integer not null,
-    name char,
+    name char(15),
     primary key(id)
 );
 
 create table if not exists Reservations
 (
 	date DATE,
-    passengers char,
-    cRep char,
+    passengers char(15),
+    cRep char(15),
     bFee integer,
     tFare integer,
     resNum integer not null,
@@ -73,11 +73,11 @@ create table if not exists Reservations
 
 create table if not exists Flights
 (
-	workingDays char,
+	workingDays char(15),
     num integer not null,
     airline char(15) not null,
-    seats char,
-    fares char,
+    seats char(15),
+    fares char(15),
     primary key (num, airline)
 );
 create table if not exists Legs
