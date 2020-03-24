@@ -28,7 +28,7 @@
 		String city = request.getParameter("city");
 		String state = request.getParameter("state");
 		int zip = Integer.parseInt((String) (request.getParameter("zip")));
-		int phone = Integer.parseInt(request.getParameter("phone"));
+		long phone = Long.parseLong((String)(request.getParameter("phone")));
 		DbManager db = new DbManager();
 		int status = db.newCustomer(fname, lname, email, 0, address, city, state, zip, phone);
 
@@ -37,6 +37,8 @@
 	%>
 	<script>
 		alert("New customer successfully created!");
+		window.location.href = "customerHome.jsp";
+
 	</script>
 	<%
 		break;

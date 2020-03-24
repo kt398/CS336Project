@@ -249,7 +249,7 @@ public class DbManager {
 			return -2;
 		}
 	}
-	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city, String state, int zip, int phone) {
+	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city, String state, int zip, long phone) {
         Connection con = getConnection();
         if (con == null) {
             return -2;
