@@ -1,10 +1,12 @@
 package test;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 
 public class DbManager {
 
@@ -247,8 +249,27 @@ public class DbManager {
 			return -2;
 		}
 	}
-	public int newCustomer(String name, String password) {
-		
-		return 0;
-	}
+	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city, String state, int zip, int phone) {
+        Connection con = getConnection();
+        if (con == null) {
+            return -2;
+        }
+        try {            
+            LocalDate timeOfCreation = LocalDate.now();
+            Statement stmt = con.createStatement();
+            String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone, integer) values ('"
+                    + fname + "','" + lname + "','" + email + "','" + timeOfCreation +  "','" + ccNum + "','" + address + "','" + city + "','" + state
+                    + "','" + zip + "','" + phone + ")";
+            System.out.println(statement);
+            stmt.executeUpdate(statement);
+            closeConnection(con);
+            return 1;
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            closeConnection(con);
+            return -2;
+        }
+        // return 0;
+    }
 }
