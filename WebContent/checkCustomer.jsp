@@ -21,6 +21,7 @@
 <body>
 
 	<%
+		String email= (String)(session.getAttribute("email"));
 		String fname = request.getParameter("firstName");
 		String lname= request.getParameter("lastName");
 		String address=request.getParameter("address");

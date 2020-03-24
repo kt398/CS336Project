@@ -23,6 +23,7 @@
 		String newName = request.getParameter("username");
 		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
+		session.setAttribute("email", newEmail);
 		DbManager db = new DbManager();
 		int status = db.newUser(newName, newPwd, newEmail);
 
@@ -42,7 +43,7 @@
 	</script>
 	<%
 		break;
-		case -1 :
+			case -1 :
 	%>
 	<script>
 		alert("Username already exists");
