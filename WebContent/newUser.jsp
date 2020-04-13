@@ -24,6 +24,8 @@
 		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
 		session.setAttribute("email", newEmail);
+		session.setAttribute("password", newPwd);
+		session.setAttribute("username", newName);
 		DbManager db = new DbManager();
 		int status = db.newUser(newName, newPwd, newEmail);
 

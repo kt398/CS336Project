@@ -38,12 +38,11 @@
 	<%
 		break;
 			case 1 :
+				session.setAttribute("password", newPwd);
+				session.setAttribute("username", newName);
 	%>
 	<script>
 		alert("Login Successful!");
-		session.setAttribute("password", newPwd);
-		session.setAttribute("username", newName);
-		session.getAttribute("username");
 		window.location.href="customerHome.jsp"
 	</script>
 	<%

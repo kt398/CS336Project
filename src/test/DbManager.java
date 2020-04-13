@@ -292,7 +292,7 @@ public class DbManager {
 		}
 		try {
 			Statement stmt =con.createStatement();
-			String statement="Select * from Account a JOIN owns o ON a.accNum=o.accNum JOIN customer c ON o.cEmail=c.email WHERE a.username=\""+username+"\"AND a.password=\""+password+"\"";
+			String statement="Select * from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.cEmail=c.email WHERE a.username=\""+username+"\"AND a.password=\""+password+"\"";
 			rs=stmt.executeQuery(statement);
 		}
 		catch(SQLException e) {

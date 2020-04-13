@@ -39,11 +39,19 @@
 		<%
 		DbManager manager=new DbManager();
 		ResultSet rs=manager.getCustomerInformation((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+		rs.next();
 		%>
 		<ul class="items2">
-			<li>Kunal</li>
-			<li>Thakker</li>
-			<li>kt333</li>
+			<li><%out.print(rs.getString("firstName"));%></li>
+			<li><%out.print(rs.getString("lastName"));%></li>
+			<li><%out.print(session.getAttribute("username"));%></li>
+			<li><%out.print(session.getAttribute("password"));%></li>
+			<li><%out.print(rs.getString("email"));%></li>
+			<li><%out.print(rs.getString("address"));%></li>
+			<li><%out.print(rs.getString("creditCard"));%></li>
+			<li>***</li>
+			<li><%out.print(rs.getString("phone"));%></li>
+			<li><%out.print(rs.getString("creationDate"));%></li>
 		</ul>
 
 	</div>
