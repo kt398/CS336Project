@@ -32,7 +32,7 @@
 			case -2 :
 	%>
 	<script>
-		alert("Databse connection issue.");
+		alert("Database connection issue.");
 		window.location.href = "login.jsp";
 	</script>
 	<%
@@ -41,6 +41,9 @@
 	%>
 	<script>
 		alert("Login Successful!");
+		session.setAttribute("password", newPwd);
+		session.setAttribute("username", newName);
+		session.getAttribute("username");
 		window.location.href="customerHome.jsp"
 	</script>
 	<%

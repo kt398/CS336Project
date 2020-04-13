@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import javax.servlet.*;
 
 public class DbManager {
 
@@ -103,7 +104,7 @@ public class DbManager {
 			rs.next();
 			int accountNum = rs.getInt(1);
 			stmt.executeQuery("set foreign_key_checks=0");
-			stmt.executeUpdate("insert into owns (cEmail, accNum) values ('"+email+"',"+ accountNum + ")");
+			stmt.executeUpdate("insert into owns (cEmail, accNum) values ('" + email + "'," + accountNum + ")");
 
 			if (emailExists(con, email)) {
 				closeConnection(con);
@@ -115,7 +116,7 @@ public class DbManager {
 			// ResultSet rs= stmt.executeQuery("Select password from Accounts where
 			// username='"+username+"'");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block			
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 			closeConnection(con);
 			return -2;
@@ -209,7 +210,8 @@ public class DbManager {
 				return -1;
 			}
 			Statement stmt = con.createStatement();
-			stmt.executeUpdate("insert into Manager (employeeNum, password, username) values (0,'"+password+"','"+username+"')");
+			stmt.executeUpdate("insert into Manager (employeeNum, password, username) values (0,'" + password + "','"
+					+ username + "')");
 			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
@@ -249,29 +251,32 @@ public class DbManager {
 			return -2;
 		}
 	}
-	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city, String state, int zip, long phone) {
-        Connection con = getConnection();
-        if (con == null) {
-            return -2;
-        }
-        try {            
-            LocalDate timeOfCreation = LocalDate.now();
-            Statement stmt = con.createStatement();
-            String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone) values ('"
-                    + fname + "','" + lname + "','" + email + "','" + timeOfCreation +  "','" + ccNum + "','" + address + "','" + city + "','" + state
-                    + "','" + zip + "','" + phone + "')";
-            System.out.println(statement);
-            stmt.executeUpdate(statement);
-            closeConnection(con);
-            return 1;
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            closeConnection(con);
-            return -2;
-        }
-        // return 0;
-    }
+
+	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city,
+			String state, int zip, long phone) {
+		Connection con = getConnection();
+		if (con == null) {
+			return -2;
+		}
+		try {
+			LocalDate timeOfCreation = LocalDate.now();
+			Statement stmt = con.createStatement();
+			String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone) values ('"
+					+ fname + "','" + lname + "','" + email + "','" + timeOfCreation + "','" + ccNum + "','" + address
+					+ "','" + city + "','" + state + "','" + zip + "','" + phone + "')";
+			System.out.println(statement);
+			stmt.executeUpdate(statement);
+			closeConnection(con);
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			closeConnection(con);
+			return -2;
+		}
+		// return 0;
+	}
+
 	/**
 	 * 
 	 * Gets the customer information for the given username and password
@@ -279,15 +284,22 @@ public class DbManager {
 	 * @param password password of the currently open account
 	 * @return A string with each attribute seperated by "$/"
 	 */
-	public String getCustomerInformation(String username,String password) {
+	public ResultSet getCustomerInformation(String username,String password) {
+		ResultSet rs=null;
 		Connection con=getConnection();
 		if(con==null) {
-			return "failure";
+			return null;
 		}
 		try {
 			Statement stmt =con.createStatement();
-			String statement="Select * from "
+			String statement="Select * from Account a JOIN owns o ON a.accNum=o.accNum JOIN customer c ON o.cEmail=c.email WHERE a.username=\""+username+"\"AND a.password=\""+password+"\"";
+			rs=stmt.executeQuery(statement);
 		}
-		return "";
+		catch(SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+		return rs;
 	}
 }

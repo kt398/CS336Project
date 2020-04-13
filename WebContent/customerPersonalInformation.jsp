@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="test.*,java.sql.ResultSet"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,10 +22,8 @@
 			<li><a class="bot" href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
-
 	<div class="information">
 		<h1 class="heading">Make Reservation</h1>
-
 		<ul class="items">
 			<li>First Name</li>
 			<li>Last Name</li>
@@ -38,9 +37,8 @@
 			<li>Account Creation Date</li>
 		</ul>
 		<%
-		
-		
-		
+		DbManager manager=new DbManager();
+		ResultSet rs=manager.getCustomerInformation((String)session.getAttribute("username"),(String)session.getAttribute("password"));
 		%>
 		<ul class="items2">
 			<li>Kunal</li>
