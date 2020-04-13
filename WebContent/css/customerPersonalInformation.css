@@ -7,49 +7,38 @@ body {
 h1 {
 	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif
 }
-
-.navbar {
-	height: auto;
-	border-radius: 15px;
-	box-shadow: 0 0 10px 0 #000;
-	background-color: #f1f1f1;
-	width: 180px;
-}
-
-.navbar ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-
-.navbar li {
-	color: #000;
-}
 .information {
+	border-radius: 2%;
+	box-shadow: 0 0 10px 0 #000;
+	width:45%;
+	margin:0 auto;
+
+	background-color: white;
+
+}
+.information .heading{
+	padding-top: 2%;
 	text-align:center;
-	padding: 8px 16px;
-	display:block;
 }
-.information ul{
-	text-align:center;
-	padding: 8px 16px;
-}
-
-.navbar li a {
-	padding: 8px 16px;
-	display: block;
+.information ul.items{
+	width:38%;
+	list-style-type:none;
+	text-align:left;
+	padding: 1% 6%;
+	display:inline-block;
 }
 
-.navbar li a:hover {
-	background-color: #555;
+.information ul.items2{
+	padding:1% 6%;
+	list-style-type:none;
+	text-align: left;
+	display:inline-block;
+
+}
+.information ul.items li{
+	padding: 15px 0px;
 }
 
-.navbar a.bot:hover {
-	border-radius: 0 0 15px 15px;
-	background-color: #555;
-}
-
-.navbar a.top:hover {
-	border-radius: 15px 15px 0 0;
-	background-color: #555;
+.information ul.items2 li{
+	padding: 15px 0px;
 }

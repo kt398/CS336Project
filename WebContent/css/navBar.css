@@ -1,0 +1,47 @@
+.navbar {
+	height: auto;
+	border-radius: 15px;
+	box-shadow: 0 0 10px 0 #000;
+	background-color: #f1f1f1;
+	width: 180px;
+	float:left;
+	
+}
+
+.navbar ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+
+.navbar li {
+	color: #000;
+}
+
+.navbar li a {
+	padding: 8px 16px;
+	display: block;
+}
+
+.navbar li a:hover {
+	background-color: #555;
+}
+
+.navbar a.bot:hover {
+	border-radius: 0 0 15px 15px;
+	background-color: #555;
+}
+
+.navbar a.top:hover {
+	border-radius: 15px 15px 0 0;
+	background-color: #555;
+}
+
+.navbar .topSelected {
+	border-radius: 15px 15px 0 0;
+	background-color: #33cc33;
+}
+
+.navbar .selected {
+	background-color: #33cc33;
+}

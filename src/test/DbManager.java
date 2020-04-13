@@ -272,4 +272,22 @@ public class DbManager {
         }
         // return 0;
     }
+	/**
+	 * 
+	 * Gets the customer information for the given username and password
+	 * @param username username of the currently open account
+	 * @param password password of the currently open account
+	 * @return A string with each attribute seperated by "$/"
+	 */
+	public String getCustomerInformation(String username,String password) {
+		Connection con=getConnection();
+		if(con==null) {
+			return "failure";
+		}
+		try {
+			Statement stmt =con.createStatement();
+			String statement="Select * from "
+		}
+		return "";
+	}
 }
