@@ -252,8 +252,8 @@ public class DbManager {
 		}
 	}
 
-	public int newCustomer(String fname, String lname, String email, int ccNum, String address, String city,
-			String state, int zip, long phone) {
+	public int newCustomer(String fname, String lname, String email, String ccNum, String address, String city,
+			String state, String zip, String phone) {
 		Connection con = getConnection();
 		if (con == null) {
 			return -2;

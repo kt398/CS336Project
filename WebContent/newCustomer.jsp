@@ -38,10 +38,10 @@
 			String address = request.getParameter("address");
 			String city = request.getParameter("city");
 			String state = request.getParameter("state");
-			int zip = Integer.parseInt((String) (request.getParameter("zip")));
-			long phone = Long.parseLong((String)(request.getParameter("phone")));
+			String zip =  request.getParameter("zip");
+			String phone = request.getParameter("phone");
 			DbManager db = new DbManager();
-			int status = db.newCustomer(fname, lname, email, 0, address, city, state, zip, phone);
+			int status = db.newCustomer(fname, lname, email, "0", address, city, state, zip, phone);
 
 			switch (status) {
 				case 1 :
