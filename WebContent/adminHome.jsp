@@ -29,7 +29,7 @@
 	</section>
 	
 	<section class="newAdmin">
-		<p>Create a new administrative account</p>
+		<p>Create a new Administrative Account</p>
 		<div class="container">
 			<form class="newAdmin" method="post" action="newAdmin.jsp">
 				<input type="text" placeholder="username" name="username">
