@@ -24,14 +24,15 @@ create table if not exists Customers
 (
     firstName char(15),
     lastName char(15),
-    email char(15) not null,
+    email char(30) not null,
     creationDate DATE,
-    creditCard integer,
+    creditCard char(20),
     address char(15),
     city char(15),
     state char(15),
-    zip integer,
-    phone integer,
+    zip char(5),
+    phone char(10),
+	ccv integer,
     primary key(email)
 );
 create table if not exists Owns
@@ -53,8 +54,8 @@ create table if not exists Manager
 
 create table if not exists Airlines
 (
-	id integer not null,
-    name char(15),
+	id char(5) not null,
+    name char(30),
     primary key(id)
 );
 
@@ -83,7 +84,7 @@ create table if not exists Legs
 	id integer not null,
     seatNum integer,
     meals char(15),
-    class char(15), 
+    class char(15),
     primary key(id)
 );
 
@@ -112,7 +113,7 @@ create table if not exists DepartsFrom
 
 create table if not exists Operates
 (
-	airlineID integer,
+	airlineID char(5),
     flightNum integer,
     airline char(15),
     primary key(airlineID,flightNum,airline),
@@ -123,7 +124,6 @@ create table if not exists Operates
 
 create table if not exists Have
 (
-
     legID integer not null,
     reservationNum integer not null,
 	primary key(reservationNum,legID),
