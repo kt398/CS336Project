@@ -41,7 +41,7 @@
 	</section>
 	
 	<section class="customerData">
-		<p>Change customer database</p>
+		<p>Change Customer Database</p>
 		<div class="container">
 			<form action=""><input type="submit" value="Add" /></form>
 			<form action=""><input type="submit" value="Delete" /></form>
