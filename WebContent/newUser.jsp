@@ -40,7 +40,7 @@
 			case 2 :
 	%>
 	<script>
-		alert("New account successfully created!TESTESTESTE");//Customer doesn't exist
+		alert("New account successfully created!");//Customer doesn't exist
 		window.location.href = "newCustomer.jsp";
 	</script>
 	<%

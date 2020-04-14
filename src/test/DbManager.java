@@ -302,4 +302,24 @@ public class DbManager {
 		}
 		return rs;
 	}
+
+	public int updateCustomerInformation(String firstName,String lastName,String email, String username,String address,String city,String state,String zip,String creditCard, String phone) {
+		Connection con=getConnection();
+		if(con==null) {
+			return -2;
+		}
+		try {
+			Statement stmt=con.createStatement();
+			String statement="UPDATE Customers SET firstName="+firstName+", lastName="+lastName+", address="+address+", city="+city+", state="+state+", zip="+zip+", creditCard="+creditCard+", phone="+phone+" WHERE email="+email;
+			boolean s=stmt.execute(statement);
+			int x=stmt.executeUpdate(statement);
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			closeConnection(con);
+			return -2;
+		}
+		closeConnection(con);
+		return 0;
+	}
 }
