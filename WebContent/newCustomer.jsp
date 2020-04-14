@@ -19,7 +19,7 @@
 <body>
 	<div class="form">
 		<h1>Enter your information</h1>
-		<form class="input" method="post" action="checkCustomer.jsp">
+		<form class="input" method="post" action="newCustomer.jsp">
 			<input type="text" placeholder="First Name" name="firstName" required />
 			<input type="text" placeholder="Last Name" name="lastName" required />
 			<input type="text" placeholder="Address" name="address" required />
@@ -29,6 +29,41 @@
 			<input type="tel" placeholder="Phone Number" name="phone" />
 			<button>create</button>
 		</form>
+		
+		<%
+		if(request.getParameter("firstName") != null){
+			String email = (String) (session.getAttribute("email"));
+			String fname = request.getParameter("firstName");
+			String lname = request.getParameter("lastName");
+			String address = request.getParameter("address");
+			String city = request.getParameter("city");
+			String state = request.getParameter("state");
+			int zip = Integer.parseInt((String) (request.getParameter("zip")));
+			long phone = Long.parseLong((String)(request.getParameter("phone")));
+			DbManager db = new DbManager();
+			int status = db.newCustomer(fname, lname, email, 0, address, city, state, zip, phone);
+
+			switch (status) {
+				case 1 :
+			%>
+			<script>
+				alert("New customer successfully created!");
+				window.location.href = "customerHome.jsp";
+	
+			</script>
+			<%
+				break;
+					default :
+			%>
+			<script>
+				alert("Databse connection issue, failed to create customer");
+				window.location.href = "newCustomer.jsp";
+			</script>
+			<%
+				break;
+			}
+		}
+		%>
 	</div>
 
 </body>

@@ -34,6 +34,7 @@
 	%>
 	<script>
 		alert("New account successfully created!");//Customer exists
+		window.location.href = "customerHome.jsp";
 	</script>
 	<%
 		break;

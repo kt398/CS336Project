@@ -28,11 +28,12 @@
 			<li>First Name</li>
 			<li>Last Name</li>
 			<li>Username</li>
-			<li>Password</li>
 			<li>Email</li>
 			<li>Address</li>
+			<li>City</li>
+			<li>State</li>
+			<li>Zip</li>
 			<li>Credit Card Number</li>
-			<li>CCV</li>
 			<li>Phone Number</li>
 			<li>Account Creation Date</li>
 		</ul>
@@ -45,15 +46,16 @@
 			<li><%out.print(rs.getString("firstName"));%></li>
 			<li><%out.print(rs.getString("lastName"));%></li>
 			<li><%out.print(session.getAttribute("username"));%></li>
-			<li><%out.print(session.getAttribute("password"));%></li>
 			<li><%out.print(rs.getString("email"));%></li>
 			<li><%out.print(rs.getString("address"));%></li>
+			<li><%out.print(rs.getString("city"));%></li>
+			<li><%out.print(rs.getString("state"));%></li>
+			<li><%out.print(rs.getString("zip"));%></li>
 			<li><%out.print(rs.getString("creditCard"));%></li>
-			<li>***</li>
 			<li><%out.print(rs.getString("phone"));%></li>
 			<li><%out.print(rs.getString("creationDate"));%></li>
 		</ul>
-
+		<a href="customerEditPersonalInformation.jsp" class="button">Edit Personal Information</a>
 	</div>
 </body>
 </html>

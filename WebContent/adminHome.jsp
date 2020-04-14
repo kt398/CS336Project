@@ -73,15 +73,16 @@
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript">
-	$(document).ready(function(){
-		$("section").hide();
-		$(".adminHome").show();
-	});	
-	
-	$('a').click(function display(id){
-		$("section").hide();
-		$("section."+$(this).attr('class')).show();
-	});
+
+    $(document).ready(function(){
+        $("section").hide();
+        $(".adminHome").show();
+    });    
+    
+    $('a').click(function display(id){
+        $("section").hide();
+        $("section."+$(this).attr('class')).show();
+    });
 </script>
 
 </html>
