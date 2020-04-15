@@ -2,6 +2,12 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.io.*,java.util.*,java.sql.*"%>
 <%@ page import="javax.servlet.http.*,javax.servlet.*"%>
+<%@ page
+	import="test.*,java.sql.Connection,
+ java.sql.DriverManager,
+ java.sql.ResultSet,
+ java.sql.SQLException,
+ java.sql.Statement"%>
 
 <!DOCTYPE html>
 <html>
@@ -41,13 +47,52 @@
 	</section>
 	
 	<section class="customerData">
-		<p>Change Customer Database</p>
+		<p>Customer Database</p>
+		
 		<div class="container">
 			<form action=""><input type="submit" value="Add" /></form>
 			<form action=""><input type="submit" value="Delete" /></form>
 			<form action=""><input type="submit" value="Edit" /></form>
 		</div>
+				
+		<%
+		DbManager db = new DbManager();
+		Connection con = db.getConnection();
+		String query = "SELECT * FROM Customers";
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		%>
+		<table>
+			<tr>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Creation Date</th>
+				<th>C.C. Num.</th>
+				<th>Address</th>
+				<th>City</th>
+				<th>State</th>
+				<th>Zip</th>
+				<th>Phone Number</th>
+			</tr>
+		<% 
+		while(rs.next()){
+		%>
+			<tr>
+				<%
+				for(int i=1; i<11; i++){
+				%>
+				<td><%=rs.getString(i)%></td>
+				<%
+				}
+				%>
+			</tr>
+		<%
+		}
+		%>
+		</table>
 	</section>
+	
 	
 	<section class="salesReport">
 		<p>Sales Report</p>
