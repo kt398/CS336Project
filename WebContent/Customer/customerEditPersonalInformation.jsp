@@ -7,8 +7,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Personal Information</title>
 <link rel="stylesheet" type="text/css"
-	href="css/customerEditPersonalInformation.css">
-<link rel="stylesheet" type="text/css" href="css/navBar.css">
+	href="../css/customerEditPersonalInformation.css">
+<link rel="stylesheet" type="text/css" href="../css/navBar.css">
 </head>
 <body>
 	<nav class="navbar">
@@ -29,7 +29,6 @@
 				(String) session.getAttribute("password"));
 		rs.next();
 		String email="\""+rs.getString("email")+"\"";
-		System.out.println(rs.getString("email")+"end");
 	%>
 	<div class="information">
 		<h1 class="heading">Make Reservation</h1>

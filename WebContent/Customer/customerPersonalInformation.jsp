@@ -6,8 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Personal Information</title>
-<link rel="stylesheet" type="text/css" href="css/customerPersonalInformation.css">
-<link rel="stylesheet" type="text/css" href="css/navBar.css">
+<link rel="stylesheet" type="text/css" href="../css/customerPersonalInformation.css">
+<link rel="stylesheet" type="text/css" href="../css/navBar.css">
 </head>
 <body>
 	<nav class="navbar">

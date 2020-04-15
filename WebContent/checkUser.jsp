@@ -24,7 +24,7 @@
 	<%
 		String newName = request.getParameter("username");
 		String newPwd = request.getParameter("password");
-		System.out.println(newName + "," + newPwd);
+		//System.out.println(newName + "," + newPwd);
 		DbManager db = new DbManager();
 		int status = db.checkUserPass(newName, newPwd);
 
@@ -43,7 +43,7 @@
 	%>
 	<script>
 		alert("Login Successful!");
-		window.location.href="customerHome.jsp"
+		window.location.href="Customer/customerHome.jsp"
 	</script>
 	<%
 		break;

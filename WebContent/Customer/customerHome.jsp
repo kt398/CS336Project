@@ -5,8 +5,8 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Home Page</title>
-<link rel="stylesheet" type="text/css" href="css/customerHome.css">
-<link rel="stylesheet" type="text/css" href="css/navBar.css">
+<link rel="stylesheet" type="text/css" href="../css/customerHome.css">
+<link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 </head>
 <body>

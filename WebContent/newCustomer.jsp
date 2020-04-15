@@ -48,7 +48,7 @@
 			%>
 			<script>
 				alert("New customer successfully created!");
-				window.location.href = "customerHome.jsp";
+				window.location.href = "Customer/customerHome.jsp";
 	
 			</script>
 			<%
