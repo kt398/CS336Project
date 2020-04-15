@@ -31,7 +31,7 @@
 		String email="\""+rs.getString("email")+"\"";
 	%>
 	<div class="information">
-		<h1 class="heading">Make Reservation</h1>
+		<h1 class="heading">Edit Personal Information</h1>
 		<form class="input" method="post"
 			action="customerEditPersonalInformation.jsp">
 			<label for="firstName">First Name</label> <input type="text"
