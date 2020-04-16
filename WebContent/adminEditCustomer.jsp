@@ -12,7 +12,7 @@
  <!DOCTYPE html>
  <html>
  <body>
- 	<h1>Edit <%=session.getAttribute("username")%> Information</h1>
+ 	<h1>Edit <%=request.getParameter("username")%> Information</h1>
  
  		<%
 		DbManager manager = new DbManager();

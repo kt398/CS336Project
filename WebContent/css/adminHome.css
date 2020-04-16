@@ -39,12 +39,3 @@ body{
 	display:flex;
 }
 
-.customerData table, td, th{
-	border: 1px solid black;
-}
-
-.customerData table{
-	border-collapse: collapse;
-	border-space:10px;
-	width:100%;
-}	

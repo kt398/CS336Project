@@ -15,6 +15,7 @@
 <title>Home Page [Admin]</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
 </head>
 
 <body>
@@ -28,6 +29,7 @@
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
 			<li><a class="airportFlights" href="#" >Flights for Airports</a></li>
+			<li><a href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
 	
@@ -49,16 +51,6 @@
 	
 	<section class="customerData">
 		<h1>Customer Database</h1>
-
-		<div class="container">
-			<form method="post" action="newUserAdmin.jsp">
-				<input type="text" placeholder="username" name="username">
-				<input type="text" placeholder="password" name="password">
-				<input type="email" placeholder="email" name="email">
-				<button>Add new user</button>
-			</form>
-		</div>
-
 		<%
 		DbManager db = new DbManager();
 		Connection con = db.getConnection();
@@ -66,22 +58,25 @@
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		%>
-		<table id="customerTable">
-			<tr>
-				<th>Username</th>
-				<th>First Name</th>
-				<th>Last Name</th>
-				<th>Email</th>
-				<th>Creation Date</th>
-				<th>C.C. Num.</th>
-				<th>Address</th>
-				<th>City</th>
-				<th>State</th>
-				<th>Zip</th>
-				<th>Phone Number</th>
-				<th>Edit</th>
-				<th>Delete</th>
-			</tr>
+		<table id="customerTable" class="display">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>Email</th>
+					<th>Creation Date</th>
+					<th>C.C. Num.</th>
+					<th>Address</th>
+					<th>City</th>
+					<th>State</th>
+					<th>Zip</th>
+					<th>Phone Number</th>
+					<th>Edit</th>
+					<th>Delete</th>
+				</tr>
+			</thead>
+			<tbody>
 		<% 
 		while(rs.next()){
 		%>
@@ -114,8 +109,20 @@
 			</tr>
 		<%
 		}
+		rs.close();
 		%>
+		</tbody>
 		</table>
+		
+		<h1>Add New User!</h1>
+		<div class="container">
+			<form method="post" action="newUserAdmin.jsp">
+				<input type="text" placeholder="username" name="username">
+				<input type="text" placeholder="password" name="password">
+				<input type="email" placeholder="email" name="email">
+				<button>Add</button>
+			</form>
+		</div>
 	</section>
 	
 	
@@ -141,19 +148,29 @@
 	
 </body>
 
+
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function(){
         $("section").hide();
         $(".adminHome").show();
     });    
-    
+
+    	 
+    	
     $('nav a').click(function(){
         $("section").hide();
         $("section."+$(this).attr('class')).show();
+        
+        if($(this).attr('class')=='customerData'){
+        	$("#customerTable").DataTable({
+        		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+			});
+        }
     });
-    
+
     $('#deleteCustomerForm a').click(function(){
     	var values = $(this).closest("tr");  
     	$('#deleteCustomerForm input').attr('value',values.find("td:eq(3)").text());
