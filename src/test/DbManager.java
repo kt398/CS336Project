@@ -284,7 +284,7 @@ public class DbManager {
 	 * @param password password of the currently open account
 	 * @return A string with each attribute seperated by "$/"
 	 */
-	public ResultSet getCustomerInformation(String username) {
+	public Results getCustomerInformation(String username) {
 		ResultSet rs=null;
 		Connection con=getConnection();
 		if(con==null) {
@@ -300,7 +300,8 @@ public class DbManager {
 			closeConnection(con);
 			return null;
 		}
-		return rs;
+		Results r=new Results(rs,con);
+		return r;
 	}
 
 	public int updateCustomerInformation(String firstName,String lastName,String email, String username,String address,String city,String state,String zip,String creditCard, String phone) {
@@ -322,7 +323,7 @@ public class DbManager {
 		closeConnection(con);
 		return 0;
 	}
-	public ResultSet getAllAirports() {
+	public Results getAllAirports() {
 		Connection con=getConnection();
 		if(con==null) {
 			return null;
@@ -332,7 +333,8 @@ public class DbManager {
 			String statement="Select id from Airports";
 			ResultSet rs=stmt.executeQuery(statement);
 			//closeConnection(con);
-			return rs;
+			Results r=new Results(rs,con);
+			return r;
 		}
 		catch(SQLException e){
 			e.printStackTrace();

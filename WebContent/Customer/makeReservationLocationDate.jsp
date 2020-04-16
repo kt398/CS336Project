@@ -20,7 +20,7 @@
 	</script>
 	<nav>
 		<ul>
-			<li><a class="top" href="../login.jsp">Home</a></li>
+			<li><a class="top" href="customerHome.jsp">Home</a></li>
 			<li><a href="customerReservations.jsp">My Reservations</a></li>
 			<li><a class="selected" href="customerMakeReservation.jsp">Make
 					Reservation</a></li>
@@ -33,10 +33,11 @@
 	</nav>
 	<%
 		DbManager manager = new DbManager();
-		ResultSet rs = manager.getAllAirports();
-		while(rs==null){
-			rs=manager.getAllAirports();
+		Results r=manager.getAllAirports();
+		while(r==null){
+			r=manager.getAllAirports();
 		}
+		ResultSet rs = r.getResultSet();
 	%>
 	<div class="box">
 		<h1 class="header1">Enter Information</h1>
@@ -76,16 +77,9 @@
 					}
 				%>
 			</select>
-
-
-
-
-
-
-
-
-
-
+			<h2>Date</h2>
+			<input type="date" id="date">
+			
 		</form>
 	</div>
 

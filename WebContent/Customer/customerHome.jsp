@@ -12,9 +12,9 @@
 <body>
 	<nav class="navbar">
 		<ul>
-			<li><a class="top topSelected" href="home">Home</a></li>
+			<li><a class="top topSelected" href="customerHome.jsp">Home</a></li>
 			<li><a href="customerReservations.jsp" >My Reservations</a></li>
-			<li><a href="customerMakeReservations.jsp">Make Reservation</a></li>
+			<li><a href="customerMakeReservation.jsp">Make Reservation</a></li>
 			<li><a href="customerPersonalInformation.jsp">Personal Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight Preferences</a></li>
 			<li><a class="bot" href="../login.jsp">Logout</a></li>

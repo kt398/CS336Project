@@ -17,9 +17,9 @@
 	<div class="login-page">
 		<div class="form">
 			<form class="register" method="post" action="newUser.jsp">
-				<input type="text" placeholder="username" name="username" /> <input
-					type="password" placeholder="password" name="password" /> <input
-					type="email" placeholder="email" name="email" />
+				<input type="text" placeholder="username" name="username" required /> <input
+					type="password" placeholder="password" name="password" required/> <input
+					type="email" placeholder="email" name="email" required/>
 				<button>create</button>
 				<p class="message">
 					Already registered? <a href="#">Sign In</a>

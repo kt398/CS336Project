@@ -16,7 +16,8 @@
  
  		<%
 		DbManager manager = new DbManager();
-		ResultSet rs = manager.getCustomerInformation(request.getParameter("username"));
+ 		Results r=manager.getCustomerInformation(request.getParameter("username"));
+		ResultSet rs =r.getResultSet();
 		rs.next();
 		String email="\""+rs.getString("email")+"\"";
 	%>
@@ -60,6 +61,7 @@
 				creditCard="\""+request.getParameter("creditCard")+"\"";
 				phone="\""+request.getParameter("phone")+"\"";
 				manager.updateCustomerInformation(firstName,lastName,email,username,address,city,state,zip,creditCard,phone);
+				r.closeConnection();
 		%>
 		<script>	
 			window.location.href = "adminHome.jsp";

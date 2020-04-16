@@ -13,7 +13,7 @@
 <body>
 	<nav class="navbar">
 		<ul>
-			<li><a class="top" href="../login.jsp">Home</a></li>
+			<li><a class="top" href="customerHome.jsp">Home</a></li>
 			<li><a href="customerReservations.jsp">My Reservations</a></li>
 			<li><a class="selected" href="customerMakeReservation.jsp">Make
 					Reservation</a></li>

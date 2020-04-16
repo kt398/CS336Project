@@ -13,8 +13,8 @@
 	<nav class="navbar">
 		<ul>
 			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservations.jsp">My Reservations</a></li>
-			<li><a href="customerMakeReservations.jsp">Make Reservation</a></li>
+			<li><a href="customerReservation.jsp">My Reservations</a></li>
+			<li><a href="customerMakeReservation.jsp">Make Reservation</a></li>
 			<li><a class="selected" href="customerPersonalInformation.jsp">Personal
 					Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight
@@ -39,7 +39,8 @@
 		</ul>
 		<%
 		DbManager manager=new DbManager();
-		ResultSet rs=manager.getCustomerInformation((String)session.getAttribute("username"));
+		Results r=manager.getCustomerInformation((String)session.getAttribute("username"));
+		ResultSet rs=r.getResultSet();
 		rs.next();
 		%>
 		<ul class="items2">
@@ -57,5 +58,8 @@
 		</ul>
 		<a href="customerEditPersonalInformation.jsp" class="button">Edit Personal Information</a>
 	</div>
+	<%
+	r.closeConnection();
+	%>
 </body>
 </html>
