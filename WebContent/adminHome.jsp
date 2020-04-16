@@ -21,6 +21,7 @@
 	<nav class="navbar">
 		<ul>
 			<li><a class="adminHome" href="#" >Home Page</a></li>
+			<li><a class="newAdmin" href="#" >Add Admin</a></li>
 			<li><a class="customerData" href="#" >Customer Information</a></li>
 			<li><a class="salesReport" href="#" >Sales Report</a></li>
 			<li><a class="allFlights" href="#" >List of all Flights</a></li>
@@ -31,7 +32,7 @@
 	</nav>
 	
 	<section class="adminHome">
-		<p>Welcome!</p>
+		<h1>Welcome!</h1>
 	</section>
 	
 	<section class="newAdmin">
@@ -47,14 +48,17 @@
 	</section>
 	
 	<section class="customerData">
-		<p>Customer Database</p>
-		
+		<h1>Customer Database</h1>
+
 		<div class="container">
-			<form action=""><input type="submit" value="Add" /></form>
-			<form action=""><input type="submit" value="Delete" /></form>
-			<form action=""><input type="submit" value="Edit" /></form>
+			<form method="post" action="newUserAdmin.jsp">
+				<input type="text" placeholder="username" name="username">
+				<input type="text" placeholder="password" name="password">
+				<input type="email" placeholder="email" name="email">
+				<button>Add new user</button>
+			</form>
 		</div>
-				
+
 		<%
 		DbManager db = new DbManager();
 		Connection con = db.getConnection();
@@ -62,8 +66,9 @@
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		%>
-		<table>
+		<table id="customerTable">
 			<tr>
+				<th>Username</th>
 				<th>First Name</th>
 				<th>Last Name</th>
 				<th>Email</th>
@@ -74,18 +79,38 @@
 				<th>State</th>
 				<th>Zip</th>
 				<th>Phone Number</th>
+				<th>Edit</th>
+				<th>Delete</th>
 			</tr>
 		<% 
 		while(rs.next()){
 		%>
 			<tr>
 				<%
+				String getUser = "Select username, password from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.email=c.email WHERE c.email=\""+rs.getString(3)+"\"";
+				Statement stmt2 = con.createStatement();
+				ResultSet rs2 = stmt2.executeQuery(getUser);
+				rs2.next();
+				%>
+				<td><b><%=rs2.getString(1)%></b></td>
+				<%
 				for(int i=1; i<11; i++){
 				%>
-				<td><%=rs.getString(i)%></td>
+					<td><%=rs.getString(i)%></td>
 				<%
 				}
 				%>
+				<td style="text-align:center"><form id="editCustomerForm" method="post" action="adminEditCustomer.jsp">
+					<input id="custUser" style="display:none" name="username">
+				<a href="#">
+					<img src="https://image.flaticon.com/icons/svg/61/61456.svg" height="10" width="10">
+				</a></form></td>
+				
+				<td style="text-align:center"><form id="deleteCustomerForm" method="post" action="adminDeleteCustomer.jsp">
+					<input style="display:none" name="email"></input>
+				<a href="#">
+					<img src="https://cdn3.iconfinder.com/data/icons/iconano-text-editor/512/005-X-512.png" height="10" width="10">
+				</a></form></td>
 			</tr>
 		<%
 		}
@@ -95,23 +120,23 @@
 	
 	
 	<section class="salesReport">
-		<p>Sales Report</p>
+		<h1>Sales Report</h1>
 	</section>
 	
 	<section class="allFlights">
-		<p>List of all Flights</p>
+		<h1>List of all Flights</h1>
 	</section>
 	
 	<section class="listReservations">
-		<p>List of all Reservations</p>
+		<h1>List of all Reservations</h1>
 	</section>
 	
 	<section class="listingRevenue">
-		<p>Summary listing of Revenue</p>
+		<h1>Summary listing of Revenue</h1>
 	</section>
 	
 	<section class="airportFlights">
-		<p>Flights for Airports</p>
+		<h1>Flights for Airports</h1>
 	</section>
 	
 </body>
@@ -124,9 +149,21 @@
         $(".adminHome").show();
     });    
     
-    $('a').click(function display(id){
+    $('nav a').click(function(){
         $("section").hide();
         $("section."+$(this).attr('class')).show();
+    });
+    
+    $('#deleteCustomerForm a').click(function(){
+    	var values = $(this).closest("tr");  
+    	$('#deleteCustomerForm input').attr('value',values.find("td:eq(3)").text());
+    	document.getElementById('deleteCustomerForm').submit();
+    });
+    
+    $('#editCustomerForm a').click(function(){
+    	var values = $(this).closest("tr");
+    	$('#editCustomerForm input').attr('value',values.find("td:eq(0)").text());
+    	document.getElementById('editCustomerForm').submit();
     });
 </script>
 

@@ -104,8 +104,9 @@ public class DbManager {
 			rs.next();
 			int accountNum = rs.getInt(1);
 			stmt.executeQuery("set foreign_key_checks=0");
-			stmt.executeUpdate("insert into owns (cEmail, accNum) values ('" + email + "'," + accountNum + ")");
-
+			stmt.executeUpdate("insert into owns (email, accNum) values ('" + email + "'," + accountNum + ")");
+			stmt.executeQuery("set foreign_key_checks=1");
+			
 			if (emailExists(con, email)) {
 				closeConnection(con);
 				return 1;
@@ -264,7 +265,6 @@ public class DbManager {
 			String statement = "insert into Customers (firstName, lastName, email, creationDate, creditCard, address, city, state, zip, phone) values ('"
 					+ fname + "','" + lname + "','" + email + "','" + timeOfCreation + "','" + ccNum + "','" + address
 					+ "','" + city + "','" + state + "','" + zip + "','" + phone + "')";
-			System.out.println(statement);
 			stmt.executeUpdate(statement);
 			closeConnection(con);
 			return 1;
@@ -284,7 +284,7 @@ public class DbManager {
 	 * @param password password of the currently open account
 	 * @return A string with each attribute seperated by "$/"
 	 */
-	public ResultSet getCustomerInformation(String username,String password) {
+	public ResultSet getCustomerInformation(String username) {
 		ResultSet rs=null;
 		Connection con=getConnection();
 		if(con==null) {
@@ -292,7 +292,7 @@ public class DbManager {
 		}
 		try {
 			Statement stmt =con.createStatement();
-			String statement="Select * from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.cEmail=c.email WHERE a.username=\""+username+"\"AND a.password=\""+password+"\"";
+			String statement="Select * from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.email=c.email WHERE a.username=\""+username+"\"";
 			rs=stmt.executeQuery(statement);
 		}
 		catch(SQLException e) {
@@ -322,4 +322,5 @@ public class DbManager {
 		closeConnection(con);
 		return 0;
 	}
+	
 }

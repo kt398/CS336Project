@@ -18,21 +18,31 @@
 <link rel="stylsheet" href="css/newUser.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
-
 <body>
-
 	<%
 		String newName = request.getParameter("username");
+		String newEmail = request.getParameter("email");
 		String newPwd = request.getParameter("password");
+		session.setAttribute("email", newEmail);
+		session.setAttribute("password", newPwd);
+		session.setAttribute("username", newName);
 		DbManager db = new DbManager();
-		int status = db.newAdmin(newName, newPwd);
+		int status = db.newUser(newName, newPwd, newEmail);
 
 		switch (status) {
 			case 1 :
 	%>
 	<script>
-		alert("New Admin successfully created!");
-		window.location.href= "adminHome.jsp";
+		alert("New account successfully created!");//Customer exists
+		window.location.href = "adminHome.jsp";
+	</script>
+	<%
+		break;
+			case 2 :
+	%>
+	<script>
+		alert("New account successfully created! Please fill out information");//Customer doesn't exist
+		window.location.href = "newCustomerAdmin.jsp";
 	</script>
 	<%
 		break;
@@ -40,14 +50,14 @@
 	%>
 	<script>
 		alert("Username already exists");
-		window.location.href = "adminLogin.jsp";
+		window.location.href = "adminHome.jsp";
 	</script>
 	<%
-		default :
+		case -2 :
 	%>
 	<script>
-		alert("Databse connection issue, failed to create account");
-		window.location.href = "adminLogin.jsp";
+		alert("Database connection issue, failed to create account");
+		window.location.href = "adminHome.jsp";
 	</script>
 	<%
 		break;

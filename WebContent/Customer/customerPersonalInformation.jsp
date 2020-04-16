@@ -19,7 +19,7 @@
 					Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight
 					Preferences</a></li>
-			<li><a class="bot" href="login.jsp">Logout</a></li>
+			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
 	<div class="information">
@@ -39,7 +39,7 @@
 		</ul>
 		<%
 		DbManager manager=new DbManager();
-		ResultSet rs=manager.getCustomerInformation((String)session.getAttribute("username"),(String)session.getAttribute("password"));
+		ResultSet rs=manager.getCustomerInformation((String)session.getAttribute("username"));
 		rs.next();
 		%>
 		<ul class="items2">

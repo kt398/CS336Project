@@ -47,7 +47,7 @@
 				$('.login').hide();
 				$('.register').show();
 			} else {
-				$('.login').show();
+				$('.login').show();  
 				$('.register').hide();
 			}
 		});

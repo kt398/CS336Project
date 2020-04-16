@@ -20,13 +20,12 @@
 					Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight
 					Preferences</a></li>
-			<li><a class="bot" href="login.jsp">Logout</a></li>
+			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
 	<%
 		DbManager manager = new DbManager();
-		ResultSet rs = manager.getCustomerInformation((String) session.getAttribute("username"),
-				(String) session.getAttribute("password"));
+		ResultSet rs = manager.getCustomerInformation((String) session.getAttribute("username"));
 		rs.next();
 		String email="\""+rs.getString("email")+"\"";
 	%>
@@ -43,7 +42,7 @@
 				readonly="readonly"> 
 			<label for="email">Email</label> <input
 				type="text" name="email"
-				value="<%out.print(rs.getString("email"));%> " readonly="readonly"></label>
+				value="<%out.print(rs.getString("email"));%> " readonly="readonly">
 			<label for="address">Address</label> <input type="text"
 				name="address" value="<%out.print(rs.getString("address"));%>">
 			<label for="city">City</label> <input type="text" name="city"
