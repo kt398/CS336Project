@@ -1,0 +1,47 @@
+body {
+    font-family: Georgia, "Times New Roman", Times, serif;
+    color: black;
+    background-color: #6699CC;
+}
+
+h1 {
+    font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif
+}
+
+.box {
+    border-radius: 15px;
+    box-shadow: 0 0 10px 0 #000;
+    width: 35%;
+    height:auto;
+    padding:1% 2% 2% 2%;
+    margin: 0 auto;
+    background-color: white;
+}
+.box .heading{
+    padding-top: 2%;
+    text-align:center;
+}
+.box .but{
+    
+}
+.button {
+  background-color: #4CAF50;
+  padding: 2%;
+  border: none;
+  color: white;
+  margin: 2%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  border-radius: 15px;
+
+  cursor: pointer;
+}
+.box #b1 {
+    width: 92%;
+}
+.box #b2 {
+
+    width: 92%;
+}

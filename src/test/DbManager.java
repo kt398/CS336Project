@@ -322,5 +322,23 @@ public class DbManager {
 		closeConnection(con);
 		return 0;
 	}
+	public ResultSet getAllAirports() {
+		Connection con=getConnection();
+		if(con==null) {
+			return null;
+		}
+		try {
+			Statement stmt=con.createStatement();
+			String statement="Select id from Airports";
+			ResultSet rs=stmt.executeQuery(statement);
+			//closeConnection(con);
+			return rs;
+		}
+		catch(SQLException e){
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+	}
 	
 }
