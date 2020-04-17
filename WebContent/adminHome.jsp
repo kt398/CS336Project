@@ -156,19 +156,15 @@
     $(document).ready(function(){
         $("section").hide();
         $(".adminHome").show();
+        $("#customerTable").DataTable({
+    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		});
     });    
 
-    	 
     	
     $('nav a').click(function(){
         $("section").hide();
         $("section."+$(this).attr('class')).show();
-        
-        if($(this).attr('class')=='customerData'){
-        	$("#customerTable").DataTable({
-        		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-			});
-        }
     });
 
     $('#deleteCustomerForm a').click(function(){

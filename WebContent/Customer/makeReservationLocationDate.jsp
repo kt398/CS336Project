@@ -36,10 +36,11 @@
 	%>
 	<div class="box">
 		<h1 class="header1">Enter Information</h1>
-		<form onSubmit="compareAirports(this)">
+		<form method="post">
 			<h2>From:</h2>
-			<br> <select class="origin">
-				<option value=" ">
+			<br> 
+			<select class="origin" onchange="test(value)">
+				<option value="   ">
 					<%
 						String s;
 						String ss;
@@ -47,12 +48,7 @@
 							s = rs.getString("id");
 							ss = "\"" + s + "\"";
 					%>
-				
-				<option value=<%out.print(ss);%>>
-					<%
-						out.print(s);
-					%>
-				</option>
+				<option><%=s%></option>
 				<%
 					}
 				%>
@@ -67,37 +63,30 @@
 							ss = "\"" + s + "\"";
 					%>
 				
-				<option value=<%out.print(ss);%>>
-					<%
-						out.print(s);
-					%>
-				</option>
+				<option><%=s%></option>
 				<%
 					}
 				%>
 			</select>
 			<h2>Date</h2>
-			<input type="date" class="date" value="YYYY-MM-DD" required>
-
-
-			<input type="submit" class="button" value="Continue">
+			<input type="date" class="date" placeholder="YYYY-MM-DD" required>
+			<button value="Continue">Continue</button>
 		</form>
 	</div>
-
-	<script type="text/javascript">
-				$('.box form').submit(function(){
-					alert('here');
-					var today=new Date();
-					var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-					if (form.origin.value == form.destination.value) {
-						alert('Origin and Destination are the same!');
-					} else if(form.date.value<date){
-						alert('Invaide Date Entry');
-					} else {
-						window.location.href = "customerHome.jsp";
-					}
-				}
-
+	
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script type="text/javascript">	
+		$('.box form').submit(function(){
+			var today=new Date();
+			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+			if ($('.origin').val() == $('.destination').val()){
+				alert('Origin and Destination are the same!');
+			} else if($('.date').val()<date){
+				alert('Invaide Date Entry');
+			} else {
+				window.location.href = "customerHome.jsp";
+			}
+		});
 	</script>
 </body>
 </html>
