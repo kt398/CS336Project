@@ -11,8 +11,6 @@
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 </head>
 <body>
-
-	\
 	<nav class="navbar">
 		<ul>
 			<li><a class="top" href="customerHome.jsp">Home</a></li>
@@ -38,8 +36,7 @@
 		<h1 class="header1">Enter Information</h1>
 		<form method="post">
 			<h2>From:</h2>
-			<br> 
-			<select class="origin" onchange="test(value)">
+			<br> <select class="origin" onchange="test(value)">
 				<option value="   ">
 					<%
 						String s;
@@ -48,6 +45,7 @@
 							s = rs.getString("id");
 							ss = "\"" + s + "\"";
 					%>
+				
 				<option><%=s%></option>
 				<%
 					}
@@ -73,20 +71,30 @@
 			<button value="Continue">Continue</button>
 		</form>
 	</div>
-	
-	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script type="text/javascript">	
-		$('.box form').submit(function(){
-			var today=new Date();
-			var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-			if ($('.origin').val() == $('.destination').val()){
-				alert('Origin and Destination are the same!');
-			} else if($('.date').val()<date){
-				alert('Invaide Date Entry');
-			} else {
-				window.location.href = "customerHome.jsp";
-			}
-		});
+
+	<script
+		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script type="text/javascript">
+		$('.box form').submit(
+				function() {
+					var today = new Date();
+					if (today.getMonth() + 1 < 10)
+						var date = today.getFullYear() + '-0'
+								+ (today.getMonth() + 1) + '-'
+								+ today.getDate();
+					else
+						var date = today.getFullYear() + '-'
+								+ (today.getMonth() + 1) + '-'
+								+ today.getDate();
+					if ($('.origin').val() == $('.destination').val()) {
+						alert('Origin and Destination are the same!');
+					} else if ($('.date').val() < date) {
+						alert('Invaide Date Entry');
+					} else {
+						window.location.href = "customerHome.jsp";
+						return false;
+					}
+				});
 	</script>
 </body>
 </html>

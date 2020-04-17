@@ -4,13 +4,12 @@ USE Travel_Reservations;
 #Entities
 create table if not exists Airports
 (
-	id integer not null,
-	aName char(15),
-	city char(15),
-    country char(15),
+	id char(7) not null,
+	aName char(80),
+	city char(50),
+    country char(50),
     primary key(id)
 );
-
 
 create table if not exists Accounts
 (
@@ -37,11 +36,11 @@ create table if not exists Customers
 );
 create table if not exists Owns
 (
-	cEmail char(30) not null,
+	email char(30) not null,
     accNum integer not null,
     foreign key(accNum) references accounts(accNum),
-	foreign key(cEmail) references customers(email),
-    primary key(cEmail(30),accNum)
+	foreign key(email) references customers(email) on delete cascade,
+    primary key(email(30),accNum)
 );
 
 create table if not exists Manager
@@ -55,9 +54,19 @@ create table if not exists Manager
 create table if not exists Airlines
 (
 	id char(5) not null,
-    name char(30),
+    name  char(30) unique,
     primary key(id)
 );
+create table if not exists Operates
+(
+	airlineID char(5),
+    flightNum integer,
+    airline char(30),
+    primary key(airlineID,flightNum,airline),
+    foreign key(airline) references Airlines(name),
+    foreign key(flightNum,airlineID) references Flights(flightNum,airline)
+);
+
 
 create table if not exists Reservations
 (
@@ -72,79 +81,64 @@ create table if not exists Reservations
 
 create table if not exists Flights
 (
-	workingDays char(15),
-    num integer not null,
+    flightNum integer not null,
     airline char(15) not null,
-    seats char(15),
-    fares char(15),
-    primary key (num, airline)
+    primary key (flightNum, airline)
 );
 create table if not exists Legs
 (
-	id integer not null,
+	legID integer not null,
     seatNum integer,
     meals char(15),
     class char(15),
-    primary key(id)
+    primary key(legID)
 );
 
-#Relationships
-create table if not exists ArrivesAt
-(
-	airportID integer,
-    flightNum integer,
-    airline char(15),
+create table if not exists goTo(
+	flightNum integer,
+    airline char(20),
+    originAirportID char(7),
+    destinationAirportID char(7),
+    distance integer,
+    workingDay integer,
     arrivalTime time,
-    primary key(airportID, airline(15), flightNum),
-    foreign key(airportID) references Airports(id),
-    foreign key(flightNum,airline) references Flights(num, airline)
-);
-
-create table if not exists DepartsFrom
-(
-	airportID integer,
-    flightNum integer,
-    airline char(15),
     departureTime time,
-	primary key(airportID, airline, flightNum),
-    foreign key(airportID) references Airports(id),
-    foreign key(flightNum,airline) references Flights(num, airline)
+    primary key(flightNum,airline,originAirportID,destinationAirportID),
+    foreign key(flightNum,airline) references Flights(flightNum,airline),
+    foreign key(destinationAirportID) references Airports(id),
+    foreign key(originAirportID) references Airports(id)
 );
 
-create table if not exists Operates
-(
-	airlineID char(5),
-    flightNum integer,
-    airline char(15),
-    primary key(airlineID,flightNum,airline),
-    foreign key(airlineID) references Airlines(id),
-    foreign key(flightNum,airline) references Flights(num,airline)
+create table if not exists Fares(
+    fare int,
+    distance integer,
+	primary key(distance)
 );
 
 
 create table if not exists Have
 (
     legID integer not null,
-    reservationNum integer not null,
-	primary key(reservationNum,legID),
-    foreign key(legID) references Legs(id),
-    foreign key(reservationNum) references Reservations(resNum)
+    resNum integer not null,
+	primary key(resNum,legID),
+    foreign key(legID) references Legs(legID),
+    foreign key(resNum) references Reservations(resNum)
 );
 create table if not exists Manages
 (
-	accountNum integer not null,
+	accNum integer not null,
     employeeNum integer not null,
-    primary key(accountNum,employeeNum),
+    primary key(accNum,employeeNum),
     foreign key(employeeNum) references Manager(employeeNum),
-    foreign key(accountNum) references Accounts(accNum)
+    foreign key(accNum) references Accounts(accNum)
 );
 create table if not exists Contain
 (
-	reservationNum integer not null,
-    accountNum integer not null,
-    primary key(reservationNum, accountNum),
-    foreign key(reservationNum) references Reservations(resNum),
-	foreign key(accountNum) references Accounts(accNum)
+	resNum integer not null,
+    accNum integer not null,
+    primary key(resNum, accNum),
+    foreign key(resNum) references Reservations(resNum),
+	foreign key(accNum) references Accounts(accNum)
 );
 
 create table if not exists Associated
@@ -153,6 +147,10 @@ create table if not exists Associated
     airline char(15) not null,
     flightNum integer not null,
     primary key(legID, flightNum,airline),
-    foreign key(flightNum,airline) references flights(num,airline),
-    foreign key(legID) references legs(id)
+    foreign key(flightNum,airline) references flights(flightNum,airline),
+    foreign key(legID) references legs(legID)
 );
+
+insert into Operates(airlineID, flightNum,airline)
+select f.airline, f.flightNum,a.name
+from airlines a JOIN flights f ON a.id=f.airline;
