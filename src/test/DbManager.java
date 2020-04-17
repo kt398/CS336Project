@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Calendar;
+
 import javax.servlet.*;
 
 public class DbManager {
@@ -345,17 +347,29 @@ public class DbManager {
 			return null;
 		}
 	}
-
+	
+	public int getDayFromDate(String date) {
+		int year=Integer.parseInt(date.substring(0,4));
+		int month=Integer.parseInt(date.substring(5,7));
+		int day=Integer.parseInt(date.substring(8));
+		Calendar c=Calendar.getInstance();
+		c.set(year, month, day);
+		return c.get(Calendar.DAY_OF_WEEK);
+		
+	}
 	public Results getReservations(String date, String from, String to) {
+		int dayOfWeek=getDayFromDate(date);
 		to = "\"" + to + "\"";
 		from = "\"" + from + "\"";
-		date = "\"" + date + "\"";
 		Results r = null;
 		Connection con = getConnection();
+		System.out.println(dayOfWeek);
+		System.out.println(from);
+		System.out.println(to);
 		try {
 			Statement stmt = con.createStatement();
 			String statement = "SELECT airline,flightNum,departureTime,arrivalTime,fare FROM goTo JOIN fares on fares.distance=goTo.distance WHERE goTo.originAirportID="
-					+ from + "AND goTo.DestinationAirportID=" + to + "AND date=" + date;
+					+ from + "AND goTo.DestinationAirportID=" + to + "AND workingDay=" + dayOfWeek;
 			ResultSet rs = stmt.executeQuery(statement);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

@@ -35,9 +35,9 @@
 	%>
 	<div class="box">
 		<h1 class="header1">Enter Information</h1>
-		<form method="post" action="makeReservationListAirports.jsp">
+		<form method="post" action="makeReservationListReservations.jsp">
 			<h2>From:</h2>
-			<br> <select class="origin" onchange="test(value)">
+			<br> <select class="origin" onchange="test(value)" name="origin">
 				<option value="   ">
 					<%
 						String s;
@@ -53,7 +53,7 @@
 				%>
 			</select>
 			<h2>Destination:</h2>
-			<br> <select class="destination">
+			<br> <select class="destination" name="destination">
 				<option value="   ">
 					<%
 						rs.beforeFirst();
@@ -68,7 +68,7 @@
 				%>
 			</select>
 			<h2>Date</h2>
-			<input type="date" class="date" placeholder="YYYY-MM-DD" required>
+			<input type="date" class="date" placeholder="YYYY-MM-DD" required name="date">
 			<input type="hidden" name="type" value=<%out.print(type);%>>
 			<button value="Continue">Continue</button>
 		</form>

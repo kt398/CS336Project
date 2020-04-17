@@ -1,0 +1,30 @@
+body {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	color: black;
+	background-color: #6699CC;
+}
+
+h1 {
+	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif
+}
+
+.box {
+	border-radius: 15px;
+	box-shadow: 0 0 10px 0 #000;
+	width: 55%;
+	height: auto;
+	padding: 1% 2% 2% 2%;
+	margin: 0 auto;
+	background-color: white;
+}
+
+input[type=submit] {
+	width: 100%;
+	background-color: #4CAF50;
+	color: white;
+	padding: 14px 20px;
+	margin: 8px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
