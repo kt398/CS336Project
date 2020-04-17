@@ -16,8 +16,11 @@ h1 {
 	padding: 1% 2% 2% 2%;
 	margin: 0 auto;
 	background-color: white;
+	
 }
-
+td{
+	text-align:center;
+}
 input[type=submit] {
 	width: 100%;
 	background-color: #4CAF50;

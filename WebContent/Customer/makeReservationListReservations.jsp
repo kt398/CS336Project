@@ -27,6 +27,10 @@
 		</ul>
 	</nav>
 	<%
+		String numPassengers=request.getParameter("numPassengers");
+		String type=request.getParameter("type");
+		type="?type="+type;
+		System.out.println(type);
 		String origin=request.getParameter("origin");
 		String destination=request.getParameter("destination");
 		String date=request.getParameter("date");
@@ -68,10 +72,10 @@
 						<%
 				}
 				%>
-						<td style="text-align: center"><form id="editCustomerForm"
-								method="post" action="adminEditCustomer.jsp">
+						<td style="text-align: center"><form id="reservationConfirmation"
+								method="post" action="customerReservationConfirmation.jsp">
 								<input id="custUser" style="display: none" name="username">
-								<a href="#"> <img
+								<a type="submit" href="customerReservationConfirmation.jsp<%=type%>"> <img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
 									height="10" width="10">
 								</a>
