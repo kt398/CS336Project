@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Calendar;
-
 import javax.servlet.*;
 
 public class DbManager {
@@ -396,6 +395,7 @@ public class DbManager {
 		}
 		return r;
 	}
+
 	
 	public Results getMonthReservations(String date) {
 		Results r = null;
@@ -411,5 +411,8 @@ public class DbManager {
 			return null;
 		}
 		return r;
+	}
+	public void makeNewReservation(String username,String password,ReservationData data,Legs[] listOfLegs) {
+		
 	}
 }

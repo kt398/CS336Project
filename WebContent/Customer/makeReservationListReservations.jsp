@@ -27,7 +27,8 @@
 		</ul>
 	</nav>
 	<%
-		String numPassengers=request.getParameter("numPassengers");
+		String _numPassengers=request.getParameter("numPassengers");
+		int numPassengers=Integer.parseInt(_numPassengers);	
 		String type=request.getParameter("type");
 		type="?type="+type;
 		System.out.println(type);
@@ -35,11 +36,12 @@
 		String destination=request.getParameter("destination");
 		String date=request.getParameter("date");
 		DbManager db = new DbManager();
-		Results r=db.getReservations(date, origin, destination);
+		Results r=db.getFlights(date, origin, destination);
 		ResultSet rs=r.getResultSet();
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnsNumber = rsmd.getColumnCount();
-	%>
+		
+		%>
 	<div class="box">
 		<section class="reservations">
 			<h1 class="header">Possible Flights</h1>
@@ -66,14 +68,16 @@
 						<td><%=destination%></td>
 						<td><%=date%></td>
 						<%
-				for(int i=1; i<=columnsNumber; i++){
+				int i=1; 
+				for(i=1; i<columnsNumber; i++){
 				%>
 						<td><%=rs.getString(i)%></td>
 						<%
 				}
 				%>
-						<td style="text-align: center"><form id="reservationConfirmation"
-								method="post" action="customerReservationConfirmation.jsp">
+						<td><%out.print(numPassengers*rs.getInt(i));%></td> 
+						<td style="text-align: center">
+						<form id="reservationConfirmation"method="post" action="customerReservationConfirmation.jsp">
 								<input id="custUser" style="display: none" name="username">
 								<a type="submit" href="customerReservationConfirmation.jsp<%=type%>"> <img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
@@ -81,9 +85,9 @@
 								</a>
 							</form></td>
 					</tr>
-					<%
-						
-						}%>
+		<% 
+		}
+		%>
 				</tbody>
 			</table>
 		</section>
