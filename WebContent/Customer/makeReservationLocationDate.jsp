@@ -6,19 +6,14 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="../css/makeReservationLocationDate.css">
+<link rel="stylesheet" type="text/css" href="../css/navBar.css">
 </head>
 <body>
-	<script type="text/javascript">
-		function compareAirports(theForm) {
-			if (theForm.origin.value == theForm.destination.value) {
-				alert('Origin and Destination are the same!');
-				return false;
-			} else {
-				window.location.href = "makeResrvationListAirports.jsp";
-			}
-		}
-	</script>
-	<nav>
+
+	\
+	<nav class="navbar">
 		<ul>
 			<li><a class="top" href="customerHome.jsp">Home</a></li>
 			<li><a href="customerReservations.jsp">My Reservations</a></li>
@@ -33,9 +28,9 @@
 	</nav>
 	<%
 		DbManager manager = new DbManager();
-		Results r=manager.getAllAirports();
-		while(r==null){
-			r=manager.getAllAirports();
+		Results r = manager.getAllAirports();
+		while (r == null) {
+			r = manager.getAllAirports();
 		}
 		ResultSet rs = r.getResultSet();
 	%>
@@ -44,13 +39,15 @@
 		<form onSubmit="compareAirports(this)">
 			<h2>From:</h2>
 			<br> <select class="origin">
-				<%
-					String s;
-					String ss;
-					while (rs.next()) {
-						s = rs.getString("id");
-						ss = "\"" + s + "\"";
-				%>
+				<option value=" ">
+					<%
+						String s;
+						String ss;
+						while (rs.next()) {
+							s = rs.getString("id");
+							ss = "\"" + s + "\"";
+					%>
+				
 				<option value=<%out.print(ss);%>>
 					<%
 						out.print(s);
@@ -62,12 +59,14 @@
 			</select>
 			<h2>Destination:</h2>
 			<br> <select class="destination">
-				<%
-					rs.beforeFirst();
-					while (rs.next()) {
-						s = rs.getString("id");
-						ss = "\"" + s + "\"";
-				%>
+				<option value="   ">
+					<%
+						rs.beforeFirst();
+						while (rs.next()) {
+							s = rs.getString("id");
+							ss = "\"" + s + "\"";
+					%>
+				
 				<option value=<%out.print(ss);%>>
 					<%
 						out.print(s);
@@ -78,11 +77,27 @@
 				%>
 			</select>
 			<h2>Date</h2>
-			<input type="date" id="date">
-			
+			<input type="date" class="date" value="YYYY-MM-DD" required>
+
+
+			<input type="submit" class="button" value="Continue">
 		</form>
 	</div>
 
+	<script type="text/javascript">
+				$('.box form').submit(function(){
+					alert('here');
+					var today=new Date();
+					var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+					if (form.origin.value == form.destination.value) {
+						alert('Origin and Destination are the same!');
+					} else if(form.date.value<date){
+						alert('Invaide Date Entry');
+					} else {
+						window.location.href = "customerHome.jsp";
+					}
+				}
 
+	</script>
 </body>
 </html>
