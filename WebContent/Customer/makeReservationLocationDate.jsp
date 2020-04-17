@@ -21,7 +21,7 @@
 					Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight
 					Preferences</a></li>
-			<li><a class="bot" href="login.jsp">Logout</a></li>
+			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
 	<%
@@ -34,7 +34,7 @@
 	%>
 	<div class="box">
 		<h1 class="header1">Enter Information</h1>
-		<form method="post">
+		<form>
 			<h2>From:</h2>
 			<br> <select class="origin" onchange="test(value)">
 				<option value="   ">
@@ -71,7 +71,6 @@
 			<button value="Continue">Continue</button>
 		</form>
 	</div>
-
 	<script
 		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script type="text/javascript">
@@ -95,6 +94,7 @@
 						return false;
 					}
 				});
+
 	</script>
 </body>
 </html>

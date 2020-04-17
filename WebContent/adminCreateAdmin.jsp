@@ -33,10 +33,6 @@
 		</ul>
 	</nav>
 	
-	<section class="adminHome">
-		<h1>Welcome!</h1>
-	</section>
-	
 	<section class="newAdmin">
 		<p>Create a new Administrative Account</p>
 		<div class="container">
@@ -48,28 +44,7 @@
 		</div>
 		
 	</section>
-	
-	<section class="salesReport">
-		<h1>Sales Report</h1>
-	</section>
-	
-	<section class="allFlights">
-		<h1>List of all Flights</h1>
-	</section>
-	
-	<section class="listReservations">
-		<h1>List of all Reservations</h1>
-	</section>
-	
-	<section class="listingRevenue">
-		<h1>Summary listing of Revenue</h1>
-	</section>
-	
-	<section class="airportFlights">
-		<h1>Flights for Airports</h1>
-	</section>
 </body>
-
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript"></script>
