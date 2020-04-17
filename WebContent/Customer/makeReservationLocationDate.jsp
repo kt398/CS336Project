@@ -25,6 +25,7 @@
 		</ul>
 	</nav>
 	<%
+		String type="\""+request.getParameter("type")+"\"";
 		DbManager manager = new DbManager();
 		Results r = manager.getAllAirports();
 		while (r == null) {
@@ -34,7 +35,7 @@
 	%>
 	<div class="box">
 		<h1 class="header1">Enter Information</h1>
-		<form>
+		<form method="post" action="makeReservationListAirports.jsp">
 			<h2>From:</h2>
 			<br> <select class="origin" onchange="test(value)">
 				<option value="   ">
@@ -68,6 +69,7 @@
 			</select>
 			<h2>Date</h2>
 			<input type="date" class="date" placeholder="YYYY-MM-DD" required>
+			<input type="hidden" name="type" value=<%out.print(type);%>>
 			<button value="Continue">Continue</button>
 		</form>
 	</div>
@@ -90,7 +92,7 @@
 					} else if ($('.date').val() < date) {
 						alert('Invaide Date Entry');
 					} else {
-						window.location.href = "customerHome.jsp";
+						$('.box form').submit();
 						return false;
 					}
 				});
