@@ -24,7 +24,7 @@
 			<li><a class="adminHome" href="adminHome.jsp" >Home Page</a></li>
 			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
 			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
-			<li><a class="salesReport" href="#" >Sales Report</a></li>
+			<li><a class="salesReport" href="adminSalesReport.jsp" >Sales Report</a></li>
 			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>

@@ -357,7 +357,7 @@ public class DbManager {
 		return c.get(Calendar.DAY_OF_WEEK);
 		
 	}
-	public Results getReservations(String date, String from, String to) {
+	public Results getFlights(String date, String from, String to) {
 		int dayOfWeek=getDayFromDate(date);
 		to = "\"" + to + "\"";
 		from = "\"" + from + "\"";
@@ -387,6 +387,22 @@ public class DbManager {
 		try {
 			Statement stmt = con.createStatement();
 			String query = "SELECT * from goTo WHERE goTo.originAirportID =\""+airport+"\" OR goTo.destinationAirportID =\""+airport+"\"";
+			ResultSet rs = stmt.executeQuery(query);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+		return r;
+	}
+	
+	public Results getMonthReservations(String date) {
+		Results r = null;
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT date,bFee,tFare FROM Reservations WHERE Reservations.date LIKE '%"+date+"%'";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

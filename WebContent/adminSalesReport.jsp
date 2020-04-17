@@ -32,64 +32,53 @@
 			<li><a href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
-	<%
-		DbManager db = new DbManager();
-		Results r = db.getAllAirports();
-		while (r == null) {
-			r = db.getAllAirports();
-		}
-		ResultSet rs = r.getResultSet();
-	%>
-	<section class="airportFlights">
-		<h1>Flights for Airports</h1>
-		<form method="post" class="selectAirport" action="adminAirportFlights.jsp">
-			<p>Select an Airport:</p>
-			<select name="airport">
-				<option>	</option>
-				<%
-					String s;
-					while (rs.next()) {
-						s = rs.getString("id");
-				%>
-				<option><%=s%></option>
-				<%}%>
-			</select>
-			<button>List all flights</button>
+	
+	<section class="salesReport">
+		<h1>Sales Report</h1>
+		<form method="post" class="selectAirport" action="adminSalesReport.jsp">
+			<p>Enter Month:</p>
+			<input id="month" type="month"	name="month">
+			<button>Display Sales Report</button>
 		</form>
-		<% 
-		if(request.getParameter("airport")!= null){
-			Results flights = db.getAirportFlights(request.getParameter("airport"));
-			ResultSet fl = flights.getResultSet();
+		
+		<%
+		if(request.getParameter("month")!=null){
+			DbManager db = new DbManager();
+			Results r = db.getMonthReservations(request.getParameter("month"));
+			while (r == null) {
+				r = db.getAllAirports();
+			}
+			ResultSet rs = r.getResultSet();
+			int monthlyTotal = 0;
 			%>
-			<h1>Showing Flights for Airport: <%=request.getParameter("airport")%></h1>
-			<table id="airportFlightsTable" class="display">
+			<table id="salesTable" class="display">
 				<thead>
 					<tr>
-						<th>Flight Num.</th>
-						<th>Airline</th>
-						<th>Origin</th>
-						<th>Destination</th>
-						<th>Distance</th>
-						<th>Day of Week</th>
-						<th>Arrival Time</th>
-						<th>Departure Time</th>
-					</tr>  
+						<th>Date</th>
+						<th>Booking Fee</th>
+						<th>Travel Fare</th>
+						<th>Total</th>
+					</tr>
 				</thead>
 				<tbody>
-				<% 
-				while(fl.next()){
+				<%
+				while(rs.next()){
 					%>
-					<tr>
-					<%
-					for(int i=1;i<=8;i++){
-						%><td><%=fl.getString(i)%></td>	
-					<%
-					}
-					%>
+					 <tr>
+						<%
+						monthlyTotal+=rs.getInt(3)+rs.getInt(2);
+						for(int i=1; i<=3; i++){
+						%>
+							<td><%=rs.getString(i)%></td>
+						<%
+						}
+						%>
+							<td><%=rs.getInt(3)+rs.getInt(2)%></td>
 					</tr>
 				<%}%>
 				</tbody>
 			</table>
+		<h1>MONTHLY TOTAL: <%=monthlyTotal%></h1>
 		<%}%>
 	</section>
 	
@@ -101,9 +90,25 @@
 <script type="text/javascript">
 
 	$(document).ready(function(){
-        $("#airportFlightsTable").DataTable({
-    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-		});
+		$(document).ready(function(){
+	        $("#salesTable").DataTable({
+	    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+			});
+	    });   
+	});
+	
+	$('.selectAirport').submit(function(){
+		var d = new Date();
+		var date;
+		if (d.getMonth() + 1 < 10){
+			date = (d.getFullYear() +'-0'+ (d.getMonth()+1));
+		}else{
+		 	date = (d.getFullYear() +'-'+ (d.getMonth()+1));
+		}
+		if($('#month').val()>date){
+			alert("Invalid month entry");
+			window.href.location="adminSalesReport.jsp";
+		}
 	});
 	
 </script>

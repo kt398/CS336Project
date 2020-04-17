@@ -23,7 +23,7 @@
 			<li><a class="adminHome" href="adminHome.jsp" >Home Page</a></li>
 			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
 			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
-			<li><a class="salesReport" href="#" >Sales Report</a></li>
+			<li><a class="salesReport" href="adminSalesReport.jsp" >Sales Report</a></li>
 			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
@@ -48,14 +48,7 @@
 		
 	</section>
 	
-	<section class="salesReport">
-		<h1>Sales Report</h1>
-	</section>
-	
-	<section class="allFlights">
-		<h1>List of all Flights</h1>
-	</section>
-	
+
 	<section class="listReservations">
 		<h1>List of all Reservations</h1>
 	</section>
@@ -64,9 +57,6 @@
 		<h1>Summary listing of Revenue</h1>
 	</section>
 	
-	<section class="airportFlights">
-		<h1>Flights for Airports</h1>
-	</section>
 </body>
 
 

@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+
 </head>
 
 <body>
@@ -24,7 +25,7 @@
 			<li><a class="adminHome" href="adminHome.jsp" >Home Page</a></li>
 			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
 			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
-			<li><a class="salesReport" href="#" >Sales Report</a></li>
+			<li><a class="salesReport" href="adminSalesReport.jsp" >Sales Report</a></li>
 			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
@@ -41,8 +42,9 @@
 		String query = "SELECT * FROM goTo limit 10000"; //LIMITED TO 10000 couldn't load 100,000 entries
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
+		rs.setFetchSize(1000);
 		%>
-		<table id="flightTable" class="display">
+		<table id="flightTable" class="display" style="display:none">
 			<thead>
 				<tr>
 					<th>Flight Num.</th>
@@ -81,6 +83,7 @@
         $("#flightTable").DataTable({
     		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		});
+    	$("#flightTable").fadeIn();
     });    
 </script>
 
