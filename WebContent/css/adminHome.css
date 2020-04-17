@@ -39,11 +39,6 @@ body{
 	display:flex;
 }
 
-#customerData{
-	margin-left: 200px;	
-	width: 100%;
-}
-
 .customerData{
 	margin:0 auto;
 }

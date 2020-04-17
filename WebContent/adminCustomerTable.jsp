@@ -15,7 +15,7 @@
 <title>Home Page [Admin]</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
 </head>
 
 <body>
@@ -25,10 +25,10 @@
 			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
 			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
 			<li><a class="salesReport" href="#" >Sales Report</a></li>
-			<li><a class="allFlights" href="#" >List of all Flights</a></li>
+			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
-			<li><a class="airportFlights" href="#" >Flights for Airports</a></li>
+			<li><a class="airportFlights" href="adminAirportFlights.jsp" >Flights for Airports</a></li>
 			<li><a href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
@@ -111,7 +111,7 @@
 	
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 
     $(document).ready(function(){

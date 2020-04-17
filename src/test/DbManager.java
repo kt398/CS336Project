@@ -380,4 +380,20 @@ public class DbManager {
 
 		return r;
 	}
+	
+	public Results getAirportFlights(String airport) {
+		Results r = null;
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT * from goTo WHERE goTo.originAirportID =\""+airport+"\" OR goTo.destinationAirportID =\""+airport+"\"";
+			ResultSet rs = stmt.executeQuery(query);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+		return r;
+	}
 }

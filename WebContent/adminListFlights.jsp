@@ -15,6 +15,7 @@
 <title>Home Page [Admin]</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
 </head>
 
 <body>
@@ -31,49 +32,56 @@
 			<li><a href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
-	
-	<section class="adminHome">
-		<h1>Welcome!</h1>
-	</section>
-	
-	<section class="newAdmin">
-		<p>Create a new Administrative Account</p>
-		<div class="container">
-			<form class="newAdmin" method="post" action="newAdmin.jsp">
-				<input type="text" placeholder="username" name="username">
-				<input type="password" placeholder="password" name="password">
-				<button>Create</button>
-			</form>
-		</div>
+
+	<section class="allFlights">
+		<h1>List of All Flights</h1>
+		<%
+		DbManager db = new DbManager();
+		Connection con = db.getConnection();
+		String query = "SELECT * FROM goTo limit 10000"; //LIMITED TO 10000 couldn't load 100,000 entries
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		%>
+		<table id="flightTable" class="display">
+			<thead>
+				<tr>
+					<th>Flight Num.</th>
+					<th>Airline</th>
+					<th>Origin</th>
+					<th>Destination</th>
+					<th>Distance</th>
+					<th>Day of Week</th>
+					<th>Arrival Time</th>
+					<th>Departure Time</th>
+				</tr>
+			</thead>
+			<tbody>
+		<% 
+		while(rs.next()){
+		%>
+			<tr>
+				<%for(int i=1; i<=8; i++){%>
+					<td><%=rs.getString(i)%></td>
+				<%}%>
+			</tr>
+		<%
+		}
+		rs.close();
+		%>
+		</tbody>
+		</table>
 		
 	</section>
 	
-	<section class="salesReport">
-		<h1>Sales Report</h1>
-	</section>
-	
-	<section class="allFlights">
-		<h1>List of all Flights</h1>
-	</section>
-	
-	<section class="listReservations">
-		<h1>List of all Reservations</h1>
-	</section>
-	
-	<section class="listingRevenue">
-		<h1>Summary listing of Revenue</h1>
-	</section>
-	
-	<section class="airportFlights">
-		<h1>Flights for Airports</h1>
-	</section>
-</body>
-
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
-
-	
+    $(document).ready(function(){
+        $("#flightTable").DataTable({
+    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		});
+    });    
 </script>
 
 </html>

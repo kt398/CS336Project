@@ -25,10 +25,10 @@
 			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
 			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
 			<li><a class="salesReport" href="#" >Sales Report</a></li>
-			<li><a class="allFlights" href="#" >List of all Flights</a></li>
+			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
 			<li><a class="listReservations" href="#" >List of Reservations</a></li>
 			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
-			<li><a class="airportFlights" href="#" >Flights for Airports</a></li>
+			<li><a class="airportFlights" href="adminAirportFlights.jsp" >Flights for Airports</a></li>
 			<li><a href="login.jsp">Logout</a></li>
 		</ul>
 	</nav>
