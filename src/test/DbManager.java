@@ -106,7 +106,7 @@ public class DbManager {
 			stmt.executeQuery("set foreign_key_checks=0");
 			stmt.executeUpdate("insert into owns (email, accNum) values ('" + email + "'," + accountNum + ")");
 			stmt.executeQuery("set foreign_key_checks=1");
-			
+
 			if (emailExists(con, email)) {
 				closeConnection(con);
 				return 1;
@@ -280,42 +280,45 @@ public class DbManager {
 	/**
 	 * 
 	 * Gets the customer information for the given username and password
+	 * 
 	 * @param username username of the currently open account
 	 * @param password password of the currently open account
 	 * @return A string with each attribute seperated by "$/"
 	 */
 	public Results getCustomerInformation(String username) {
-		ResultSet rs=null;
-		Connection con=getConnection();
-		if(con==null) {
+		ResultSet rs = null;
+		Connection con = getConnection();
+		if (con == null) {
 			return null;
 		}
 		try {
-			Statement stmt =con.createStatement();
-			String statement="Select * from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.email=c.email WHERE a.username=\""+username+"\"";
-			rs=stmt.executeQuery(statement);
-		}
-		catch(SQLException e) {
+			Statement stmt = con.createStatement();
+			String statement = "Select * from Accounts a JOIN owns o ON a.accNum=o.accNum JOIN customers c ON o.email=c.email WHERE a.username=\""
+					+ username + "\"";
+			rs = stmt.executeQuery(statement);
+		} catch (SQLException e) {
 			e.printStackTrace();
 			closeConnection(con);
 			return null;
 		}
-		Results r=new Results(rs,con);
+		Results r = new Results(rs, con);
 		return r;
 	}
 
-	public int updateCustomerInformation(String firstName,String lastName,String email, String username,String address,String city,String state,String zip,String creditCard, String phone) {
-		Connection con=getConnection();
-		if(con==null) {
+	public int updateCustomerInformation(String firstName, String lastName, String email, String username,
+			String address, String city, String state, String zip, String creditCard, String phone) {
+		Connection con = getConnection();
+		if (con == null) {
 			return -2;
 		}
 		try {
-			Statement stmt=con.createStatement();
-			String statement="UPDATE Customers SET firstName="+firstName+", lastName="+lastName+", address="+address+", city="+city+", state="+state+", zip="+zip+", creditCard="+creditCard+", phone="+phone+" WHERE email="+email;
-			boolean s=stmt.execute(statement);
-			int x=stmt.executeUpdate(statement);
-		}
-		catch(SQLException e){
+			Statement stmt = con.createStatement();
+			String statement = "UPDATE Customers SET firstName=" + firstName + ", lastName=" + lastName + ", address="
+					+ address + ", city=" + city + ", state=" + state + ", zip=" + zip + ", creditCard=" + creditCard
+					+ ", phone=" + phone + " WHERE email=" + email;
+			boolean s = stmt.execute(statement);
+			int x = stmt.executeUpdate(statement);
+		} catch (SQLException e) {
 			e.printStackTrace();
 			closeConnection(con);
 			return -2;
@@ -323,24 +326,44 @@ public class DbManager {
 		closeConnection(con);
 		return 0;
 	}
+
 	public Results getAllAirports() {
-		Connection con=getConnection();
-		if(con==null) {
+		Connection con = getConnection();
+		if (con == null) {
 			return null;
 		}
 		try {
-			Statement stmt=con.createStatement();
-			String statement="Select id from Airports";
-			ResultSet rs=stmt.executeQuery(statement);
-			//closeConnection(con);
-			Results r=new Results(rs,con);
+			Statement stmt = con.createStatement();
+			String statement = "Select id from Airports";
+			ResultSet rs = stmt.executeQuery(statement);
+			// closeConnection(con);
+			Results r = new Results(rs, con);
 			return r;
-		}
-		catch(SQLException e){
+		} catch (SQLException e) {
 			e.printStackTrace();
 			closeConnection(con);
 			return null;
 		}
 	}
-	
+
+	public Results getReservations(String date, String from, String to) {
+		to = "\"" + to + "\"";
+		from = "\"" + from + "\"";
+		date = "\"" + date + "\"";
+		Results r = null;
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String statement = "SELECT airline,flightNum,departureTime,arrivalTime,fare FROM goTo JOIN fares on fares.distance=goTo.distance WHERE goTo.originAirportID="
+					+ from + "AND goTo.DestinationAirportID=" + to + "AND date=" + date;
+			ResultSet rs = stmt.executeQuery(statement);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+
+		return r;
+	}
 }
