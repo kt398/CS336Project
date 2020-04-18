@@ -3,11 +3,13 @@ package test;
 public class ReservationData {
 	int resNum;
 	String reservationDate;
+	public String destination;
+	public String origin;
 	int passengers;
 	int t_fare;
 	int c_rep;
 	int b_fee;
-	int type;// 0=one way,1=two way
+	public String type;
 	int numLegs;
 
 	public ReservationData() {

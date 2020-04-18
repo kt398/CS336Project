@@ -91,8 +91,10 @@
 								+ today.getDate();
 					if ($('.origin').val() == $('.destination').val()) {
 						alert('Origin and Destination are the same!');
+						return false;
 					} else if ($('.date').val() < date) {
-						alert('Invaide Date Entry');
+						alert('Invalid Date Entry');
+						return false;
 					} else {
 						$('.box form').submit();
 						return false;

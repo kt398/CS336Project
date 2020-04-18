@@ -27,22 +27,58 @@
 		</ul>
 	</nav>
 	<%
-		String _numPassengers=request.getParameter("numPassengers");
-		int numPassengers=Integer.parseInt(_numPassengers);	
-		String type=request.getParameter("type");
-		type="?type="+type;
+		String _numPassengers = request.getParameter("numPassengers");
+		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
+		int numPassengers = Integer.parseInt(_numPassengers);
+		String type = request.getParameter("type");
+		type = "?type=" + type;
 		System.out.println(type);
-		String origin=request.getParameter("origin");
-		String destination=request.getParameter("destination");
-		String date=request.getParameter("date");
+		String origin = request.getParameter("origin");
+		String destination = request.getParameter("destination");
+		String date = request.getParameter("date");
 		DbManager db = new DbManager();
-		Results r=db.getFlights(date, origin, destination);
-		ResultSet rs=r.getResultSet();
+		Results r = db.getFlights(date, origin, destination);
+		ResultSet rs = r.getResultSet();
+		
+		if (!rs.first()) {
+			numLegs = 2;
+			System.out.println(numLegs);
+			r = db.getTwoLegFlights(date, origin, destination);
+		}
+		else{
+			rs.beforeFirst();
+		}
+		rs = r.getResultSet();
+		if (rs == null) {
+			numLegs = -1;
+		}
+
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnsNumber = rsmd.getColumnCount();
-		
-		%>
+		double dateMultiplier = 1;
+		int dayDifference = db.findDaysDifference(date);
+
+		if (dayDifference > 30) {
+			dateMultiplier = .8;
+		} else if (dayDifference < 3) {
+			dateMultiplier = 1.3;
+		} else if (dayDifference < 14) {
+			dateMultiplier = 1.1;
+		}
+		ReservationData res = new ReservationData();
+		res.setDate(date);
+		res.setPassengers(numPassengers);
+		res.origin = origin;
+		res.destination = destination;
+		res.type = type;
+	%>
 	<div class="box">
+
+
+
+		<%
+			if (numLegs == 1) {
+		%>
 		<section class="reservations">
 			<h1 class="header">Possible Flights</h1>
 			<table id="reservations" class="display">
@@ -60,37 +96,107 @@
 					</tr>
 				</thead>
 				<tbody>
-					<% 
-		while(rs.next()){
-		%>
+					<%
+						while (rs.next()) {
+					%>
 					<tr>
 						<td><%=origin%></td>
 						<td><%=destination%></td>
 						<td><%=date%></td>
 						<%
-				int i=1; 
-				for(i=1; i<columnsNumber; i++){
-				%>
+							int i = 1;
+									for (i = 1; i < columnsNumber; i++) {
+						%>
 						<td><%=rs.getString(i)%></td>
 						<%
-				}
-				%>
-						<td><%out.print(numPassengers*rs.getInt(i));%></td> 
+							}
+						%>
+						<td>
+							<%
+								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
+							%>
+						</td>
 						<td style="text-align: center">
-						<form id="reservationConfirmation"method="post" action="customerReservationConfirmation.jsp">
-								<input id="custUser" style="display: none" name="username">
-								<a type="submit" href="customerReservationConfirmation.jsp<%=type%>"> <img
+
+							<form class="reservationConfirmation" method="post">
+								<input id="custUser" style="display: none" name="username"
+									value="<%out.print(rs.getRow());%>"> <a type="submit"
+									href="customerReservationConfirmation.jsp<%=type%>"> <img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
 									height="10" width="10">
 								</a>
-							</form></td>
+							</form>
+						</td>
 					</tr>
-		<% 
-		}
-		%>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 		</section>
+		<%
+			} else if (numLegs == 2) {
+		%>
+		<section class="reservations">
+			<h1 class="header">Possible Flights</h1>
+			<table id="reservations" class="display">
+				<thead>
+					<tr>
+						<th>Date</th>
+						<th>Leg 1 From</th>
+						<th>Leg 1 Airline</th>
+						<th>Leg 1 Flight Number</th>
+						<th>Leg 1 Departure Time</th>
+						<th>Stop Arrival Time</th>
+						<th>Stop Airport</th>
+						<th>Leg 2 Airline</th>
+						<th>Leg 2 Flight Number</th>
+						<th>Leg 2 Departure Time</th>
+						<th>Destination Arrival Time</th>
+						<th>Destination Airport>
+						<th>Cost</th>
+						<th>Select</th>
+					</tr>
+				</thead>
+				<tbody>
+					<%
+						while (rs.next()) {
+					%>
+					<tr>
+
+						<%
+							int i = 1;
+								for (i=1; i <columnsNumber; i++) {
+						%>
+						<td><%=rs.getString(i)%></td>
+						<%
+							}
+						%>
+						<td>
+							<%
+								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
+							%>
+						</td>
+						<td style="text-align: center">
+
+							<form class="reservationConfirmation" method="post">
+								<input id="custUser" style="display: none" name="username"
+									value="<%out.print(rs.getRow());%>"> <a type="submit"
+									href="customerReservationConfirmation.jsp<%=type%>"> <img
+									src="https://image.flaticon.com/icons/svg/61/61456.svg"
+									height="10" width="10">
+								</a>
+							</form>
+						</td>
+					</tr>
+					<%
+						}
+					%>
+				</tbody>
+			</table>
+		</section>
+		<%
+		}%>
 	</div>
 </body>
 <script
@@ -103,5 +209,11 @@
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
+	function nextPage(){
+		<%session.setAttribute("results", r);%>
+		window.location.href="customerReservationConfirmation.jsp<%=type%>
+	";
+		return false;
+	}
 </script>
 </html>

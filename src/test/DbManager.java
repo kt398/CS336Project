@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.TimeZone;
+
 import javax.servlet.*;
 
 public class DbManager {
@@ -346,25 +348,23 @@ public class DbManager {
 			return null;
 		}
 	}
-	
+
 	public int getDayFromDate(String date) {
-		int year=Integer.parseInt(date.substring(0,4));
-		int month=Integer.parseInt(date.substring(5,7));
-		int day=Integer.parseInt(date.substring(8));
-		Calendar c=Calendar.getInstance();
+		int year = Integer.parseInt(date.substring(0, 4));
+		int month = Integer.parseInt(date.substring(5, 7)) - 1;
+		int day = Integer.parseInt(date.substring(8));
+		Calendar c = Calendar.getInstance();
 		c.set(year, month, day);
 		return c.get(Calendar.DAY_OF_WEEK);
-		
+
 	}
+
 	public Results getFlights(String date, String from, String to) {
-		int dayOfWeek=getDayFromDate(date);
+		int dayOfWeek = getDayFromDate(date);
 		to = "\"" + to + "\"";
 		from = "\"" + from + "\"";
 		Results r = null;
 		Connection con = getConnection();
-		System.out.println(dayOfWeek);
-		System.out.println(from);
-		System.out.println(to);
 		try {
 			Statement stmt = con.createStatement();
 			String statement = "SELECT airline,flightNum,departureTime,arrivalTime,fare FROM goTo JOIN fares on fares.distance=goTo.distance WHERE goTo.originAirportID="
@@ -379,13 +379,14 @@ public class DbManager {
 
 		return r;
 	}
-	
+
 	public Results getAirportFlights(String airport) {
 		Results r = null;
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * from goTo WHERE goTo.originAirportID =\""+airport+"\" OR goTo.destinationAirportID =\""+airport+"\"";
+			String query = "SELECT * from goTo WHERE goTo.originAirportID =\"" + airport
+					+ "\" OR goTo.destinationAirportID =\"" + airport + "\"";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -396,13 +397,12 @@ public class DbManager {
 		return r;
 	}
 
-	
 	public Results getMonthReservations(String date) {
 		Results r = null;
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT date,bFee,tFare FROM Reservations WHERE Reservations.date LIKE '%"+date+"%'";
+			String query = "SELECT date,bFee,tFare FROM Reservations WHERE Reservations.date LIKE '%" + date + "%'";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -412,7 +412,43 @@ public class DbManager {
 		}
 		return r;
 	}
-	public void makeNewReservation(String username,String password,ReservationData data,Legs[] listOfLegs) {
-		
+
+	public void makeNewReservation(String username, String password, ReservationData data, Legs[] listOfLegs) {
+
+	}
+
+	public int findDaysDifference(String date) {
+		System.out.println(date);
+		int year = Integer.parseInt(date.substring(0, 4));
+		int month = Integer.parseInt(date.substring(5, 7)) - 1;
+		int day = Integer.parseInt(date.substring(8));
+		Calendar c = Calendar.getInstance();
+		c.set(Calendar.MONTH, month);
+		c.set(Calendar.YEAR, year);
+		c.set(Calendar.DATE, day);
+		java.util.Date d1 = c.getTime();
+		return (int) Math.abs((d1.getTime() - System.currentTimeMillis()) / (1000 * 60 * 60 * 24));
+	}
+
+	public Results getTwoLegFlights(String date,String from,String to) {
+		int dayOfWeek=getDayFromDate(date);
+		to = "\"" + to + "\"";
+		from = "\"" + from + "\"";
+		Results r = null;
+		Connection con = getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String statement = "select g1.departureAirportID,g1.airline,g1.flightNum,g1.departureTime,g1.arrivalTime,g1.destinationAirportID,g2.airline,g2.flightNum,g2.departureTime,g2.arrivalTime,g2.destinationAirportID,(f1.fare+f2.fare) "
+					+ "from (goTo g1 join fares f1 on g1.distance=f1.distance),(goTo g2 join fares f2 on g2.distance=f2.distance) "
+					+ "where g1.originAirportID="+from+"AND g2.destinationAirportID="+to+"and g1.destinationAirportID=g2.originAirportID and g1.arrivalTime<g2.departureTime and g1.workingday=g2.workingday and g1.workingday="+dayOfWeek
+					+ "order by (g1.distance+g2.distance) asc limit 15";
+			ResultSet rs = stmt.executeQuery(statement);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+			return null;
+		}
+		return r;
 	}
 }

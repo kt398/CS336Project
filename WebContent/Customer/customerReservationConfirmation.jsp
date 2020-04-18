@@ -10,6 +10,8 @@
 <body>
 	<%
 	DbManager manager=new DbManager();
+	Results r=(Results)session.getAttribute("Results");
+	ReservationData resData=(ReservationData)session.getAttribute("resData");
 	%>
 	<nav class="navbar">
 		<ul>
@@ -34,7 +36,7 @@
 		</h2>
 		<form action="">
 			<h2>Enter the ccv code for your credit card number linked to
-				youraccount</h2>
+				your account</h2>
 			<input type="number" name="ccv"> <input type="submit"
 				value="Confirm your Reservation">
 		</form>
@@ -43,9 +45,9 @@
 		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 	<script type="text/javascript">
 		$('.box form').submit(
-			if('.ccv').val().length==3){
+			if(('.ccv').val().length==3){
 				<%
-					manager.makeNewReservation();
+					manager.makeNewReservation((String)session.getAttribute("username"),(String)session.getAttribute("password"),(ReservationData)session.getAttribute("resData"),null);
 				%>
 			}			
 	</script>
