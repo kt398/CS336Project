@@ -12,9 +12,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Home Page [Admin]</title>
+<title>List of Reservations</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
 </head>
 
 <body>
@@ -29,38 +30,35 @@
 		<a href="login.jsp">Logout</a>
 	</nav>
 	
-	<section class="adminHome">
-		<h1>Welcome!</h1>
-	</section>
-	
-	<section class="newAdmin">
-		<p>Create a new Administrative Account</p>
-		<div class="container">
-			<form class="newAdmin" method="post" action="newAdmin.jsp">
-				<input type="text" placeholder="username" name="username">
-				<input type="password" placeholder="password" name="password">
-				<button>Create</button>
-			</form>
-		</div>
-		
-	</section>
-	
-
 	<section class="listReservations">
-		<h1>List of all Reservations</h1>
+		<h1>List of Reservations</h1>
+		<form method="post" action="adminReservations.jsp">
+			<p>Enter Customer or Flight Number:</p>
+			<input type="text" name="val">
+			<button>Find Reservations!</button>
+		</form>
+		<%
+		if(request.getParameter("val")!=null){
+			DbManager db = new DbManager();
+			Connection con = db.getConnection();
+			String query = "SELECT FROM Customers NATURAL JOIN Owns NATURAL JOIN Contain NATURAL JOIN Reservations NATURAL JOIN Have NATURAL JOIN Legs NATURAL JOIN Associated";
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+		}
+		%>
 	</section>
 	
-	<section class="listingRevenue">
-		<h1>Summary listing of Revenue</h1>
-	</section>
-	
-</body>
-
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 
-	
+    $(document).ready(function(){
+        $("#").DataTable({
+    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		});
+    });    
+
 </script>
 
 </html>

@@ -20,17 +20,14 @@
 
 <body>
 	<nav class="navbar">
-		<ul>
-			<li><a class="adminHome" href="adminHome.jsp" >Home Page</a></li>
-			<li><a class="newAdmin" href="adminCreateAdmin.jsp" >Add Admin</a></li>
-			<li><a class="customerData" href="adminCustomerTable.jsp" >Customer Information</a></li>
-			<li><a class="salesReport" href="adminSalesReport.jsp" >Sales Report</a></li>
-			<li><a class="allFlights" href="adminListFlights.jsp" >List of all Flights</a></li>
-			<li><a class="listReservations" href="#" >List of Reservations</a></li>
-			<li><a class="listingRevenue" href="#" >Summary listing of Revenue</a></li>
-			<li><a class="airportFlights" href="adminAirportFlights.jsp" >Flights for Airports</a></li>
-			<li><a href="login.jsp">Logout</a></li>
-		</ul>
+		<a href="adminHome.jsp" >Home Page</a>
+		<a href="adminCustomerTable.jsp" >Customer Information</a>
+		<a href="adminSalesReport.jsp" >Sales Report</a>
+		<a href="adminListFlights.jsp" >All Flights</a>
+		<a href="adminReservations.jsp" >Reservations</a>
+		<a href="#" >Revenue Summary</a>
+		<a href="adminAirportFlights.jsp" >Airport Flights</a>
+		<a href="login.jsp">Logout</a>
 	</nav>
 	
 	<section class="customerData">
