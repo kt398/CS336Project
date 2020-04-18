@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <link rel="stylesheet" type="text/css"
 	href="../css/makeReservationListReservations.css">
-<title>Choose Flight</title>
+<title>Insert title here</title>
 </head>
 <body>
 	<nav class="navbar">
@@ -30,20 +30,12 @@
 		String _numPassengers = request.getParameter("numPassengers");
 		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
 		int numPassengers = Integer.parseInt(_numPassengers);
-		boolean isRoundTrip=false;
 		String type = request.getParameter("type");
-		if(type.compareTo("roundTrip")==0)
-			isRoundTrip=true;
-		System.out.println(isRoundTrip);
 		type = "?type=" + type;
 		System.out.println(type);
 		String origin = request.getParameter("origin");
 		String destination = request.getParameter("destination");
 		String date = request.getParameter("date");
-		String returnDate="";
-		if(type.compareTo("?type=roundTrip")==0){
-			returnDate=request.getParameter("returnDate");
-		}
 		DbManager db = new DbManager();
 		Results r = db.getFlights(date, origin, destination);
 		ResultSet rs = r.getResultSet();
@@ -82,7 +74,6 @@
 		res.destination = destination;
 		res.type = type;
 		Legs leg=new Legs();
-		System.out.println(type);
 	%>
 	<div class="box">
 		<%
@@ -127,19 +118,14 @@
 						</td>
 						<td style="text-align: center">
 
-							<form class="reservationConfirmation" method="post" action="/submit">
-								<%if(isRoundTrip){ %>
+							<form class="reservationConfirmation" method="post">
+								<%if(type.compareTo("?=roundTrip")==0){ %>
 								<input type="hidden" name="origin" value="<%=destination%>">
 								<input type="hidden" name="destination" value="<%=origin%>">
-								<input type="hidden" name="numPassengers" value="1"> 
-								<input type="hidden" name="date" value="<%=returnDate%>">
-								<input id="custUser" type="hidden" style="display: none" name="username"value="<%out.print(rs.getRow());%>">
-								<a type="submit" href="returnFlight.jsp"class="button"></a>
-								<%}else{%>
-								<input id="custUser" type="hidden" style="display: none" name="username"value="<%out.print(rs.getRow());%>">
-								<a type="submit" href="customerHome.jsp" class="button"></a>
 								<%}%>
- 								<img
+								<input id="custUser" style="display: none" name="username"
+									value="<%out.print(rs.getRow());%>"> <a type="submit"
+									href="#"onclick="nextPage()"> <img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
 									height="10" width="10">
 								</a>
@@ -198,15 +184,13 @@
 						<td style="text-align: center">
 
 							<form class="reservationConfirmation" method="post">
-								<%if(isRoundTrip){ %>
+								<%if(type.compareTo("?=roundTrip")==0){ %>
 								<input type="hidden" name="origin" value="<%=destination%>">
 								<input type="hidden" name="destination" value="<%=origin%>">
-								<input type="hidden" name="numPassengers"
-									value="<%=numPassengers%>"> <input type="hidden"
-									name="date" value=<%=returnDate%>>
 								<%}%>
 								<input id="custUser" style="display: none" name="username"
-									value="<%out.print(rs.getRow());%>"> <a type="submit"
+									value="<%out.print(rs.getRow());%>"> 
+								<a  type="submit"
 									href="#" onclick="nextPage()"> <img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
 									height="10" width="10">
@@ -234,21 +218,23 @@
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
-	$('.reservationConfirmation a').click(function(){
-		alert('hello');
+	function nextPage(){
 		<%session.setAttribute("results", r);
-		if(!isRoundTrip){
+		if(type.compareTo("?type=oneWay")==0){
 			%>
-			form('.reservationConfirmation').submit();
+			alert('here');
+			window.location.href="customerReservationConfirmation.jsp?type=oneWay";
+			return false;
 		<%
 		}
-		else if(isRoundTrip){
+		else if(type.compareTo("?type=roundTrip")==0){
 		%>	
-			form('.reservationConfirmation').submit();
+			window.location.href="returnFlight.jsp";
+			return false;
 		<%
 		}
 		%>
-	});
+		return false;
+	}
 </script>
-
 </html>
