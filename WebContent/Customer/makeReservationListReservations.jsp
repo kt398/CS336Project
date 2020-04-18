@@ -9,7 +9,7 @@
 	href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <link rel="stylesheet" type="text/css"
-	href="../css/makeReservationListReservations.css">
+	href="../css/makeReservationListResesrvations.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -43,16 +43,18 @@
 		if (!rs.first()) {
 			numLegs = 2;
 			System.out.println(numLegs);
+			r.closeConnection();
 			r = db.getTwoLegFlights(date, origin, destination);
 		}
+		
 		else{
 			rs.beforeFirst();
 		}
-		rs = r.getResultSet();
+		rs=r.getResultSet();
 		if (rs == null) {
 			numLegs = -1;
 		}
-
+		
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnsNumber = rsmd.getColumnCount();
 		double dateMultiplier = 1;
@@ -73,9 +75,6 @@
 		res.type = type;
 	%>
 	<div class="box">
-
-
-
 		<%
 			if (numLegs == 1) {
 		%>
@@ -139,7 +138,7 @@
 		%>
 		<section class="reservations">
 			<h1 class="header">Possible Flights</h1>
-			<table id="reservations" class="display">
+			<table id="reservations2" class="display">
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -153,7 +152,7 @@
 						<th>Leg 2 Flight Number</th>
 						<th>Leg 2 Departure Time</th>
 						<th>Destination Arrival Time</th>
-						<th>Destination Airport>
+						<th>Destination Airport</th>
 						<th>Cost</th>
 						<th>Select</th>
 					</tr>
@@ -174,7 +173,7 @@
 						%>
 						<td>
 							<%
-								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
+								out.print( Math.floor((numPassengers * rs.getInt(i) * dateMultiplier)/100)*100);
 							%>
 						</td>
 						<td style="text-align: center">
@@ -205,14 +204,13 @@
 	src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#reservations").DataTable({
+		$("#reservations2").DataTable({
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
 	function nextPage(){
 		<%session.setAttribute("results", r);%>
-		window.location.href="customerReservationConfirmation.jsp<%=type%>
-	";
+		window.location.href="customerReservationConfirmation.jsp<%=type%>";
 		return false;
 	}
 </script>

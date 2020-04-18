@@ -438,10 +438,10 @@ public class DbManager {
 		Connection con = getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String statement = "select g1.departureAirportID,g1.airline,g1.flightNum,g1.departureTime,g1.arrivalTime,g1.destinationAirportID,g2.airline,g2.flightNum,g2.departureTime,g2.arrivalTime,g2.destinationAirportID,(f1.fare+f2.fare) "
+			String statement = "select g1.originAirportID,g1.airline,g1.flightNum,g1.departureTime,g1.arrivalTime,g1.destinationAirportID,g2.airline,g2.flightNum,g2.departureTime,g2.arrivalTime,g2.destinationAirportID,(f1.fare+f2.fare),(g1.distance+g2.distance) "
 					+ "from (goTo g1 join fares f1 on g1.distance=f1.distance),(goTo g2 join fares f2 on g2.distance=f2.distance) "
 					+ "where g1.originAirportID="+from+"AND g2.destinationAirportID="+to+"and g1.destinationAirportID=g2.originAirportID and g1.arrivalTime<g2.departureTime and g1.workingday=g2.workingday and g1.workingday="+dayOfWeek
-					+ "order by (g1.distance+g2.distance) asc limit 15";
+					+ " order by (g1.distance+g2.distance) asc limit 15";
 			ResultSet rs = stmt.executeQuery(statement);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

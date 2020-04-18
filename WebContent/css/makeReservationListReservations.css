@@ -11,7 +11,7 @@ h1 {
 .box {
 	border-radius: 15px;
 	box-shadow: 0 0 10px 0 #000;
-	width: 55%;
+	width: 100%;
 	height: auto;
 	padding: 1% 2% 2% 2%;
 	margin: 0 auto;
