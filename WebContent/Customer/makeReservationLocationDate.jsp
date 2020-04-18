@@ -25,7 +25,8 @@
 		</ul>
 	</nav>
 	<%
-		String type="\""+request.getParameter("type")+"\"";
+		String t=request.getParameter("type");
+		String type="\""+t+"\"";
 		DbManager manager = new DbManager();
 		Results r = manager.getAllAirports();
 		while (r == null) {
@@ -71,8 +72,13 @@
 			</select>
 			<h2>Date</h2>
 			<input type="date" class="date" placeholder="YYYY-MM-DD" required name="date">
+			<%if(t.compareTo("roundTrip")==0){ %>
+			<br><h2>Return Date</h2>
+			<br><input type="date" class="date" placeholder="YYYY-MM-DD" required name="returnDate">
+			<%}%>
 			<input type="hidden" name="type" value=<%out.print(type);%>>
-			<button value="Continue">Continue</button>
+			<br>
+			<br><button value="Continue">Continue</button>
 		</form>
 	</div>
 	<script

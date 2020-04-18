@@ -9,7 +9,7 @@
 	href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <link rel="stylesheet" type="text/css"
-	href="../css/makeReservationListResesrvations.css">
+	href="../css/makeReservationListReservations.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -138,7 +138,7 @@
 		%>
 		<section class="reservations">
 			<h1 class="header">Possible Flights</h1>
-			<table id="reservations2" class="display">
+			<table id="reservations" class="display">
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -204,14 +204,29 @@
 	src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#reservations2").DataTable({
+		$("#reservations").DataTable({
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
 	function nextPage(){
-		<%session.setAttribute("results", r);%>
-		window.location.href="customerReservationConfirmation.jsp<%=type%>";
-		return false;
+		
+		<%
+		session.setAttribute("results", r);
+		
+		if(type.compareTo("?type=oneWay")==0){
+			%>
+			window.location.href="customerReservationConfirmation.jsp?type=oneWay";
+			return false;
+		<%
+		}
+		else if(type.compareTo("?type=roundTrip")==0){
+		%>	
+			window.location.href="customerListReservations.jsp?goingBack=true";
+			return false;
+		<%
+		}
+		%>
+		//return false;
 	}
 </script>
 </html>

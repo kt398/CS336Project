@@ -414,7 +414,7 @@ public class DbManager {
 	}
 
 	public void makeNewReservation(String username, String password, ReservationData data, Legs[] listOfLegs) {
-
+		
 	}
 
 	public int findDaysDifference(String date) {
