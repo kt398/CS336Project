@@ -134,15 +134,17 @@
 								<input type="hidden" name="numPassengers" value="1"> 
 								<input type="hidden" name="date" value="<%=returnDate%>">
 								<input id="custUser" type="hidden" style="display: none" name="username"value="<%out.print(rs.getRow());%>">
-								<a type="submit" href="returnFlight.jsp"class="button"></a>
+								<a type="submit" href="returnFlight.jsp"class="button"> 								
+								<img
+									src="https://image.flaticon.com/icons/svg/61/61456.svg"
+									height="10" width="10"></a>
+								
 								<%}else{%>
 								<input id="custUser" type="hidden" style="display: none" name="username"value="<%out.print(rs.getRow());%>">
-								<a type="submit" href="customerHome.jsp" class="button"></a>
-								<%}%>
- 								<img
+								<a type="submit" href="customerHome.jsp" class="button"> 								<img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
-									height="10" width="10">
-								</a>
+									height="10" width="10"></a>
+								<%}%>
 							</form>
 						</td>
 					</tr>
