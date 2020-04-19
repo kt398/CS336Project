@@ -49,13 +49,13 @@
 			if (request.getParameter("val") != null) {
 				DbManager db = new DbManager();
 				Connection con = db.getConnection();
-				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN Reservations WHERE customer.email=\""
+				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN Reservations WHERE Customers.email=\""
 						+ request.getParameter("val") + "\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>
 		<div id="emailTable">
-			<table id="customerTable" class="display">
+			<table id="reservationByEmail" class="display">
 				<thead>
 					<tr>
 						<th>Reservation Date</th>
@@ -92,17 +92,17 @@
 		%>
 
 		<%
-			if (request.getParameter("val3") != null) {
+			if (request.getParameter("flightNum") != null) {
 				DbManager db = new DbManager();
 				Connection con = db.getConnection();
 				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
-						+ request.getParameter("airline") + "\" AND flights.airlineID=\""
-						+ request.getParameter("airlineID");
+						+ request.getParameter("flightNum") + "\" AND flights.airline=\""
+						+ request.getParameter("airlineID")+"\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>
-		<div id="emailTable">
-			<table id="customerTable" class="display">
+		<div id="flightsTable">
+			<table id="reservationByFlightNum" class="display">
 				<thead>
 					<tr>
 						<th>Reservation Date</th>
@@ -126,9 +126,9 @@
 							}
 						%>
 						<td style="text-align: center">
-							<%
-								}
-							%>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 		</div>
@@ -143,17 +143,22 @@
 	<script type="text/javascript">
 
     $(document).ready(function(){
-        $("#").DataTable({
+        $("#reservationByEmail").DataTable({
     		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
 		});
-    });    
+        
+        $("#reservationByFlightNum").DataTable({
+    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+		});
+    });   
+    
 	$('.searchByEmail').submit(function(){
 		$('#emailTable').show();
 		$('#flightsTable').hide();
-	}
+	});
 	$('.searchByFlight').submit(function(){
 		$('#emailTable').hide();
 		$('#flightsTable').show();
-	}
+	});
 </script>
 </html>

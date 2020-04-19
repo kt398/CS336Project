@@ -460,25 +460,34 @@ public class DbManager {
 		}
 		try {
 			LocalDate timeOfCreation = LocalDate.now();
+			String timeCreate = "\"" + timeOfCreation + "\"";
 			Statement stmt = con.createStatement();
 			String statement = "select accounts.accNum from Accounts where Accounts.username=\""+username+"\"";
 			ResultSet rs=stmt.executeQuery(statement);
 			rs.next();
 			String accNum=rs.getString("accNum");
 			rs.close();
-			statement="insert into reservations (date, bFee, tFare,resNum) values ("+timeOfCreation+","+r.b_fee+","+r.t_fare+",0";
-			rs=stmt.executeQuery(statement);
-			int resNum=rs.getInt("resNum");
-			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum;
+			statement="insert into reservations (date, bFee, tFare,resNum) values ("+timeCreate+","+r.b_fee+","+r.t_fare+",0)";
+			stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+			System.out.println(statement);
+			rs = stmt.getGeneratedKeys();
+			int resNum;
+			rs.next();
+			resNum = rs.getInt(1);
+			System.out.println("ResNum: " + resNum);
+			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum+")";
+			stmt.executeUpdate(statement);
+			
 			for(int i=0;i<r.legs.size();i++) {
 				statement="insert into legs (legID) values(0)";
-				rs=stmt.executeQuery(statement);
+				stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+				rs= stmt.getGeneratedKeys();
 				rs.next(); 
-				int legID=rs.getInt("legID");
+				int legID=rs.getInt(1);
 				statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
-				stmt.executeQuery(statement);
-				statement="insert into Associated (legID, flightNum, airline) values ("+legID+","+r.legs.get(i).flightNumber+","+r.legs.get(i).airline+")";
-				stmt.executeQuery(statement);
+				stmt.executeUpdate(statement);
+				statement="insert into Associated (legID, flightNum, airline) values ("+legID+",\""+r.legs.get(i).flightNumber+"\",\""+r.legs.get(i).airline+"\")";
+				stmt.executeUpdate(statement);
 			}
 			closeConnection(con);
 			return 1;
@@ -489,5 +498,19 @@ public class DbManager {
 			return -2;
 		}
 		// return 0;
+	}
+	
+	
+	public Results getCustomerReservations(String username) {
+		Connection con = getConnection();
+		Results r = null;
+		try {
+			Statement stmt = con.createStatement();
+			String query = "SELECT * FROM Reservations NATURAL JOIN Contain WHERE accNum IN (SELECT accNum FROM Accounts WHERE Accounts.username=\""+username+"\")";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return r;
 	}
 }

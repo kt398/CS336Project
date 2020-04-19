@@ -21,7 +21,7 @@
 					Information</a></li>
 			<li><a href="customerFlightPreferences.jsp">Flight
 					Preferences</a></li>
-			<li><a class="bot" href="login.jsp">Logout</a></li>
+			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
 	<div class="box">

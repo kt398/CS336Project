@@ -33,7 +33,7 @@
 		
 		if(request.getParameter("multipleLegs")==null){
 			Legs leg = (Legs)session.getAttribute("leg1");
-			Results prevLegInfo = db.getFlights(date,origin,destination);
+			Results prevLegInfo = db.getFlights(leg.flightDate,leg.fromAirport,leg.toAirport);
 			ResultSet rs = prevLegInfo.getResultSet();
 			rs.absolute(Integer.parseInt(request.getParameter("rowNumber")));
 			leg.flightNumber = rs.getInt(2);

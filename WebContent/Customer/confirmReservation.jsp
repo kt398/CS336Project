@@ -5,11 +5,9 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<link rel="stylesheet" type="text/css"
-	href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
-<link rel="stylesheet" type="text/css"
-	href="../css/makeReservationListReservations.css">
+<link rel="stylesheet" type="text/css" href="../css/makeReservationListReservations.css">
 <title>Insert title here</title>
 </head>
 <body>
@@ -30,16 +28,17 @@
 	
 		DbManager db = new DbManager();
 		ReservationData res = (ReservationData)session.getAttribute("reservation");
-		double bFee = Math.floor(res.t_fare*.05 * 100) / 100;
+		res.b_fee = Math.floor(res.t_fare*.05 * 100) / 100;
+		session.setAttribute("reservation",res);
 	%>
 	<div class="box">
 	
 		<section class="reservations">
 			<h1>Confirm Reservation</h1>
 			<p>Type: <%if(res.type.compareTo("roundTrip")==0) out.print("Round Trip"); else out.print("One Way");%></p>
-			<p>Booking Fee: <%=bFee%></p>
+			<p>Booking Fee: <%=res.b_fee%></p>
 			<p>Travel Fee: <%=res.t_fare%></p>
-			<h1>Total Price: <%=res.t_fare+bFee%></h1>	
+			<h1>Total Price: <%=res.t_fare+res.b_fee%></h1>	
 			
 		
 			
@@ -76,7 +75,7 @@
 				</tbody>
 			</table>
 		
-			<form method="post" action="">
+			<form method="post" action="insertReservationData.jsp">
 				<h2>Enter the CCV code for your credit card number linked to
 					your account</h2>
 				<input type="number" name="ccv"> 
@@ -92,7 +91,7 @@
 <script type="text/javascript">
 
 	$(document).ready(function() {
-	
+		 $('#legs').DataTable();
 	});
 	
 </script>
