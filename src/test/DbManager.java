@@ -368,7 +368,7 @@ public class DbManager {
 		try {
 			Statement stmt = con.createStatement();
 			String statement = "SELECT airline,flightNum,departureTime,arrivalTime,fare FROM goTo JOIN fares on fares.distance=goTo.distance WHERE goTo.originAirportID="
-					+ from + "AND goTo.DestinationAirportID=" + to + "AND workingDay=" + dayOfWeek;
+					+ from + "AND goTo.DestinationAirportID=" + to + "AND workingDay=" + dayOfWeek +" order by flightNum asc";
 			ResultSet rs = stmt.executeQuery(statement);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

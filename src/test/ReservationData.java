@@ -1,16 +1,20 @@
 package test;
 
+import java.util.ArrayList;
+
 public class ReservationData {
 	int resNum;
-	String reservationDate;
+	public String reservationDate;
+	public String goDate;
+	public String returnDate;
 	public String destination;
 	public String origin;
 	int passengers;
-	int t_fare;
+	public double t_fare;
+	public double b_fee;
 	int c_rep;
-	int b_fee;
 	public String type;
-	int numLegs;
+	public ArrayList<Legs> legs = new ArrayList<Legs>();
 
 	public ReservationData() {
 	}
@@ -30,12 +34,5 @@ public class ReservationData {
 	public String getDate() {
 		return reservationDate;
 	}
-
-	public void setLegs(int legs) {
-		this.numLegs = legs;
-	}
-
-	public int getLegs() {
-		return numLegs;
-	}
+	
 }

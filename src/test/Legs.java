@@ -1,12 +1,15 @@
 package test;
 
 public class Legs {
-	String flightDate;
-	String fromAirport;
-	String toAirport;
-	int SeatNumber;
-	int flightNumber;
-	String airline;
+	public String flightDate;
+	public String fromAirport;
+	public String toAirport;
+	public int SeatNumber;
+	public int flightNumber;
+	public String airline;
+	public String departureTime;
+	public String arrivalTime;
+	
 	public Legs() {
 		
 	}

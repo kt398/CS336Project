@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData"%>
 <!DOCTYPE html>
@@ -27,15 +27,17 @@
 		</ul>
 	</nav>
 	<%
+	
+		
 		String _numPassengers = request.getParameter("numPassengers");
 		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
 		int numPassengers = Integer.parseInt(_numPassengers);
-		String type = request.getParameter("type");
-		type = "?type=" + type;
-		System.out.println(type);
+		boolean isRoundTrip=false;
+
 		String origin = request.getParameter("origin");
 		String destination = request.getParameter("destination");
 		String date = request.getParameter("date");
+		
 		DbManager db = new DbManager();
 		Results r = db.getFlights(date, origin, destination);
 		ResultSet rs = r.getResultSet();
@@ -67,14 +69,12 @@
 		} else if (dayDifference < 14) {
 			dateMultiplier = 1.1;
 		}
-		ReservationData res = new ReservationData();
-		res.setDate(date);
-		res.setPassengers(numPassengers);
-		res.origin = origin;
-		res.destination = destination;
-		res.type = type;
-		Legs leg=new Legs();
+		double fare = 0;
+		ReservationData res = (ReservationData)session.getAttribute("reservation");
+		Legs leg = new Legs();
+		Legs leg2 = new Legs();
 	%>
+	
 	<div class="box">
 		<%
 			if (numLegs == 1) {
@@ -114,26 +114,27 @@
 						<td>
 							<%
 								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
+								fare = numPassengers * rs.getInt(i) * dateMultiplier;
 							%>
 						</td>
 						<td style="text-align: center">
 
-							<form class="reservationConfirmation" method="post">
-								<%if(type.compareTo("?=roundTrip")==0){ %>
-								<input type="hidden" name="origin" value="<%=destination%>">
-								<input type="hidden" name="destination" value="<%=origin%>">
-								<%}%>
-								<input id="custUser" style="display: none" name="username"
-									value="<%out.print(rs.getRow());%>"> <a type="submit"
-									href="#"onclick="nextPage()"> <img
-									src="https://image.flaticon.com/icons/svg/61/61456.svg"
-									height="10" width="10">
+							<form id="reservationConfirmation1" method="post" action="dataStorage.jsp">
+								<input type="hidden" name="origin" value="<%=origin%>">
+								<input type="hidden" name="destination" value="<%=destination%>">
+								<input type="hidden" name="numPassengers" value="<%=numPassengers%>"> 
+								<input type="hidden" name="date" value="<%=date%>">
+								<input type="hidden" name="fromReturnFlight" value="fromReturnFlight">
+								<input id="rowNum" type="hidden" name="rowNumber">
+								<a type="submit" href="#"> 
+								<img src="https://image.flaticon.com/icons/svg/61/61456.svg" height="10" width="10">
 								</a>
 							</form>
 						</td>
 					</tr>
 					<%
 						}
+						res.t_fare+= fare;
 					%>
 				</tbody>
 			</table>
@@ -167,10 +168,10 @@
 						while (rs.next()) {
 					%>
 					<tr>
-
+						<td><%=date%></td>
 						<%
 							int i = 1;
-								for (i=1; i <columnsNumber; i++) {
+								for (i=1; i <columnsNumber-1; i++) {
 						%>
 						<td><%=rs.getString(i)%></td>
 						<%
@@ -179,27 +180,28 @@
 						<td>
 							<%
 								out.print( Math.floor((numPassengers * rs.getInt(i) * dateMultiplier)/100)*100);
+								fare = Math.floor((numPassengers * rs.getInt(i) * dateMultiplier)/100)*100;
 							%>
 						</td>
 						<td style="text-align: center">
 
-							<form class="reservationConfirmation" method="post">
-								<%if(type.compareTo("?=roundTrip")==0){ %>
-								<input type="hidden" name="origin" value="<%=destination%>">
-								<input type="hidden" name="destination" value="<%=origin%>">
-								<%}%>
-								<input id="custUser" style="display: none" name="username"
-									value="<%out.print(rs.getRow());%>"> 
-								<a  type="submit"
-									href="#" onclick="nextPage()"> <img
-									src="https://image.flaticon.com/icons/svg/61/61456.svg"
-									height="10" width="10">
+							<form id="reservationConfirmation2" method="post" action="dataStorage.jsp">
+								<input type="hidden" name="origin" value="<%=origin%>">
+								<input type="hidden" name="destination" value="<%=destination%>">
+								<input type="hidden" name="numPassengers" value="<%=numPassengers%>"> 
+								<input type="hidden" name="date" value="<%=date%>">
+								<input type="hidden" name="fromReturnFlight" value="fromReturnFlight">
+								<input type="hidden" name="multipleLegs" value="multipleLegs">
+								<input id="rowNum" type="hidden" name="rowNumber">
+								<a type="submit" href="#"> 
+								<img src="https://image.flaticon.com/icons/svg/61/61456.svg" height="10" width="10">
 								</a>
 							</form>
 						</td>
 					</tr>
 					<%
 						}
+					res.t_fare+= fare;
 					%>
 				</tbody>
 			</table>
@@ -208,33 +210,43 @@
 		}%>
 	</div>
 </body>
-<script
-	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script type="text/javascript"
-	src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#reservations").DataTable({
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
-	function nextPage(){
-		<%session.setAttribute("results", r);
-		if(type.compareTo("?type=oneWay")==0){
-			%>
-			alert('here');
-			window.location.href="customerReservationConfirmation.jsp?type=oneWay";
-			return false;
+	
+	$('#reservationConfirmation1 a').click(function(){
 		<%
-		}
-		else if(type.compareTo("?type=roundTrip")==0){
-		%>	
-			window.location.href="returnFlight.jsp";
-			return false;
-		<%
-		}
+		session.setAttribute("reservation",res);
+		leg.fromAirport = origin;
+		leg.toAirport = destination;
+		leg.flightDate = date;
+		session.setAttribute("leg1", leg);
 		%>
-		return false;
-	}
+		$('#rowNum').val($(this).parent().closest("tr").index('tr'));
+		alert($('#rowNum').val());
+		$('#reservationConfirmation1').submit();
+
+	});
+	
+	$('#reservationConfirmation2 a').click(function(){
+		<%
+		session.setAttribute("reservation",res);
+		leg.fromAirport = origin;
+		leg.flightDate = date;
+		leg2.flightDate = date;
+		session.setAttribute("leg1", leg);
+		session.setAttribute("leg2", leg2);
+		%>
+		$('#rowNum').val($(this).parent().closest("tr").index('tr'));
+		alert($('#rowNum').val());
+		$('#reservationConfirmation2').submit();
+	});
+	
 </script>
 </html>
