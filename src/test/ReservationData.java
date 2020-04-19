@@ -9,7 +9,7 @@ public class ReservationData {
 	public String returnDate;
 	public String destination;
 	public String origin;
-	int passengers;
+	public int passengers;
 	public double t_fare;
 	public double b_fee;
 	int c_rep;

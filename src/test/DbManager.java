@@ -341,7 +341,6 @@ public class DbManager {
 			ResultSet rs = stmt.executeQuery(statement);
 			// closeConnection(con);
 			Results r = new Results(rs, con);
-			closeConnection(con);
 			return r;
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -470,9 +469,9 @@ public class DbManager {
 			String accNum=rs.getString("accNum");
 			rs.close();
 			if(r.type.compareTo("roundTrip")==0)
-				statement="insert into reservations (date, tripType, bFee, tFare,resNum) values ("+timeCreate+",\"Round-Trip\","+r.b_fee+","+r.t_fare+",0)";
+				statement="insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("+timeCreate+","+r.passengers+",\"Round-Trip\","+r.b_fee+","+r.t_fare+",0)";
 			else {
-				statement="insert into reservations (date, tripType, bFee, tFare,resNum) values ("+timeCreate+",\"One-Way\","+r.b_fee+","+r.t_fare+",0)";
+				statement="insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("+timeCreate+","+r.passengers+",\"One-Way\","+r.b_fee+","+r.t_fare+",0)";
 			}
 			stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
 			System.out.println(statement);
@@ -510,7 +509,6 @@ public class DbManager {
 			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			closeConnection(con);
 			return -2;
@@ -529,11 +527,9 @@ public class DbManager {
 					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
-			closeConnection(con);
-			return r;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			closeConnection(con);
 		}
 		return r;
 	}

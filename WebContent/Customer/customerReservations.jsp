@@ -26,7 +26,26 @@
 	
 	<%
 	DbManager db = new DbManager();
+	Results legs = db.getCustomerReservations((String)session.getAttribute("username"));
+	ResultSet legsData = r.getResultSet();
+	
+	
+	while(rs.next()){
 	%>
+	
+	<table>
+		<thead>
+			<tr>
+			
+			</tr>
+		</thead>
+		
+		<tbody>
+			<tr>
+			
+			</tr>
+		</tbody>
+	</table>
 </body>
 
 
