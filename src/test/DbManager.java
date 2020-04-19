@@ -473,7 +473,7 @@ public class DbManager {
 			for(int i=0;i<r.legs.size();i++) {
 				statement="insert into legs (legID) values(0)";
 				rs=stmt.executeQuery(statement);
-				rs.next();
+				rs.next(); 
 				int legID=rs.getInt("legID");
 				statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
 				stmt.executeQuery(statement);

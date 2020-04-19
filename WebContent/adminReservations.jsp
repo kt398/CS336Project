@@ -107,7 +107,7 @@
 					<tr>
 						<th>Reservation Date</th>
 						<th>Number Of Passengers</th>
-						<th>Customer Representative ID</th>
+						<th>Customer Representative ID</th> 
 						<th>Booking Fee</th>
 						<th>Travel Fare</th>
 						<th>Reservation Number</th>
