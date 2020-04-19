@@ -414,7 +414,7 @@ public class DbManager {
 	}
 
 	public void makeNewReservation(String username, String password, ReservationData data, Legs[] listOfLegs) {
-		
+
 	}
 
 	public int findDaysDifference(String date) {
@@ -430,8 +430,8 @@ public class DbManager {
 		return (int) Math.abs((d1.getTime() - System.currentTimeMillis()) / (1000 * 60 * 60 * 24));
 	}
 
-	public Results getTwoLegFlights(String date,String from,String to) {
-		int dayOfWeek=getDayFromDate(date);
+	public Results getTwoLegFlights(String date, String from, String to) {
+		int dayOfWeek = getDayFromDate(date);
 		to = "\"" + to + "\"";
 		from = "\"" + from + "\"";
 		Results r = null;
@@ -440,8 +440,9 @@ public class DbManager {
 			Statement stmt = con.createStatement();
 			String statement = "select g1.originAirportID,g1.airline,g1.flightNum,g1.departureTime,g1.arrivalTime,g1.destinationAirportID,g2.airline,g2.flightNum,g2.departureTime,g2.arrivalTime,g2.destinationAirportID,(f1.fare+f2.fare),(g1.distance+g2.distance) "
 					+ "from (goTo g1 join fares f1 on g1.distance=f1.distance),(goTo g2 join fares f2 on g2.distance=f2.distance) "
-					+ "where g1.originAirportID="+from+"AND g2.destinationAirportID="+to+"and g1.destinationAirportID=g2.originAirportID and g1.arrivalTime<g2.departureTime and g1.workingday=g2.workingday and g1.workingday="+dayOfWeek
-					+ " order by (g1.distance+g2.distance) asc limit 15";
+					+ "where g1.originAirportID=" + from + "AND g2.destinationAirportID=" + to
+					+ "and g1.destinationAirportID=g2.originAirportID and g1.arrivalTime<g2.departureTime and g1.workingday=g2.workingday and g1.workingday="
+					+ dayOfWeek + " order by (g1.distance+g2.distance) asc limit 15";
 			ResultSet rs = stmt.executeQuery(statement);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -450,5 +451,43 @@ public class DbManager {
 			return null;
 		}
 		return r;
+	}
+
+	public int addAllReservationData(ReservationData r,String username) {
+		Connection con = getConnection();
+		if (con == null) {
+			return -2;
+		}
+		try {
+			LocalDate timeOfCreation = LocalDate.now();
+			Statement stmt = con.createStatement();
+			String statement = "select accounts.accNum from Accounts where Accounts.username=\""+username+"\"";
+			ResultSet rs=stmt.executeQuery(statement);
+			rs.next();
+			String accNum=rs.getString("accNum");
+			rs.close();
+			statement="insert into reservations (date, bFee, tFare,resNum) values ("+timeOfCreation+","+r.b_fee+","+r.t_fare+",0";
+			rs=stmt.executeQuery(statement);
+			int resNum=rs.getInt("resNum");
+			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum;
+			for(int i=0;i<r.legs.size();i++) {
+				statement="insert into legs (legID) values(0)";
+				rs=stmt.executeQuery(statement);
+				rs.next();
+				int legID=rs.getInt("legID");
+				statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
+				stmt.executeQuery(statement);
+				statement="insert into Associated (legID, flightNum, airline) values ("+legID+","+r.legs.get(i).flightNumber+","+r.legs.get(i).airline+")";
+				stmt.executeQuery(statement);
+			}
+			closeConnection(con);
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			closeConnection(con);
+			return -2;
+		}
+		// return 0;
 	}
 }
