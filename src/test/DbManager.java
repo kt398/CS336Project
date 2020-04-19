@@ -341,12 +341,14 @@ public class DbManager {
 			ResultSet rs = stmt.executeQuery(statement);
 			// closeConnection(con);
 			Results r = new Results(rs, con);
+			closeConnection(con);
 			return r;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			closeConnection(con);
 			return null;
 		}
+		
 	}
 
 	public int getDayFromDate(String date) {
@@ -467,7 +469,11 @@ public class DbManager {
 			rs.next();
 			String accNum=rs.getString("accNum");
 			rs.close();
-			statement="insert into reservations (date, bFee, tFare,resNum) values ("+timeCreate+","+r.b_fee+","+r.t_fare+",0)";
+			if(r.type.compareTo("roundTrip")==0)
+				statement="insert into reservations (date, tripType, bFee, tFare,resNum) values ("+timeCreate+",\"Round-Trip\","+r.b_fee+","+r.t_fare+",0)";
+			else {
+				statement="insert into reservations (date, tripType, bFee, tFare,resNum) values ("+timeCreate+",\"One-Way\","+r.b_fee+","+r.t_fare+",0)";
+			}
 			stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
 			System.out.println(statement);
 			rs = stmt.getGeneratedKeys();
@@ -478,17 +484,29 @@ public class DbManager {
 			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum+")";
 			stmt.executeUpdate(statement);
 			
-			for(int i=0;i<r.legs.size();i++) {
-				statement="insert into legs (legID) values(0)";
-				stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
-				rs= stmt.getGeneratedKeys();
-				rs.next(); 
-				int legID=rs.getInt(1);
-				statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
-				stmt.executeUpdate(statement);
-				statement="insert into Associated (legID, flightNum, airline) values ("+legID+",\""+r.legs.get(i).flightNumber+"\",\""+r.legs.get(i).airline+"\")";
-				stmt.executeUpdate(statement);
-			}
+		       for(int i=0;i<r.legs.size();i++) {
+	                statement="insert into legs (legID,legDate) values(0,\""+r.legs.get(i).flightDate+"\")";
+	                stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+	                rs= stmt.getGeneratedKeys();
+	                rs.next();
+	                int legID = rs.getInt(1);
+	                System.out.println("legid: " +legID);
+	                statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
+	                stmt.executeUpdate(statement);
+	                statement="insert into Associated (legID, flightNum, airline) values ("+legID+",\""+r.legs.get(i).flightNumber+"\",\""+r.legs.get(i).airline+"\")";
+	                stmt.executeUpdate(statement);
+	                int workingDays=this.getDayFromDate(r.legs.get(i).flightDate);
+	                statement="select goToID from goTo where flightNum='"+r.legs.get(i).flightNumber+"' and "
+	                		+ "airline='"+r.legs.get(i).airline+"' and originAirportID='"+r.legs.get(i).fromAirport+"' and "
+            				+ "destinationAirportID='"+r.legs.get(i).toAirport+"' and arrivalTime=\""+r.legs.get(i).arrivalTime+"\" and "
+    						+ "departureTime=\""+r.legs.get(i).departureTime+"\" and workingDay="+workingDays;
+	                rs=stmt.executeQuery(statement);
+	                rs.next();
+	                int goToID=rs.getInt("goToID");
+	                System.out.println("GOTOID: "+ goToID);
+	                statement="insert into goToLegs (goToID,legID) values ("+goToID+","+legID+")";
+	                stmt.executeUpdate(statement);
+	            }
 			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
@@ -506,7 +524,13 @@ public class DbManager {
 		Results r = null;
 		try {
 			Statement stmt = con.createStatement();
-			String query = "SELECT * FROM Reservations NATURAL JOIN Contain WHERE accNum IN (SELECT accNum FROM Accounts WHERE Accounts.username=\""+username+"\")";
+			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class,seatNum "
+					+ "from goTo NATURAL JOIN goToLegs NATURAL JOIN Legs NATURAL JOIN Have Natural JOIN Reservations "
+					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
+			ResultSet rs = stmt.executeQuery(query);
+			r = new Results(rs, con);
+			closeConnection(con);
+			return r;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

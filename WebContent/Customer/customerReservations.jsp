@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<%@ page import="test.*,java.sql.ResultSet"%>
+
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,6 +23,10 @@
 			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
+	
+	<%
+	DbManager db = new DbManager();
+	%>
 </body>
 
 
