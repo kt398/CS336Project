@@ -18,9 +18,7 @@
 <link rel="stylsheet" href="css/checkUser.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 </head>
-
 <body>
-
 	<%
 		DbManager db = new DbManager();
 		

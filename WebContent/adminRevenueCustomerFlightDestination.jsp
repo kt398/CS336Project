@@ -29,8 +29,8 @@
 		<a href="adminReservations.jsp" >Reservations</a>
 		<a href="adminRevenueCustomerFlightDestination.jsp" >Revenue Summary</a>
 		<a href="adminAirportFlights.jsp" >Airport Flights</a>
-		<a href="login.jsp">Logout</a>
-	</nav>
+		<a href="logout.jsp">Logout</a>
+			</nav>
 	<section class="listRevenues">
 		<h1>List Revenues for Customer, Destination, or Flight</h1>
 		<form name="searchByEmail" method="post"

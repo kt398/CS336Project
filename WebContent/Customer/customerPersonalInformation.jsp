@@ -6,21 +6,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Personal Information</title>
-<link rel="stylesheet" type="text/css" href="../css/customerPersonalInformation.css">
+<link rel="stylesheet" type="text/css"
+	href="../css/customerPersonalInformation.css">
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 </head>
 <body>
 	<nav class="navbar">
-		<ul>
-			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservation.jsp">My Reservations</a></li>
-			<li><a href="customerMakeReservation.jsp">Make Reservation</a></li>
-			<li><a class="selected" href="customerPersonalInformation.jsp">Personal
-					Information</a></li>
-			<li><a href="customerFlightPreferences.jsp">Flight
-					Preferences</a></li>
-			<li><a class="bot" href="../login.jsp">Logout</a></li>
-		</ul>
+		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+			href="customerReservations.jsp">My Reservations</a> <a
+			href="customerMakeReservation.jsp">Make Reservation</a> <a
+			href="customerPersonalInformation.jsp">Personal Information</a> <a
+			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
+			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<div class="information">
 		<h1 class="heading">Make Reservation</h1>
@@ -38,28 +35,73 @@
 			<li>Account Creation Date</li>
 		</ul>
 		<%
-		DbManager manager=new DbManager();
-		Results r=manager.getCustomerInformation((String)session.getAttribute("username"));
-		ResultSet rs=r.getResultSet();
-		rs.next();
+			DbManager manager = new DbManager();
+			Results r = manager.getCustomerInformation((String) session.getAttribute("username"));
+			ResultSet rs = r.getResultSet();
+			rs.next();
 		%>
 		<ul class="items2">
-			<li><%out.print(rs.getString("firstName"));%></li>
-			<li><%out.print(rs.getString("lastName"));%></li>
-			<li><%out.print(session.getAttribute("username"));%></li>
-			<li><%out.print(rs.getString("email"));%></li>
-			<li><%out.print(rs.getString("address"));%></li>
-			<li><%out.print(rs.getString("city"));%></li>
-			<li><%out.print(rs.getString("state"));%></li>
-			<li><%out.print(rs.getString("zip"));%></li>
-			<li><%out.print(rs.getString("creditCard"));%></li>
-			<li><%out.print(rs.getString("phone"));%></li>
-			<li><%out.print(rs.getString("creationDate"));%></li>
+			<li>
+				<%
+					out.print(rs.getString("firstName"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("lastName"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(session.getAttribute("username"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("email"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("address"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("city"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("state"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("zip"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("creditCard"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("phone"));
+				%>
+			</li>
+			<li>
+				<%
+					out.print(rs.getString("creationDate"));
+				%>
+			</li>
 		</ul>
-		<a href="customerEditPersonalInformation.jsp" class="button">Edit Personal Information</a>
+		<a href="customerEditPersonalInformation.jsp" class="button">Edit
+			Personal Information</a>
 	</div>
 	<%
-	r.closeConnection();
+		r.closeConnection();
 	%>
 </body>
 </html>

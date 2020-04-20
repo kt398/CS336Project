@@ -12,21 +12,16 @@
 </head>
 <body>
 	<nav class="navbar">
-		<ul>
-			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservations.jsp">My Reservations</a></li>
-			<li><a class="selected" href="customerMakeReservation.jsp">Make
-					Reservation</a></li>
-			<li><a href="customerPersonalInformation.jsp">Personal
-					Information</a></li>
-			<li><a href="customerFlightPreferences.jsp">Flight
-					Preferences</a></li>
-			<li><a class="bot" href="../login.jsp">Logout</a></li>
-		</ul>
+		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+			href="customerReservations.jsp">My Reservations</a> <a
+			href="customerMakeReservation.jsp">Make Reservation</a> <a
+			href="customerPersonalInformation.jsp">Personal Information</a> <a
+			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
+			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
-		String t=request.getParameter("type");
-		String type="\""+t+"\"";
+		String t = request.getParameter("type");
+		String type = "\"" + t + "\"";
 		DbManager manager = new DbManager();
 		Results r = manager.getAllAirports();
 		while (r == null) {
@@ -40,7 +35,8 @@
 			<h2>Number of Passengers</h2>
 			<input type="number" name="numPassengers" required>
 			<h2>From:</h2>
-			<br> <select class="origin" onchange="test(value)" name="origin" required>
+			<br> <select class="origin" onchange="test(value)" name="origin"
+				required>
 				<option value="   ">
 					<%
 						String s;
@@ -71,14 +67,22 @@
 				%>
 			</select>
 			<h2>Date</h2>
-			<input type="date" class="date" placeholder="YYYY-MM-DD" required name="date">
-			<%if(t.compareTo("roundTrip")==0){ %>
-			<br><h2>Return Date</h2>
-			<br><input type="date" class="date" placeholder="YYYY-MM-DD" required name="returnDate">
-			<%}%>
-			<input type="hidden" name="type" value=<%out.print(type);%>>
+			<input type="date" class="date" placeholder="YYYY-MM-DD" required
+				name="date">
+			<%
+				if (t.compareTo("roundTrip") == 0) {
+			%>
 			<br>
-			<br><button value="Continue">Continue</button>
+			<h2>Return Date</h2>
+			<br>
+			<input type="date" class="date" placeholder="YYYY-MM-DD" required
+				name="returnDate">
+			<%
+				}
+			%>
+			<input type="hidden" name="type" value=<%out.print(type);%>>
+			<br> <br>
+			<button value="Continue">Continue</button>
 		</form>
 	</div>
 	<script

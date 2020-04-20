@@ -12,22 +12,18 @@
 </head>
 <body>
 	<nav class="navbar">
-		<ul>
-			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservations.jsp">My Reservations</a></li>
-			<li><a class="selected" href="customerMakeReservation.jsp">Make
-					Reservation</a></li>
-			<li><a href="customerPersonalInformation.jsp">Personal
-					Information</a></li>
-			<li><a href="customerFlightPreferences.jsp">Flight
-					Preferences</a></li>
-			<li><a class="bot" href="../login.jsp">Logout</a></li>
-		</ul>
+		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+			href="customerReservations.jsp">My Reservations</a> <a
+			href="customerMakeReservation.jsp">Make Reservation</a> <a
+			href="customerPersonalInformation.jsp">Personal Information</a> <a
+			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
+			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<div class="box">
 		<h1 class="heading">What Type of Reservation?</h1>
-		<a id="b1" href="makeReservationLocationDate.jsp?type=oneWay" class="button">One-Way</a>
-		<a id="b2" href="makeReservationLocationDate.jsp?type=roundTrip" class="button">Round-Trip</a>
+		<a id="b1" href="makeReservationLocationDate.jsp?type=oneWay"
+			class="button">One-Way</a> <a id="b2"
+			href="makeReservationLocationDate.jsp?type=roundTrip" class="button">Round-Trip</a>
 	</div>
 </body>
 </html>

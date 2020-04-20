@@ -28,7 +28,7 @@
 		<a href="adminReservations.jsp" >Reservations</a>
 		<a href="adminRevenueCustomerFlightDestination.jsp" >Revenue Summary</a>
 		<a href="adminAirportFlights.jsp" >Airport Flights</a>
-		<a href="login.jsp">Logout</a>
+		<a href="logout.jsp">Logout</a>
 	</nav>
 	
 	<section class="salesReport">

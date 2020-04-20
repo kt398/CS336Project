@@ -9,24 +9,18 @@
 </head>
 <body>
 	<%
-	DbManager manager=new DbManager();
-	Results r=(Results)session.getAttribute("Results");
-	ReservationData resData=(ReservationData)session.getAttribute("resData");
+		DbManager manager = new DbManager();
+		Results r = (Results) session.getAttribute("Results");
+		ReservationData resData = (ReservationData) session.getAttribute("resData");
 	%>
 	<nav class="navbar">
-		<ul>
-			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservations.jsp">My Reservations</a></li>
-			<li><a class="selected" href="customerMakeReservation.jsp">Make
-					Reservation</a></li>
-			<li><a href="customerPersonalInformation.jsp">Personal
-					Information</a></li>
-			<li><a href="customerFlightPreferences.jsp">Flight
-					Preferences</a></li>
-			<li><a class="bot" href="../login.jsp">Logout</a></li>
-		</ul>
+		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+			href="customerReservations.jsp">My Reservations</a> <a
+			href="customerMakeReservation.jsp">Make Reservation</a> <a
+			href="customerPersonalInformation.jsp">Personal Information</a> <a
+			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
+			class="bot" href="../login.jsp">Logout</a>
 	</nav>
-
 	<div class="box">
 		<h1 class="header">Confirm Your Reservation</h1>
 		<h2>
@@ -46,9 +40,8 @@
 	<script type="text/javascript">
 		$('.box form').submit(
 			if(('.ccv').val().length==3){
-				<%
-					manager.makeNewReservation((String)session.getAttribute("username"),(String)session.getAttribute("password"),(ReservationData)session.getAttribute("resData"),null);
-				%>
+				<%manager.makeNewReservation((String) session.getAttribute("username"),
+					(String) session.getAttribute("password"), (ReservationData) session.getAttribute("resData"), null);%>
 			}			
 	</script>
 

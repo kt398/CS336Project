@@ -1,4 +1,5 @@
- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ page import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData"%>
 <!DOCTYPE html>
@@ -14,49 +15,42 @@
 </head>
 <body>
 	<nav class="navbar">
-		<ul>
-			<li><a class="top" href="customerHome.jsp">Home</a></li>
-			<li><a href="customerReservations.jsp">My Reservations</a></li>
-			<li><a class="selected" href="customerMakeReservation.jsp">Make
-					Reservation</a></li>
-			<li><a href="customerPersonalInformation.jsp">Personal
-					Information</a></li>
-			<li><a href="customerFlightPreferences.jsp">Flight
-					Preferences</a></li>
-			<li><a class="bot" href="../login.jsp">Logout</a></li>
-		</ul>
+		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+			href="customerReservations.jsp">My Reservations</a> <a
+			href="customerMakeReservation.jsp">Make Reservation</a> <a
+			href="customerPersonalInformation.jsp">Personal Information</a> <a
+			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
+			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
-	
-		
 		String _numPassengers = request.getParameter("numPassengers");
 		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
 		int numPassengers = Integer.parseInt(_numPassengers);
-		boolean isRoundTrip=false;
+		boolean isRoundTrip = false;
 
 		String origin = request.getParameter("origin");
 		String destination = request.getParameter("destination");
 		String date = request.getParameter("date");
-		
+
 		DbManager db = new DbManager();
 		Results r = db.getFlights(date, origin, destination);
 		ResultSet rs = r.getResultSet();
-		
+
 		if (!rs.first()) {
 			numLegs = 2;
 			System.out.println(numLegs);
 			r.closeConnection();
 			r = db.getTwoLegFlights(date, origin, destination);
 		}
-		
-		else{
+
+		else {
 			rs.beforeFirst();
 		}
-		rs=r.getResultSet();
+		rs = r.getResultSet();
 		if (rs == null) {
 			numLegs = -1;
 		}
-		
+
 		ResultSetMetaData rsmd = rs.getMetaData();
 		int columnsNumber = rsmd.getColumnCount();
 		double dateMultiplier = 1;
@@ -70,11 +64,11 @@
 			dateMultiplier = 1.1;
 		}
 		double fare = 0;
-		ReservationData res = (ReservationData)session.getAttribute("reservation");
+		ReservationData res = (ReservationData) session.getAttribute("reservation");
 		Legs leg = new Legs();
 		Legs leg2 = new Legs();
 	%>
-	
+
 	<div class="box">
 		<%
 			if (numLegs == 1) {
@@ -114,27 +108,30 @@
 						<td>
 							<%
 								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
-								fare = numPassengers * rs.getInt(i) * dateMultiplier;
+										fare = numPassengers * rs.getInt(i) * dateMultiplier;
 							%>
 						</td>
 						<td style="text-align: center">
 
-							<form id="reservationConfirmation1" method="post" action="dataStorage.jsp">
+							<form id="reservationConfirmation1" method="post"
+								action="dataStorage.jsp">
 								<input type="hidden" name="origin" value="<%=origin%>">
 								<input type="hidden" name="destination" value="<%=destination%>">
-								<input type="hidden" name="numPassengers" value="<%=numPassengers%>"> 
-								<input type="hidden" name="date" value="<%=date%>">
-								<input type="hidden" name="fromReturnFlight" value="fromReturnFlight">
-								<input id="rowNum" type="hidden" name="rowNumber">
-								<a type="submit" href="#"> 
-								<img src="https://image.flaticon.com/icons/svg/61/61456.svg" height="10" width="10">
+								<input type="hidden" name="numPassengers"
+									value="<%=numPassengers%>"> <input type="hidden"
+									name="date" value="<%=date%>"> <input type="hidden"
+									name="fromReturnFlight" value="fromReturnFlight"> <input
+									id="rowNum" type="hidden" name="rowNumber"> <a
+									type="submit" href="#"> <img
+									src="https://image.flaticon.com/icons/svg/61/61456.svg"
+									height="10" width="10">
 								</a>
 							</form>
 						</td>
 					</tr>
 					<%
 						}
-						res.t_fare+= fare;
+							res.t_fare += fare;
 					%>
 				</tbody>
 			</table>
@@ -171,7 +168,7 @@
 						<td><%=date%></td>
 						<%
 							int i = 1;
-								for (i=1; i <columnsNumber-1; i++) {
+									for (i = 1; i < columnsNumber - 1; i++) {
 						%>
 						<td><%=rs.getString(i)%></td>
 						<%
@@ -179,74 +176,81 @@
 						%>
 						<td>
 							<%
-								out.print( Math.floor((numPassengers * rs.getInt(i) * dateMultiplier)/100)*100);
-								fare = Math.floor((numPassengers * rs.getInt(i) * dateMultiplier)/100)*100;
+								out.print(Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100);
+										fare = Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100;
 							%>
 						</td>
 						<td style="text-align: center">
 
-							<form id="reservationConfirmation2" method="post" action="dataStorage.jsp">
+							<form id="reservationConfirmation2" method="post"
+								action="dataStorage.jsp">
 								<input type="hidden" name="origin" value="<%=origin%>">
 								<input type="hidden" name="destination" value="<%=destination%>">
-								<input type="hidden" name="numPassengers" value="<%=numPassengers%>"> 
-								<input type="hidden" name="date" value="<%=date%>">
-								<input type="hidden" name="fromReturnFlight" value="fromReturnFlight">
-								<input type="hidden" name="multipleLegs" value="multipleLegs">
-								<input id="rowNum" type="hidden" name="rowNumber">
-								<a type="submit" href="#"> 
-								<img src="https://image.flaticon.com/icons/svg/61/61456.svg" height="10" width="10">
+								<input type="hidden" name="numPassengers"
+									value="<%=numPassengers%>"> <input type="hidden"
+									name="date" value="<%=date%>"> <input type="hidden"
+									name="fromReturnFlight" value="fromReturnFlight"> <input
+									type="hidden" name="multipleLegs" value="multipleLegs">
+								<input id="rowNum" type="hidden" name="rowNumber"> <a
+									type="submit" href="#"> <img
+									src="https://image.flaticon.com/icons/svg/61/61456.svg"
+									height="10" width="10">
 								</a>
 							</form>
 						</td>
 					</tr>
 					<%
 						}
-					res.t_fare+= fare;
+							res.t_fare += fare;
 					%>
 				</tbody>
 			</table>
 		</section>
 		<%
-		}%>
+			}
+		%>
 	</div>
 </body>
 
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+<script
+	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript"
+	src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#reservations").DataTable({
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
-	
-	$('#reservationConfirmation1 a').click(function(){
-		<%
-		session.setAttribute("reservation",res);
-		leg.fromAirport = origin;
-		leg.toAirport = destination;
-		leg.flightDate = date;
-		session.setAttribute("leg1", leg);
-		%>
-		$('#rowNum').val($(this).parent().closest("tr").index('tr'));
-		alert($('#rowNum').val());
-		$('#reservationConfirmation1').submit();
 
-	});
-	
-	$('#reservationConfirmation2 a').click(function(){
-		<%
-		session.setAttribute("reservation",res);
-		leg.fromAirport = origin;
-		leg.flightDate = date;
-		leg2.flightDate = date;
-		session.setAttribute("leg1", leg);
-		session.setAttribute("leg2", leg2);
-		%>
-		$('#rowNum').val($(this).parent().closest("tr").index('tr'));
-		alert($('#rowNum').val());
-		$('#reservationConfirmation2').submit();
-	});
-	
+	$('#reservationConfirmation1 a')
+			.click(
+					function() {
+<%session.setAttribute("reservation", res);
+			leg.fromAirport = origin;
+			leg.toAirport = destination;
+			leg.flightDate = date;
+			session.setAttribute("leg1", leg);%>
+	$('#rowNum').val(
+								$(this).parent().closest("tr").index('tr'));
+						alert($('#rowNum').val());
+						$('#reservationConfirmation1').submit();
+
+					});
+
+	$('#reservationConfirmation2 a')
+			.click(
+					function() {
+<%session.setAttribute("reservation", res);
+			leg.fromAirport = origin;
+			leg.flightDate = date;
+			leg2.flightDate = date;
+			session.setAttribute("leg1", leg);
+			session.setAttribute("leg2", leg2);%>
+	$('#rowNum').val(
+								$(this).parent().closest("tr").index('tr'));
+						alert($('#rowNum').val());
+						$('#reservationConfirmation2').submit();
+					});
 </script>
 </html>
