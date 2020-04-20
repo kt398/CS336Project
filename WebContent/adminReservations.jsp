@@ -46,11 +46,11 @@
 			<button>Find Reservations!</button>
 		</form>
 		<%
+			DbManager db = new DbManager();
+			Connection con = db.getConnection();
 			if (request.getParameter("val") != null) {
-				DbManager db = new DbManager();
-				Connection con = db.getConnection();
-		       	String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
-                        + request.getParameter("val") + "\"";
+				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
+						+ request.getParameter("val") + "\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>
@@ -93,11 +93,9 @@
 
 		<%
 			if (request.getParameter("flightNum") != null) {
-				DbManager db = new DbManager();
-				Connection con = db.getConnection();
 				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
 						+ request.getParameter("flightNum") + "\" AND flights.airline=\""
-						+ request.getParameter("airlineID")+"\"";
+						+ request.getParameter("airlineID") + "\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>
@@ -107,7 +105,7 @@
 					<tr>
 						<th>Reservation Date</th>
 						<th>Number Of Passengers</th>
-						<th>Customer Representative ID</th> 
+						<th>Customer Representative ID</th>
 						<th>Booking Fee</th>
 						<th>Travel Fare</th>
 						<th>Reservation Number</th>
@@ -126,9 +124,10 @@
 							}
 						%>
 						<td style="text-align: center">
-					<%
-						}
-					%>
+							<%
+								}
+							%>
+						
 				</tbody>
 			</table>
 		</div>
@@ -141,24 +140,23 @@
 	<script type="text/javascript"
 		src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#reservationByEmail").DataTable({
+				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+			});
 
-    $(document).ready(function(){
-        $("#reservationByEmail").DataTable({
-    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+			$("#reservationByFlightNum").DataTable({
+				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+			});
 		});
-        
-        $("#reservationByFlightNum").DataTable({
-    		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+
+		$('.searchByEmail').submit(function() {
+			$('#emailTable').show();
+			$('#flightsTable').hide();
 		});
-    });   
-    
-	$('.searchByEmail').submit(function(){
-		$('#emailTable').show();
-		$('#flightsTable').hide();
-	});
-	$('.searchByFlight').submit(function(){
-		$('#emailTable').hide();
-		$('#flightsTable').show();
-	});
-</script>
+		$('.searchByFlight').submit(function() {
+			$('#emailTable').hide();
+			$('#flightsTable').show();
+		});
+	</script>
 </html>
