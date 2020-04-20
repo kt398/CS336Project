@@ -347,7 +347,15 @@ public class DbManager {
 			closeConnection(con);
 			return null;
 		}
-		
+
+	}
+
+	public String offsetDate(String date, int offset) {
+		int year = Integer.parseInt(date.substring(0, 4));
+		int month = Integer.parseInt(date.substring(5, 7)) - 1;
+		int day = Integer.parseInt(date.substring(8));
+		LocalDate date1 = LocalDate.of(year,month,day).minusDays(offset);
+		return date1.toString();
 	}
 
 	public int getDayFromDate(String date) {
@@ -369,7 +377,8 @@ public class DbManager {
 		try {
 			Statement stmt = con.createStatement();
 			String statement = "SELECT airline,flightNum,departureTime,arrivalTime,fare FROM goTo JOIN fares on fares.distance=goTo.distance WHERE goTo.originAirportID="
-					+ from + "AND goTo.DestinationAirportID=" + to + "AND workingDay=" + dayOfWeek +" order by flightNum asc";
+					+ from + "AND goTo.DestinationAirportID=" + to + "AND workingDay=" + dayOfWeek
+					+ " order by flightNum asc";
 			ResultSet rs = stmt.executeQuery(statement);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -454,7 +463,7 @@ public class DbManager {
 		return r;
 	}
 
-	public int addAllReservationData(ReservationData r,String username) {
+	public int addAllReservationData(ReservationData r, String username) {
 		Connection con = getConnection();
 		if (con == null) {
 			return -2;
@@ -463,45 +472,49 @@ public class DbManager {
 			LocalDate timeOfCreation = LocalDate.now();
 			String timeCreate = "\"" + timeOfCreation + "\"";
 			Statement stmt = con.createStatement();
-			String statement = "select accounts.accNum from Accounts where Accounts.username=\""+username+"\"";
-			ResultSet rs=stmt.executeQuery(statement);
+			String statement = "select accounts.accNum from Accounts where Accounts.username=\"" + username + "\"";
+			ResultSet rs = stmt.executeQuery(statement);
 			rs.next();
-			String accNum=rs.getString("accNum");
+			String accNum = rs.getString("accNum");
 			rs.close();
-			if(r.type.compareTo("roundTrip")==0)
-				statement="insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("+timeCreate+","+r.passengers+",\"Round-Trip\","+r.b_fee+","+r.t_fare+",0)";
+			if (r.type.compareTo("roundTrip") == 0)
+				statement = "insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("
+						+ timeCreate + "," + r.passengers + ",\"Round-Trip\"," + r.b_fee + "," + r.t_fare + ",0)";
 			else {
-				statement="insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("+timeCreate+","+r.passengers+",\"One-Way\","+r.b_fee+","+r.t_fare+",0)";
+				statement = "insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("
+						+ timeCreate + "," + r.passengers + ",\"One-Way\"," + r.b_fee + "," + r.t_fare + ",0)";
 			}
-			stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
+			stmt.executeUpdate(statement, Statement.RETURN_GENERATED_KEYS);
 			rs = stmt.getGeneratedKeys();
 			int resNum;
 			rs.next();
 			resNum = rs.getInt(1);
-			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum+")";
+			statement = "insert into Contain (resNum,accNum) values (" + resNum + "," + accNum + ")";
 			stmt.executeUpdate(statement);
-			
-		       for(int i=0;i<r.legs.size();i++) {
-	                statement="insert into legs (legID,legDate) values(0,\""+r.legs.get(i).flightDate+"\")";
-	                stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
-	                rs= stmt.getGeneratedKeys();
-	                rs.next();
-	                int legID = rs.getInt(1);
-	                statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
-	                stmt.executeUpdate(statement);
-	                statement="insert into Associated (legID, flightNum, airline) values ("+legID+",\""+r.legs.get(i).flightNumber+"\",\""+r.legs.get(i).airline+"\")";
-	                stmt.executeUpdate(statement);
-	                int workingDays=this.getDayFromDate(r.legs.get(i).flightDate);
-	                statement="select goToID from goTo where flightNum='"+r.legs.get(i).flightNumber+"' and "
-	                		+ "airline='"+r.legs.get(i).airline+"' and originAirportID='"+r.legs.get(i).fromAirport+"' and "
-            				+ "destinationAirportID='"+r.legs.get(i).toAirport+"' and arrivalTime=\""+r.legs.get(i).arrivalTime+"\" and "
-    						+ "departureTime=\""+r.legs.get(i).departureTime+"\" and workingDay="+workingDays;
-	                rs=stmt.executeQuery(statement);
-	                rs.next();
-	                int goToID=rs.getInt("goToID");
-	                statement="insert into goToLegs (goToID,legID) values ("+goToID+","+legID+")";
-	                stmt.executeUpdate(statement);
-	            }
+
+			for (int i = 0; i < r.legs.size(); i++) {
+				statement = "insert into legs (legID,legDate) values(0,\"" + r.legs.get(i).flightDate + "\")";
+				stmt.executeUpdate(statement, Statement.RETURN_GENERATED_KEYS);
+				rs = stmt.getGeneratedKeys();
+				rs.next();
+				int legID = rs.getInt(1);
+				statement = "insert into Have (legID,resNum) values(" + legID + "," + resNum + ")";
+				stmt.executeUpdate(statement);
+				statement = "insert into Associated (legID, flightNum, airline) values (" + legID + ",\""
+						+ r.legs.get(i).flightNumber + "\",\"" + r.legs.get(i).airline + "\")";
+				stmt.executeUpdate(statement);
+				int workingDays = this.getDayFromDate(r.legs.get(i).flightDate);
+				statement = "select goToID from goTo where flightNum='" + r.legs.get(i).flightNumber + "' and "
+						+ "airline='" + r.legs.get(i).airline + "' and originAirportID='" + r.legs.get(i).fromAirport
+						+ "' and " + "destinationAirportID='" + r.legs.get(i).toAirport + "' and arrivalTime=\""
+						+ r.legs.get(i).arrivalTime + "\" and " + "departureTime=\"" + r.legs.get(i).departureTime
+						+ "\" and workingDay=" + workingDays;
+				rs = stmt.executeQuery(statement);
+				rs.next();
+				int goToID = rs.getInt("goToID");
+				statement = "insert into goToLegs (goToID,legID) values (" + goToID + "," + legID + ")";
+				stmt.executeUpdate(statement);
+			}
 			closeConnection(con);
 			return 1;
 		} catch (SQLException e) {
@@ -511,8 +524,7 @@ public class DbManager {
 		}
 		// return 0;
 	}
-	
-	
+
 	public Results getCustomerReservationsLegs(String username) {
 		Connection con = getConnection();
 		Results r = null;
@@ -520,7 +532,8 @@ public class DbManager {
 			Statement stmt = con.createStatement();
 			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class,seatNum "
 					+ "from goTo NATURAL JOIN goToLegs NATURAL JOIN Legs NATURAL JOIN Have Natural JOIN Reservations "
-					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
+					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""
+					+ username + "\")";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -529,13 +542,14 @@ public class DbManager {
 		}
 		return r;
 	}
-	
+
 	public Results getCustomerReservations(String username) {
 		Connection con = getConnection();
 		Results r = null;
 		try {
 			Statement stmt = con.createStatement();
-			String query = "select date,passengers,tripType,bFee,tFare from Reservations NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
+			String query = "select date,passengers,tripType,bFee,tFare from Reservations NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""
+					+ username + "\")";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -544,7 +558,7 @@ public class DbManager {
 		}
 		return r;
 	}
-	
+
 	public Results getMostValuableCustomer() {
 		Connection con = getConnection();
 		Results r = null;
