@@ -23,6 +23,7 @@
 		<a href="adminCustomerTable.jsp" >Customers</a>
 		<a href="adminSalesReport.jsp" >Sales Report</a>
 		<a href="adminListFlights.jsp" >All Flights</a>
+		<a href="adminActiveFlights.jsp">Active Flights</a>
 		<a href="adminReservations.jsp" >Reservations</a>
 		<a href="#" >Revenue Summary</a>
 		<a href="adminAirportFlights.jsp" >Airport Flights</a>
@@ -43,15 +44,6 @@
 			</form>
 		</div>
 		
-	</section>
-	
-
-	<section class="listReservations">
-		<h1>List of all Reservations</h1>
-	</section>
-	
-	<section class="listingRevenue">
-		<h1>Summary listing of Revenue</h1>
 	</section>
 	
 </body>

@@ -474,12 +474,10 @@ public class DbManager {
 				statement="insert into reservations (date, passengers, tripType, bFee, tFare,resNum) values ("+timeCreate+","+r.passengers+",\"One-Way\","+r.b_fee+","+r.t_fare+",0)";
 			}
 			stmt.executeUpdate(statement,Statement.RETURN_GENERATED_KEYS);
-			System.out.println(statement);
 			rs = stmt.getGeneratedKeys();
 			int resNum;
 			rs.next();
 			resNum = rs.getInt(1);
-			System.out.println("ResNum: " + resNum);
 			statement="insert into Contain (resNum,accNum) values ("+resNum+","+accNum+")";
 			stmt.executeUpdate(statement);
 			
@@ -489,7 +487,6 @@ public class DbManager {
 	                rs= stmt.getGeneratedKeys();
 	                rs.next();
 	                int legID = rs.getInt(1);
-	                System.out.println("legid: " +legID);
 	                statement="insert into Have (legID,resNum) values("+legID+","+resNum+")";
 	                stmt.executeUpdate(statement);
 	                statement="insert into Associated (legID, flightNum, airline) values ("+legID+",\""+r.legs.get(i).flightNumber+"\",\""+r.legs.get(i).airline+"\")";
@@ -502,7 +499,6 @@ public class DbManager {
 	                rs=stmt.executeQuery(statement);
 	                rs.next();
 	                int goToID=rs.getInt("goToID");
-	                System.out.println("GOTOID: "+ goToID);
 	                statement="insert into goToLegs (goToID,legID) values ("+goToID+","+legID+")";
 	                stmt.executeUpdate(statement);
 	            }

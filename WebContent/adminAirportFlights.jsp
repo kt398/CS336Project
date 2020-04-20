@@ -20,13 +20,13 @@
 
 <body>
 	<nav class="navbar">
-		<a href="adminHome.jsp" >Home Page</a>
-		<a href="adminCustomerTable.jsp" >Customer Information</a>
+		<a href="adminHome.jsp" >Home</a>
+		<a href="adminCustomerTable.jsp" >Customers</a>
 		<a href="adminSalesReport.jsp" >Sales Report</a>
-		<a href="adminListFlights.jsp" >List of all Flights</a>
-		<a href="#" >List of Reservations</a>
-		<a href="#" >Summary listing of Revenue</a>
-		<a href="adminAirportFlights.jsp" >Flights for Airports</a>
+		<a href="adminListFlights.jsp" >All Flights</a>
+		<a href="adminReservations.jsp" >Reservations</a>
+		<a href="#" >Revenue Summary</a>
+		<a href="adminAirportFlights.jsp" >Airport Flights</a>
 		<a href="login.jsp">Logout</a>
 	</nav>
 	<%

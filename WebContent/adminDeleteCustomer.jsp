@@ -16,6 +16,7 @@
  	DbManager db = new DbManager();
 	Connection con = db.getConnection();
 	String email = request.getParameter("email");
+	System.out.println(email);
 	try {
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate("DELETE Accounts, Customers FROM Accounts NATURAL JOIN Owns NATURAL JOIN Customers WHERE Customers.email=\""+email+"\"");

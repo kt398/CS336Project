@@ -20,8 +20,8 @@
 
 <body>
 	<nav class="navbar">
-		<a href="adminHome.jsp" >Home Page</a>
-		<a href="adminCustomerTable.jsp" >Customer Information</a>
+		<a href="adminHome.jsp" >Home</a>
+		<a href="adminCustomerTable.jsp" >Customers</a>
 		<a href="adminSalesReport.jsp" >Sales Report</a>
 		<a href="adminListFlights.jsp" >All Flights</a>
 		<a href="adminReservations.jsp" >Reservations</a>

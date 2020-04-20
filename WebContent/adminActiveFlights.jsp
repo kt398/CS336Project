@@ -31,44 +31,7 @@
 		<a href="login.jsp">Logout</a>
 	</nav>
 
-	<section class="allFlights">
-		<h1>List of All Flights</h1>
-		<%
-		DbManager db = new DbManager();
-		Connection con = db.getConnection();
-		String query = "SELECT * FROM goTo limit 10000"; //LIMITED TO 10000 couldn't load 100,000 entries
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-		rs.setFetchSize(1000);
-		%>
-		<table id="flightTable" class="display" style="display:none">
-			<thead>
-				<tr>
-					<th>Flight Num.</th>
-					<th>Airline</th>
-					<th>Origin</th>
-					<th>Destination</th>
-					<th>Distance</th>
-					<th>Day of Week</th>
-					<th>Arrival Time</th>
-					<th>Departure Time</th>
-				</tr>
-			</thead>
-			<tbody>
-		<% 
-		while(rs.next()){
-		%>
-			<tr>
-				<%for(int i=1; i<=8; i++){%>
-					<td><%=rs.getString(i)%></td>
-				<%}%>
-			</tr>
-		<%
-		}
-		rs.close();
-		%>
-		</tbody>
-		</table>
+	<section class="activeFlights">
 		
 	</section>
 	
