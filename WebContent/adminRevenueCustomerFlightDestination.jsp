@@ -53,7 +53,6 @@
 			Connection con = db.getConnection();
 			if (request.getParameter("email") != null) {
 				int totalFare = 0;
-				System.out.println(request.getParameter("email"));
 				String query = "SELECT firstName,lastName,email, date,bFee,tFare FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
 						+ request.getParameter("email") + "\"";
 				Statement stmt = con.createStatement();
@@ -86,12 +85,13 @@
 									int totalFeeForRes = rs.getInt(5) + rs.getInt(6);
 						%>
 						<td><%=totalFeeForRes%></td>
-						<td style="text-align: center">
-							<%
-								totalFare += totalFeeForRes;
-									}
-							%>
-						
+						<td style="text-align: center"></td>
+					</tr>
+					<%
+						totalFare += totalFeeForRes;
+							}
+					%>
+
 				</tbody>
 			</table>
 			<br>
@@ -117,9 +117,10 @@
 				String query = "select flightNum,airline,bFee,tFare from goTo natural Join goToLegs natural Join have natural join reservations where destinationAirportID=\""
 						+ airportCode + "\"";
 				rs = stmt.executeQuery(query);
+				int totalFare = 0;
 		%>
 		<div id="flightsTable">
-			<table id="revenue" class="display">
+			<table id="revenue1" class="display">
 				<thead>
 					<tr>
 						<th>Destination City</th>
@@ -132,8 +133,7 @@
 				</thead>
 				<tbody>
 					<%
-						int totalFare = 0;
-							while (rs.next()) {
+						while (rs.next()) {
 								int totalReservationFare = 0;
 					%>
 					<tr>
@@ -150,11 +150,11 @@
 						<td>$<%=totalReservationFare%></td>
 
 
-						<td style="text-align: center">
-							<%
-								}
-							%>
-						
+						<td style="text-align: center"></td>
+					</tr>
+					<%
+						}
+					%>
 				</tbody>
 			</table>
 			<h1>
@@ -164,18 +164,6 @@
 		<%
 			}
 		%>
-
-
-
-
-
-
-
-
-
-
-
-
 		<%
 			if (request.getParameter("airlineID") != null) {
 				Statement stmt = con.createStatement();
@@ -184,7 +172,7 @@
 				ResultSet rs = stmt.executeQuery(query);
 		%>
 		<div id="flightsTable">
-			<table id="revenue" class="display">
+			<table id="revenue2" class="display">
 				<thead>
 					<tr>
 						<th>Airline</th>
@@ -213,11 +201,13 @@
 						<td>$<%=totalReservationFare%></td>
 
 
-						<td style="text-align: center">
-							<%
-								}
-							%>
-						
+						<td style="text-align: center"></td>
+					</tr>
+					<%
+						}
+					%>
+
+
 				</tbody>
 			</table>
 			<h1>
@@ -227,13 +217,7 @@
 		<%
 			}
 		%>
-
 	</section>
-
-
-
-
-
 
 
 </body>
@@ -243,8 +227,17 @@
 	src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 		$(document).ready(function() {
-			$(".revenue").DataTable({
+			$("#revenue").DataTable({
 				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
-			})
+			}); 
+			$(document).ready(function() {
+				$("#revenue1").DataTable({
+					"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+				}); 
+			$(document).ready(function() {
+				$("#revenue2").DataTable({
+					"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+				}); 
+
 </script>
 </html>
