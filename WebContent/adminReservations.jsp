@@ -49,8 +49,8 @@
 			if (request.getParameter("val") != null) {
 				DbManager db = new DbManager();
 				Connection con = db.getConnection();
-				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN Reservations WHERE Customers.email=\""
-						+ request.getParameter("val") + "\"";
+		       	String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
+                        + request.getParameter("val") + "\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>

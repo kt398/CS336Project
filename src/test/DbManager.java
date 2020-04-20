@@ -517,7 +517,7 @@ public class DbManager {
 	}
 	
 	
-	public Results getCustomerReservations(String username) {
+	public Results getCustomerReservationsLegs(String username) {
 		Connection con = getConnection();
 		Results r = null;
 		try {
@@ -525,6 +525,21 @@ public class DbManager {
 			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class,seatNum "
 					+ "from goTo NATURAL JOIN goToLegs NATURAL JOIN Legs NATURAL JOIN Have Natural JOIN Reservations "
 					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
+			ResultSet rs = stmt.executeQuery(query);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+		}
+		return r;
+	}
+	
+	public Results getCustomerReservations(String username) {
+		Connection con = getConnection();
+		Results r = null;
+		try {
+			Statement stmt = con.createStatement();
+			String query = "select date,passengers,tripType,bFee,tFare from Reservations NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""+username+"\")";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

@@ -23,29 +23,51 @@
 			<li><a class="bot" href="../login.jsp">Logout</a></li>
 		</ul>
 	</nav>
-	
 	<%
 	DbManager db = new DbManager();
-	Results legs = db.getCustomerReservations((String)session.getAttribute("username"));
-	ResultSet legsData = r.getResultSet();
+	Results legs = db.getCustomerReservationsLegs((String)session.getAttribute("username"));
+	ResultSet legsData = legs.getResultSet();
 	
+	Results reservations = db.getCustomerReservations((String)session.getAttribute("username"));
+	ResultSet res = reservations.getResultSet();
 	
-	while(rs.next()){
+	while(res.next()){
 	%>
-	
+	<div class="reservations">
+		<p>Date Purchased: <%=res.getString(1)%></p>
+		<p>Number of Passengers: <%=res.getString(2)%></p>
+		<p>Trip Type: <%=res.getString(3)%></p>
+		<p>Booking Fee: $<%=res.getString(4)%></p>
+		<p>Travel Fare: $<%=res.getString(5)%></p>
+	</div>
+	<h1>Flights for Reservation</h1>
 	<table>
 		<thead>
 			<tr>
-			
+				<th>Date</th>
+				<th>Origin</th>
+				<th>Destination</th>
+				<th>Flight Num.</th>
+				<th>Airline</th>
+				<th>Departure Time</th>
+				<th>Arrival Time</th>
+				<th>Class</th>
+				<th>Seat Num</th>
 			</tr>
 		</thead>
 		
 		<tbody>
+		<%while(legsData.next()){ %>
 			<tr>
-			
+				<%for(int i=1; i<=9;i++){ %>
+					<td><%=legsData.getString(i)%></td>
+				<%} %>
 			</tr>
 		</tbody>
+		<%}%>
 	</table>
+	<%
+	}%>
 </body>
 
 
