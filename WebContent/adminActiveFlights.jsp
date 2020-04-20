@@ -15,13 +15,11 @@
 <title>Home Page [Admin]</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css"
-	href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 
 </head>
 
 <body>
-
 	<nav class="navbar">
 		<a href="adminHome.jsp" >Home</a>
 		<a href="adminCustomerTable.jsp" >Customers</a>
@@ -33,6 +31,7 @@
 		<a href="adminAirportFlights.jsp" >Airport Flights</a>
 		<a href="login.jsp">Logout</a>
 	</nav>
+	
 	<section class="activeFlights">
 		<%
 			DbManager manager = new DbManager();
@@ -41,8 +40,8 @@
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(statement);
 		%>
-		<div class="table" style="text-align: center">
-			<table id="flightTable" class="display">
+		<div style="text-align: center">
+			<table id="activeFlights" class="display">
 				<thead>
 					<tr>
 						<th>Airline</th>
@@ -50,48 +49,37 @@
 						<th>Bookings</th>
 					</tr>
 				</thead>
+				<tbody>
 				<%
 					while (rs.next()) {
 				%>
-
-				<tr>
-					<%
-						for (int i = 1; i <= 3; i++) {
-					%>
-					<td><%=rs.getString(i)%></td>
-					<%
-						}
-					%>
-					<td style="text-align: center">
+	
+					<tr>
+						<%
+							for (int i = 1; i <= 3; i++) {
+						%>
+						<td><%=rs.getString(i)%></td>
 						<%
 							}
-							con.close();
 						%>
+					</tr>
+					<%
+					}
+					con.close();
+					%>
 					
+				</tbody>
 			</table>
-
-
-
-
-
-
-
-
-
-
 		</div>
 	</section>
 
-	<script
-		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script type="text/javascript"
-		src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
 		$(document).ready(function() {
-			$("#flightTable").DataTable({
+			$("#activeFlights").DataTable({
 				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 			});
-			$("#flightTable").fadeIn();
 		});
 	</script>
 </html>

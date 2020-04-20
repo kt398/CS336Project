@@ -16,9 +16,9 @@
 <title>Revenue</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css"
-	href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 </head>
+
 <body>
 	<nav class="navbar">
 		<a href="adminHome.jsp" >Home</a>
@@ -51,6 +51,8 @@
 			<input type="text" name="destination" required>
 			<button>Find Revenue!</button>
 		</form>
+		
+		
 		<%
 			DbManager db = new DbManager();
 			Connection con = db.getConnection();
@@ -61,7 +63,8 @@
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
 		%>
-		<div id="revenueByCustomer">
+		
+		<div>
 			<table id="revenue" class="display">
 				<thead>
 					<tr>
@@ -85,44 +88,34 @@
 						<td><%=rs.getString(i)%></td>
 						<%
 							}
-									int totalFeeForRes = rs.getInt(5) + rs.getInt(6);
+							int totalFeeForRes = rs.getInt(5) + rs.getInt(6);
 						%>
 						<td><%=totalFeeForRes%></td>
-						<td style="text-align: center"></td>
 					</tr>
 					<%
-						totalFare += totalFeeForRes;
-							}
+					totalFare += totalFeeForRes;
+					}
 					%>
-
 				</tbody>
 			</table>
 			<br>
-			<h1>
-				Total Revenue: $<%=totalFare%></h1>
+			<h1>Total Revenue: $<%=totalFare%></h1>
 		</div>
 		<%
-			}
+		}
+		else if (request.getParameter("destination") != null) {
+			String q1 = "select id from airports where city='" + request.getParameter("destination") + "'";
+
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(q1);
+			rs.next();
+			String airportCode = rs.getString(1);
+			String query = "select flightNum,airline,bFee,tFare from goTo natural Join goToLegs natural Join have natural join reservations where destinationAirportID=\""
+					+ airportCode + "\"";
+			rs = stmt.executeQuery(query);
+			int totalFare = 0;
 		%>
-
-
-
-
-
-		<%
-			if (request.getParameter("destination") != null) {
-				String q1 = "select id from airports where city='" + request.getParameter("destination") + "'";
-
-				Statement stmt = con.createStatement();
-				ResultSet rs = stmt.executeQuery(q1);
-				rs.next();
-				String airportCode = rs.getString(1);
-				String query = "select flightNum,airline,bFee,tFare from goTo natural Join goToLegs natural Join have natural join reservations where destinationAirportID=\""
-						+ airportCode + "\"";
-				rs = stmt.executeQuery(query);
-				int totalFare = 0;
-		%>
-		<div id="flightsTable">
+		<div>
 			<table id="revenue1" class="display">
 				<thead>
 					<tr>
@@ -151,30 +144,24 @@
 									totalFare += totalReservationFare;
 						%>
 						<td>$<%=totalReservationFare%></td>
-
-
-						<td style="text-align: center"></td>
 					</tr>
 					<%
 						}
 					%>
 				</tbody>
 			</table>
-			<h1>
-				Total Revenue: $<%=totalFare%></h1>
+			<h1> Total Revenue: $<%=totalFare%></h1>
 		</div>
 
 		<%
-			}
+		}
+		else if (request.getParameter("airlineID") != null) {
+			Statement stmt = con.createStatement();
+			String query = "select airline,flightNum,bFee,tFare from  goTo natural Join goToLegs natural Join have natural join reservations where airline='"
+					+ request.getParameter("airlineID") + "'";
+			ResultSet rs = stmt.executeQuery(query);
 		%>
-		<%
-			if (request.getParameter("airlineID") != null) {
-				Statement stmt = con.createStatement();
-				String query = "select airline,flightNum,bFee,tFare from  goTo natural Join goToLegs natural Join have natural join reservations where airline='"
-						+ request.getParameter("airlineID") + "'";
-				ResultSet rs = stmt.executeQuery(query);
-		%>
-		<div id="flightsTable">
+		<div>
 			<table id="revenue2" class="display">
 				<thead>
 					<tr>
@@ -188,7 +175,7 @@
 				<tbody>
 					<%
 						int totalFare = 0;
-							while (rs.next()) {
+						while (rs.next()) {
 								int totalReservationFare = 0;
 					%>
 					<tr>
@@ -198,23 +185,17 @@
 						<td><%=rs.getString(i)%></td>
 						<%
 							}
-									totalReservationFare = rs.getInt(3) + rs.getInt(4);
-									totalFare += totalReservationFare;
+							totalReservationFare = rs.getInt(3) + rs.getInt(4);
+							totalFare += totalReservationFare;
 						%>
 						<td>$<%=totalReservationFare%></td>
-
-
-						<td style="text-align: center"></td>
 					</tr>
 					<%
-						}
+					}
 					%>
-
-
 				</tbody>
 			</table>
-			<h1>
-				Total Revenue: $<%=totalFare%></h1>
+			<h1> Total Revenue: $<%=totalFare%></h1>
 		</div>
 
 		<%
@@ -225,18 +206,19 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
+
 		$(document).ready(function() {
 			$("#revenue").DataTable({
 				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 			}); 
-			$(document).ready(function() {
-				$("#revenue1").DataTable({
-					"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
-				}); 
-			$(document).ready(function() {
-				$("#revenue2").DataTable({
-					"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
-				}); 
+			$("#revenue1").DataTable({
+				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+			}); 
+
+			$("#revenue2").DataTable({
+				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+			}); 
+		});
 
 </script>
 </html>
