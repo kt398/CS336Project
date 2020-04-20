@@ -40,6 +40,8 @@
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(statement);
 		%>
+		
+		<h1>Most Active Flights</h1>
 		<div style="text-align: center">
 			<table id="activeFlights" class="display">
 				<thead>
