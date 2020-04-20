@@ -21,12 +21,15 @@
 </head>
 <body>
 	<nav class="navbar">
-		<a href="adminHome.jsp">Home</a> <a href="adminCustomerTable.jsp">Customers</a>
-		<a href="adminSalesReport.jsp">Sales Report</a> <a
-			href="adminListFlights.jsp">All Flights</a> <a
-			href="adminReservations.jsp">Reservations</a> <a href="#">Revenue
-			Summary</a> <a href="adminAirportFlights.jsp">Airport Flights</a> <a
-			href="login.jsp">Logout</a>
+		<a href="adminHome.jsp" >Home</a>
+		<a href="adminCustomerTable.jsp" >Customers</a>
+		<a href="adminSalesReport.jsp" >Sales Report</a>
+		<a href="adminListFlights.jsp" >All Flights</a>
+		<a href="adminActiveFlights.jsp">Active Flights</a>
+		<a href="adminReservations.jsp" >Reservations</a>
+		<a href="adminRevenueCustomerFlightDestination.jsp" >Revenue Summary</a>
+		<a href="adminAirportFlights.jsp" >Airport Flights</a>
+		<a href="login.jsp">Logout</a>
 	</nav>
 	<section class="listRevenues">
 		<h1>List Revenues for Customer, Destination, or Flight</h1>
@@ -218,13 +221,9 @@
 			}
 		%>
 	</section>
-
-
 </body>
-<script
-	src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script type="text/javascript"
-	src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
 		$(document).ready(function() {
 			$("#revenue").DataTable({

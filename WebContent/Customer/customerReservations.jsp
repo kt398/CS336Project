@@ -30,7 +30,9 @@
 	
 	Results reservations = db.getCustomerReservations((String)session.getAttribute("username"));
 	ResultSet res = reservations.getResultSet();
-	
+	%>
+	<h1>Flights for Reservation</h1>
+	<%
 	while(res.next()){
 	%>
 	<div class="reservations">
@@ -40,7 +42,7 @@
 		<p>Booking Fee: $<%=res.getString(4)%></p>
 		<p>Travel Fare: $<%=res.getString(5)%></p>
 	</div>
-	<h1>Flights for Reservation</h1>
+	
 	<table>
 		<thead>
 			<tr>

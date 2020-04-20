@@ -20,20 +20,36 @@
 
 <body>
 	<nav class="navbar">
-		<a href="adminHome.jsp" >Home</a>
+	<a href="adminHome.jsp" >Home</a>
 		<a href="adminCustomerTable.jsp" >Customers</a>
 		<a href="adminSalesReport.jsp" >Sales Report</a>
 		<a href="adminListFlights.jsp" >All Flights</a>
+		<a href="adminActiveFlights.jsp">Active Flights</a>
 		<a href="adminReservations.jsp" >Reservations</a>
-		<a href="#" >Revenue Summary</a>
+		<a href="adminRevenueCustomerFlightDestination.jsp" >Revenue Summary</a>
 		<a href="adminAirportFlights.jsp" >Airport Flights</a>
 		<a href="login.jsp">Logout</a>
 	</nav>
 	
 	<section class="customerData">
-		<h1>Customer Database</h1>
 		<%
 		DbManager db = new DbManager();
+		Results mvc = db.getMostValuableCustomer();
+		ResultSet valuedCustomer = mvc.getResultSet();
+		valuedCustomer.next();
+		%>
+		<h1>OUR MOST VALUABLE CUSTOMER!!!</h1>
+		<div id="valuedCustomer" style="width:50%;margin:0 auto;display:flex;justify-content:space-around;color:deepskyblue;">
+			<p><b>Email:</b> <%=valuedCustomer.getString(1)%></p>
+			<p><b>Username:</b> <%=valuedCustomer.getString(2)%></p>
+			<p><b>First Name:</b> <%=valuedCustomer.getString(3)%></p>
+			<p><b>Last Name:</b> <%=valuedCustomer.getString(4)%></p>
+			<p><b>Phone:</b> <%=valuedCustomer.getString(5)%></p>
+			<p><b>SUM:</b> $<%=valuedCustomer.getString(6)%></p>
+		</div>
+		
+		<h1>Customer Database</h1>
+		<%
 		Connection con = db.getConnection();
 		String query = "SELECT * FROM Customers";
 		Statement stmt = con.createStatement();

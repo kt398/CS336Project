@@ -544,4 +544,20 @@ public class DbManager {
 		}
 		return r;
 	}
+	
+	public Results getMostValuableCustomer() {
+		Connection con = getConnection();
+		Results r = null;
+		try {
+			Statement stmt = con.createStatement();
+			String query = "select email,username,firstName,lastName,phone,SUM(bFee) from"
+					+ " Reservations NATURAL JOIN Contain NATURAL JOIN Customers NATURAL JOIN Owns NATURAL JOIN Accounts GROUP BY Accounts.accNum limit 1";
+			ResultSet rs = stmt.executeQuery(query);
+			r = new Results(rs, con);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			closeConnection(con);
+		}
+		return r;
+	}
 }
