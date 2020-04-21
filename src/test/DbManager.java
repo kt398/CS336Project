@@ -490,7 +490,7 @@ public class DbManager {
 			resNum = rs.getInt(1);
 			statement = "insert into Contain (resNum,accNum) values (" + resNum + "," + accNum + ")";
 			stmt.executeUpdate(statement);
-
+			String flightClass=r.flightClass;
 			for (int i = 0; i < r.legs.size(); i++) {
 				statement = "insert into legs (legID,legDate) values(0,\"" + r.legs.get(i).flightDate + "\")";
 				stmt.executeUpdate(statement, Statement.RETURN_GENERATED_KEYS);

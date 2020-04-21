@@ -57,25 +57,18 @@ create table if not exists Airlines
     name  char(30) unique,
     primary key(id)
 );
-create table if not exists Operates
-(
-	airlineID char(5),
-    flightNum integer,
-    airline char(30),
-    primary key(airlineID,flightNum,airline),
-    foreign key(airline) references Airlines(name),
-    foreign key(flightNum,airlineID) references Flights(flightNum,airline)
-);
+
 
 
 create table if not exists Reservations
 (
 	date DATE,
+    tripType char(15),
     passengers char(15),
     cRep char(15),
     bFee integer,
     tFare integer,
-    resNum integer not null,
+    resNum integer not null auto_increment,
     primary key(resNum)
 );
 
@@ -85,11 +78,22 @@ create table if not exists Flights
     airline char(15) not null,
     primary key (flightNum, airline)
 );
+
+create table if not exists Operates
+(
+	airlineID char(5),
+    flightNum integer,
+    airline char(30),
+    primary key(airlineID,flightNum,airline),
+    foreign key(airline) references Airlines(name),
+    foreign key(flightNum,airlineID) references Flights(flightNum,airline)
+);
 create table if not exists Legs
 (
-	legID integer not null,
+	legDate DATE,
+	legID integer not null auto_increment,
     seatNum integer,
-    meals char(15),
+    meals char(15) default "Normal",
     class char(15),
     primary key(legID)
 );
@@ -100,13 +104,22 @@ create table if not exists goTo(
     originAirportID char(7),
     destinationAirportID char(7),
     distance integer,
-    workingDay integer,
-    arrivalTime time,
-    departureTime time,
-    primary key(flightNum,airline,originAirportID,destinationAirportID),
+    workingDay integer not null,
+    arrivalTime time not null,
+    departureTime time not null,
+    goToID integer not null unique,
+    primary key(flightNum,airline,originAirportID,destinationAirportID,workingDay,arrivalTime,departureTime),
     foreign key(flightNum,airline) references Flights(flightNum,airline),
     foreign key(destinationAirportID) references Airports(id),
     foreign key(originAirportID) references Airports(id)
+);
+
+create table if not exists goToLegs(
+	goToID integer not null,
+    legID integer not null,
+    primary key(goToID, legID),
+	foreign key(goToID) references goTo(goToID),
+    foreign key(legID) references Legs(legID)
 );
 
 create table if not exists Fares(
