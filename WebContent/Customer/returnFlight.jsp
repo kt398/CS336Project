@@ -67,6 +67,7 @@
 		ReservationData res = (ReservationData) session.getAttribute("reservation");
 		Legs leg = new Legs();
 		Legs leg2 = new Legs();
+		double flightClass = res.flightClassMult;
 	%>
 
 	<div class="box">
@@ -107,8 +108,8 @@
 						%>
 						<td>
 							<%
-								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
-										fare = numPassengers * rs.getInt(i) * dateMultiplier;
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+							res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">
@@ -176,8 +177,8 @@
 						%>
 						<td>
 							<%
-								out.print(Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100);
-										fare = Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100;
+								out.print((Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+										res.t_fare = ((Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">

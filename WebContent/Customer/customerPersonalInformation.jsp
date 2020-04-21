@@ -20,7 +20,7 @@
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<div class="information">
-		<h1 class="heading">Make Reservation</h1>
+		<h1 class="heading">Personal Information</h1>
 		<ul class="items">
 			<li>First Name</li>
 			<li>Last Name</li>
@@ -97,6 +97,7 @@
 				%>
 			</li>
 		</ul>
+		<br>
 		<a href="customerEditPersonalInformation.jsp" class="button">Edit
 			Personal Information</a>
 	</div>

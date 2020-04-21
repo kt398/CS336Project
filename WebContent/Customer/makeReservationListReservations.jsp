@@ -45,7 +45,6 @@
 
 		if (!rs.first()) {
 			numLegs = 2;
-			System.out.println(numLegs);
 			r.closeConnection();
 			r = db.getTwoLegFlights(date, origin, destination);
 		} else {
@@ -97,6 +96,19 @@
 		res.returnDate = returnDate;
 		Legs leg = new Legs();
 		Legs leg2 = new Legs();
+		double flightClass = Double.parseDouble(request.getParameter("class"));
+		switch (request.getParameter("class")) {
+			case "0.9" :
+				res.flightClass = "Economy";
+				break;
+			case "1.0" :
+				res.flightClass = "Business";
+				break;
+			case "1.1" :
+				res.flightClass = "First Class";
+				break;
+		}
+		res.flightClassMult = flightClass;
 	%>
 
 	<div class="box">
@@ -137,8 +149,8 @@
 						%>
 						<td>
 							<%
-								out.print(numPassengers * rs.getInt(i) * dateMultiplier);
-										res.t_fare = numPassengers * rs.getInt(i) * dateMultiplier;
+								out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+										res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">
@@ -203,8 +215,8 @@
 						%>
 						<td>
 							<%
-								out.print(Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100);
-										res.t_fare = numPassengers * rs.getInt(i) * dateMultiplier;
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+							res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">

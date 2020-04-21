@@ -80,6 +80,13 @@
 			<%
 				}
 			%>
+			<br>
+			<select class="class" name="class" required>
+				<option value="0.9">Economy</option>
+				<option value="1.0">Business</option>
+				<option value="1.1">First Class</option>
+			
+			</select>
 			<input type="hidden" name="type" value=<%out.print(type);%>>
 			<br> <br>
 			<button value="Continue">Continue</button>

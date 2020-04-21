@@ -2,7 +2,10 @@ body {
 	font-family: Georgia, "Times New Roman", Times, serif;
 	color: black;
 	background-color: #6699CC;
+	margin:0;
+	padding:0;
 }
+
 
 h1 {
 	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif

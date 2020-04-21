@@ -12,6 +12,8 @@ public class ReservationData {
 	public int passengers;
 	public double t_fare;
 	public double b_fee;
+	public String flightClass;
+	public double flightClassMult;
 	int c_rep;
 	public String type;
 	public ArrayList<Legs> legs = new ArrayList<Legs>();
