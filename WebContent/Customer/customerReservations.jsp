@@ -19,7 +19,7 @@
 			href="customerMakeReservation.jsp">Make Reservation</a> <a
 			href="customerPersonalInformation.jsp">Personal Information</a> <a
 			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
-			class="bot" href="../login.jsp">Logout</a>
+			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
 	DbManager db = new DbManager();

@@ -37,7 +37,7 @@
 		<%
 		DbManager db = new DbManager();
 		Connection con = db.getConnection();
-		String query = "SELECT * FROM goTo limit 10000"; //LIMITED TO 10000 couldn't load 100,000 entries
+		String query = "SELECT * FROM goTo limit 50000"; //LIMITED TO 50000 couldn't load 100,000 entries
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
 		rs.setFetchSize(1000);

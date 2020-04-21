@@ -37,6 +37,7 @@
 		Results mvc = db.getMostValuableCustomer();
 		ResultSet valuedCustomer = mvc.getResultSet();
 		valuedCustomer.next();
+		if(valuedCustomer.next()){
 		%>
 		<h1>OUR MOST VALUABLE CUSTOMER!!!</h1>
 		<div id="valuedCustomer" style="width:50%;margin:0 auto;display:flex;justify-content:space-around;color:deepskyblue;">
@@ -47,7 +48,7 @@
 			<p><b>Phone:</b> <%=valuedCustomer.getString(5)%></p>
 			<p><b>SUM:</b> $<%=valuedCustomer.getString(6)%></p>
 		</div>
-		
+		<%} %>
 		<h1>Customer Database</h1>
 		<%
 		Connection con = db.getConnection();
