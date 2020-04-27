@@ -531,7 +531,7 @@ public class DbManager {
 			Statement stmt = con.createStatement();
 			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class,meals "
 					+ "from Reservations NATURAL JOIN Contain NATURAL JOIN Accounts NATURAL JOIN Have NATURAL JOIN Legs NATURAL JOIN "
-					+ "goToLegs NATURAL JOIN goTo where Accounts.username=\""+username+"\" and resNum =\""+resNum+"\"";
+					+ "goToLegs NATURAL JOIN goTo where Accounts.username=\""+username+"\" and resNum =\""+resNum+"\" ";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {

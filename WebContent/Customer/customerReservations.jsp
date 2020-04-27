@@ -49,6 +49,7 @@
 				<th>Departure Time</th>
 				<th>Arrival Time</th>
 				<th>Class</th>
+				<th>Dietary Restriction</th>
 			</tr>
 		</thead>
 		<%
