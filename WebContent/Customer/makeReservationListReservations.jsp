@@ -224,10 +224,9 @@
 								action="dataStorage.jsp">
 								<input type="hidden" name="origin" value="<%=origin%>">
 								<input type="hidden" name="destination" value="<%=destination%>">
-								<input type="hidden" name="numPassengers"
-									value="<%=numPassengers%>"> <input type="hidden"
-									name="date" value="<%=returnDate%>"> <input id="rowNum"
-									type="hidden" name="rowNumber" value="<%=rs.getRow()%>">
+								<input type="hidden" name="numPassengers"value="<%=numPassengers%>"> 
+								<input type="hidden" name="date" value="<%=returnDate%>"> 
+								<input id="rowNum" type="hidden" name="rowNumber" value="<%=rs.getRow()%>">
 								<input type="hidden" name="multipleLegs" value="multipleLegs">
 								<a href="#"><img
 									src="https://image.flaticon.com/icons/svg/61/61456.svg"
@@ -267,7 +266,6 @@
 			session.setAttribute("leg1", leg);%>
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
-						alert($('#rowNum').val());
 						$('#reservationConfirmation').submit();
 					});
 
@@ -282,7 +280,6 @@
 			session.setAttribute("leg2", leg2);%>
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
-						alert($('#rowNum').val());
 						$('#reservationConfirmation2').submit();
 					});
 </script>

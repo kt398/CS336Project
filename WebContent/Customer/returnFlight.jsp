@@ -119,8 +119,8 @@
 								<input type="hidden" name="origin" value="<%=origin%>">
 								<input type="hidden" name="destination" value="<%=destination%>">
 								<input type="hidden" name="numPassengers"
-									value="<%=numPassengers%>"> <input type="hidden"
-									name="date" value="<%=date%>"> <input type="hidden"
+									value="<%=numPassengers%>"> 
+									<input type="hidden" name="date" value="<%=date%>"> <input type="hidden"
 									name="fromReturnFlight" value="fromReturnFlight"> <input
 									id="rowNum" type="hidden" name="rowNumber"> <a
 									type="submit" href="#"> <img

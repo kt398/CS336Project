@@ -56,7 +56,7 @@
 					default :
 			%>
 			<script>
-				alert("Databse connection issue, failed to create customer");
+				alert("Database connection issue, failed to create customer");
 				window.location.href = "adminHome.jsp";
 			</script>
 			<%

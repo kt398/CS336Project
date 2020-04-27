@@ -58,7 +58,7 @@
 		<tbody>
 		<%while(legsData.next()){ %>
 			<tr>
-				<%for(int i=1; i<=8;i++){ %>
+				<%for(int i=1; i<=9;i++){ %>
 					<td><%=legsData.getString(i)%></td>
 				<%} %>
 			</tr>

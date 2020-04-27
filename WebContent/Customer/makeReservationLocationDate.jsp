@@ -89,9 +89,9 @@
 			<br>
 			<h2>Dietary Restrictions</h2>
 			<select class="food" name="food" required>
-				<option value="regual">None</option>
-				<option value="vegetarian">Vegetarian</option>
-				<option value="vegan">Vegan</option>
+				<option value="Regular">None</option>
+				<option value="Vegetarian">Vegetarian</option>
+				<option value="Vegan">Vegan</option>
 			</select>
 			<input type="hidden" name="type" value=<%out.print(type);%>>
 			<br> <br>

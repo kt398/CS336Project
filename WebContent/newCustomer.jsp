@@ -27,6 +27,7 @@
 			<input type="text" placeholder="State" name="state" required />
 			<input type="number" placeholder="Zip Code" name="zip" required />
 			<input type="tel" placeholder="Phone Number" name="phone" />
+			<input type="text" placeholder="Credit Card Number" name="cc"/>
 			<button>create</button>
 		</form>
 		
@@ -40,8 +41,9 @@
 			String state = request.getParameter("state");
 			String zip =  request.getParameter("zip");
 			String phone = request.getParameter("phone");
+			String creditCard=request.getParameter("cc");
 			DbManager db = new DbManager();
-			int status = db.newCustomer(fname, lname, email, "0", address, city, state, zip, phone);
+			int status = db.newCustomer(fname, lname, email, creditCard, address, city, state, zip, phone);
 
 			switch (status) {
 				case 1 :

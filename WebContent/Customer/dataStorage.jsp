@@ -42,7 +42,7 @@
 		}else{
 			Legs leg1 = (Legs)session.getAttribute("leg1");
 			Legs leg2 = (Legs)session.getAttribute("leg2");
-			Results multiLegs = db.getTwoLegFlights(date, origin, destination);
+			Results multiLegs = db.getTwoLegFlights(leg1.flightDate, origin, destination);
 			ResultSet rs = multiLegs.getResultSet();
 			rs.absolute(Integer.parseInt(request.getParameter("rowNumber")));
 			leg1.toAirport = rs.getString(6);
