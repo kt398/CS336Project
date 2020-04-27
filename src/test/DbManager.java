@@ -524,15 +524,14 @@ public class DbManager {
 		// return 0;
 	}
 
-	public Results getCustomerReservationsLegs(String username) {
+	public Results getCustomerReservationsLegs(String username, int resNum) {
 		Connection con = getConnection();
 		Results r = null;
 		try {
 			Statement stmt = con.createStatement();
-			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class,seatNum "
-					+ "from goTo NATURAL JOIN goToLegs NATURAL JOIN Legs NATURAL JOIN Have Natural JOIN Reservations "
-					+ "NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""
-					+ username + "\")";
+			String query = "select legDate,originAirportID,destinationAirportID,flightNum,airline,departureTime,arrivalTime,class "
+					+ "from Reservations NATURAL JOIN Contain NATURAL JOIN Accounts NATURAL JOIN Have NATURAL JOIN Legs NATURAL JOIN "
+					+ "goToLegs NATURAL JOIN goTo where Accounts.username=\""+username+"\" and resNum =\""+resNum+"\"";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);
 		} catch (SQLException e) {
@@ -547,7 +546,7 @@ public class DbManager {
 		Results r = null;
 		try {
 			Statement stmt = con.createStatement();
-			String query = "select date,passengers,tripType,bFee,tFare from Reservations NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""
+			String query = "select date,passengers,tripType,bFee,tFare,resNum from Reservations NATURAL JOIN Contain WHERE Contain.accNum IN (select accNum from Accounts where Accounts.username=\""
 					+ username + "\")";
 			ResultSet rs = stmt.executeQuery(query);
 			r = new Results(rs, con);

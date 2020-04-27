@@ -22,8 +22,6 @@
 	</nav>
 	<%
 	DbManager db = new DbManager();
-	Results legs = db.getCustomerReservationsLegs((String)session.getAttribute("username"));
-	ResultSet legsData = legs.getResultSet();
 	
 	Results reservations = db.getCustomerReservations((String)session.getAttribute("username"));
 	ResultSet res = reservations.getResultSet();
@@ -53,7 +51,10 @@
 				<th>Class</th>
 			</tr>
 		</thead>
-		
+		<%
+		Results legs = db.getCustomerReservationsLegs((String)session.getAttribute("username"), res.getInt(6));
+		ResultSet legsData = legs.getResultSet();
+		%>
 		<tbody>
 		<%while(legsData.next()){ %>
 			<tr>
