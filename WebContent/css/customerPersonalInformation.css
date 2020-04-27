@@ -1,7 +1,7 @@
 body {
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: Roboto, "Times New Roman", Times, serif;
 	color: black;
-	background-color: #6699CC;
+	background-color: #37A8FB;
 	margin:0;
 	padding:0;
 }
@@ -16,7 +16,7 @@ h1 {
 	margin:0 auto;
 
 	background-color: white;
-
+	text-align: center;
 }
 .information .heading{
 	padding-top: 2%;
@@ -30,13 +30,12 @@ h1 {
 	display:inline-block;
 }
 .button {
-	background-color: #4CAF50;
+	background-color: #006BA6;
 	padding: 2%;
 	border: none;
 	color: white;
 	width: 60%;
 	margin: 2%;
-	text-align: center;
 	text-decoration: none;
 	display:inline-block;
 	font-size: 16px;

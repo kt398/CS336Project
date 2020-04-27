@@ -51,7 +51,7 @@
 				required> <label for="phone">Phone Number</label> <input
 				type="text" name="phone"
 				value="<%out.print(rs.getString("phone"));%>" required> <input
-				type="submit" value="submit">
+				type="submit" value="Submit">
 		</form>
 		<%
 			if (request.getParameter("firstName") != null) {
