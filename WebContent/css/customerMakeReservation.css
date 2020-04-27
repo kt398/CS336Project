@@ -1,13 +1,14 @@
 body {
-	font-family: Georgia, "Times New Roman", Times, serif;
+	font-family: Roboto, "Times New Roman", Times, serif;
 	color: black;
-	background-color: #6699CC;
+	background-color: #37A8FB;
 	margin: 0;
 	padding: 0;
+	height: ;
 }
 
 h1 {
-	font-family: Helvetica, Geneva, Arial, SunSans-Regular, sans-serif
+	font-family: Roboto, Geneva, Arial, SunSans-Regular, sans-serif
 }
 
 .box {
@@ -15,8 +16,8 @@ h1 {
 	box-shadow: 0 0 10px 0 #000;
 	width: 35%;
 	height: auto;
-	padding: 1% 2% 2% 2%;
-	margin: 0 auto;
+	padding: 0% 2% 2% 2%;
+	margin: 100px auto;
 	background-color: white;
 }
 
@@ -27,7 +28,7 @@ h1 {
 
 
 .button {
-	background-color: #4CAF50;
+	background-color: #006BA6;
 	padding: 2%;
 	border: none;
 	color: white;

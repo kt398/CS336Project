@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css" />
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <link rel="stylesheet" type="text/css" href="../css/makeReservationListReservations.css">
-<title>Insert title here</title>
+<title>Confirm your reservation</title>
 </head>
 <body>
 	<nav class="navbar">

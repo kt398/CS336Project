@@ -17,7 +17,7 @@
 <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
-	<div class="form">
+	<div class="form form1">
 		<h1>Enter your information</h1>
 		<form class="input" method="post" action="newCustomer.jsp">
 			<input type="text" placeholder="First Name" name="firstName" required />

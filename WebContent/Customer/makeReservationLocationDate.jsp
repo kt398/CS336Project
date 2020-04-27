@@ -32,9 +32,9 @@
 		<h1 class="header">Enter Information</h1>
 		<form method="post" action="makeReservationListReservations.jsp">
 			<h2>Number of Passengers</h2>
-			<input type="number" name="numPassengers" required>
+			<input type="number" placeholder= "0" name="numPassengers" required>
 			<h2>From:</h2>
-			<br> <select class="origin" onchange="test(value)" name="origin"
+			<select class="origin" onchange="test(value)" name="origin"
 				required>
 				<option value="   ">
 					<%
@@ -50,8 +50,8 @@
 					}
 				%>
 			</select>
-			<h2>Destination:</h2>
-			<br> <select class="destination" name="destination" required>
+			<h2>To:</h2>
+			<select class="destination" name="destination" required>
 				<option value="   ">
 					<%
 						rs.beforeFirst();
@@ -71,22 +71,22 @@
 			<%
 				if (t.compareTo("roundTrip") == 0) {
 			%>
-			<br>
+			
 			<h2>Return Date</h2>
-			<br>
+			
 			<input type="date" class="date" placeholder="YYYY-MM-DD" required
 				name="returnDate">
 			<%
 				}
 			%>
-			<br>
+			
 			<h2>Class</h2>
 			<select class="class" name="class" required>
 				<option value="0.9">Economy</option>
 				<option value="1.0">Business</option>
 				<option value="1.1">First Class</option>
 			</select>
-			<br>
+			
 			<h2>Dietary Restrictions</h2>
 			<select class="food" name="food" required>
 				<option value="Regular">None</option>
@@ -94,7 +94,7 @@
 				<option value="Vegan">Vegan</option>
 			</select>
 			<input type="hidden" name="type" value=<%out.print(type);%>>
-			<br> <br>
+			
 			<button value="Continue">Continue</button>
 		</form>
 	</div>

@@ -17,7 +17,7 @@
 	db.addAllReservationData(res,username);
 	%>
 	<script>
-		window.location.href = "customerHome.jsp";
+		window.location.href = "customerReservations.jsp";
 	</script>
 </body>
 

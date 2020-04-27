@@ -42,7 +42,6 @@
 				session.setAttribute("username", newName);
 	%>
 	<script>
-		alert("Login Successful!");
 		window.location.href="Customer/customerHome.jsp"
 	</script>
 	<%
@@ -50,8 +49,7 @@
 			default :
 	%>
 	<script>
-		alert("Login information is incorrect");
-		window.location.href = "login.jsp";
+		window.location.href = "login.jsp?correct=false";
 	</script>
 	<%
 		break;
