@@ -492,7 +492,7 @@ public class DbManager {
 			stmt.executeUpdate(statement);
 			String flightClass=r.flightClass;
 			for (int i = 0; i < r.legs.size(); i++) {
-				statement = "insert into legs (legID,legDate) values(0,\"" + r.legs.get(i).flightDate + "\")";
+				statement = "insert into legs (legID,legDate,meals,class) values(0,\"" + r.legs.get(i).flightDate + "\",\""+r.food+"\",\""+r.flightClass+"\")";
 				stmt.executeUpdate(statement, Statement.RETURN_GENERATED_KEYS);
 				rs = stmt.getGeneratedKeys();
 				rs.next();

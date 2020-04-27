@@ -14,6 +14,7 @@ public class ReservationData {
 	public double b_fee;
 	public String flightClass;
 	public double flightClassMult;
+	public String food;
 	int c_rep;
 	public String type;
 	public ArrayList<Legs> legs = new ArrayList<Legs>();

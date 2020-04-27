@@ -16,7 +16,6 @@
 			href="customerReservations.jsp">My Reservations</a> <a
 			href="customerMakeReservation.jsp">Make Reservation</a> <a
 			href="customerPersonalInformation.jsp">Personal Information</a> <a
-			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
@@ -81,11 +80,18 @@
 				}
 			%>
 			<br>
+			<h2>Class</h2>
 			<select class="class" name="class" required>
 				<option value="0.9">Economy</option>
 				<option value="1.0">Business</option>
 				<option value="1.1">First Class</option>
-			
+			</select>
+			<br>
+			<h2>Dietary Restrictions</h2>
+			<select class="food" name="food" required>
+				<option value="regual">None</option>
+				<option value="vegetarian">Vegetarian</option>
+				<option value="vegan">Vegan</option>
 			</select>
 			<input type="hidden" name="type" value=<%out.print(type);%>>
 			<br> <br>

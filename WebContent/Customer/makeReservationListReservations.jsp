@@ -20,7 +20,6 @@
 			href="customerReservations.jsp">My Reservations</a> <a
 			href="customerMakeReservation.jsp">Make Reservation</a> <a
 			href="customerPersonalInformation.jsp">Personal Information</a> <a
-			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
@@ -30,7 +29,7 @@
 		String type = request.getParameter("type");
 		if (type.compareTo("roundTrip") == 0)
 			isRoundTrip = true;
-
+		String food=request.getParameter("food");
 		String origin = request.getParameter("origin");
 		String destination = request.getParameter("destination");
 		String date = request.getParameter("date");
@@ -88,6 +87,7 @@
 			dateMultiplier = 1.1;
 		}
 		ReservationData res = new ReservationData();
+		res.food=food;
 		res.setPassengers(numPassengers);
 		res.origin = origin;
 		res.destination = destination;

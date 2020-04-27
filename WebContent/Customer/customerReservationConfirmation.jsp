@@ -18,7 +18,6 @@
 			href="customerReservations.jsp">My Reservations</a> <a
 			href="customerMakeReservation.jsp">Make Reservation</a> <a
 			href="customerPersonalInformation.jsp">Personal Information</a> <a
-			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<div class="box">

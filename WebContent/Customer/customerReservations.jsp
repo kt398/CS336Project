@@ -18,7 +18,6 @@
 			href="customerReservations.jsp">My Reservations</a> <a
 			href="customerMakeReservation.jsp">Make Reservation</a> <a
 			href="customerPersonalInformation.jsp">Personal Information</a> <a
-			href="customerFlightPreferences.jsp">Flight Preferences</a> <a
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
@@ -52,14 +51,13 @@
 				<th>Departure Time</th>
 				<th>Arrival Time</th>
 				<th>Class</th>
-				<th>Seat Num</th>
 			</tr>
 		</thead>
 		
 		<tbody>
 		<%while(legsData.next()){ %>
 			<tr>
-				<%for(int i=1; i<=9;i++){ %>
+				<%for(int i=1; i<=8;i++){ %>
 					<td><%=legsData.getString(i)%></td>
 				<%} %>
 			</tr>
