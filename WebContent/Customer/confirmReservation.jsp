@@ -32,7 +32,7 @@
 			<p>Type: <%if(res.type.compareTo("roundTrip")==0) out.print("Round Trip"); else out.print("One Way");%></p>
 			<p>Booking Fee: <%=res.b_fee%></p>
 			<p>Travel Fee: <%=res.t_fare%></p>
-			<h1>Total Price: <%=res.t_fare+res.b_fee%></h1>	
+			<h1>Total Price: $<%=res.t_fare+res.b_fee%></h1>	
 			
 		
 			

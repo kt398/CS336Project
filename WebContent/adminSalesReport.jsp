@@ -104,7 +104,6 @@
 		 	date = (d.getFullYear() +'-'+ (d.getMonth()+1));
 		}
 		if($('#month').val()>date){
-			alert("Invalid month entry");
 			window.href.location="adminSalesReport.jsp";
 		}
 	});

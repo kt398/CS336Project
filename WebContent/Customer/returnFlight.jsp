@@ -1,7 +1,8 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData"%>
+<%@ page
+	import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData,java.util.ArrayList"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <link rel="stylesheet" type="text/css"
 	href="../css/makeReservationListReservations.css">
-<title>Insert title here</title>
+<title>Return Flights</title>
 </head>
 <body>
 	<nav class="navbar">
@@ -23,6 +24,7 @@
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		String _numPassengers = request.getParameter("numPassengers");
 		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
 		int numPassengers = Integer.parseInt(_numPassengers);
@@ -38,7 +40,6 @@
 
 		if (!rs.first()) {
 			numLegs = 2;
-			System.out.println(numLegs);
 			r.closeConnection();
 			r = db.getTwoLegFlights(date, origin, destination);
 		}
@@ -75,8 +76,8 @@
 			if (numLegs == 1) {
 		%>
 		<section class="reservations">
-			<h1 class="header">Possible Flights</h1>
-			<table id="reservations" class="display">
+			<h1 class="header">Return Flights</h1>
+			<table id="reservation1" class="display">
 				<thead>
 					<tr>
 						<th>From</th>
@@ -108,8 +109,10 @@
 						%>
 						<td>
 							<%
-							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
-							res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+								list.add((int) (Math.random() * 50) - 25);
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100)+list.get(list.size()-1));
+										fare = ((Math.floor((flightClass * numPassengers * rs.getInt(i) * dateMultiplier) / 100)
+												* 100));
 							%>
 						</td>
 						<td style="text-align: center">
@@ -119,8 +122,8 @@
 								<input type="hidden" name="origin" value="<%=origin%>">
 								<input type="hidden" name="destination" value="<%=destination%>">
 								<input type="hidden" name="numPassengers"
-									value="<%=numPassengers%>"> 
-									<input type="hidden" name="date" value="<%=date%>"> <input type="hidden"
+									value="<%=numPassengers%>"> <input type="hidden"
+									name="date" value="<%=date%>"> <input type="hidden"
 									name="fromReturnFlight" value="fromReturnFlight"> <input
 									id="rowNum" type="hidden" name="rowNumber"> <a
 									type="submit" href="#"> <img
@@ -142,7 +145,7 @@
 		%>
 		<section class="reservations">
 			<h1 class="header">Possible Flights</h1>
-			<table id="reservations" class="display">
+			<table id="reservation2" class="display">
 				<thead>
 					<tr>
 						<th>Date</th>
@@ -177,8 +180,9 @@
 						%>
 						<td>
 							<%
-								out.print((Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
-										res.t_fare = ((Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+							list.add((int) (Math.random() * 50) - 25);
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100)+list.get(list.size()-1));
+										fare = ((Math.floor((numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">
@@ -219,7 +223,10 @@
 	src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#reservations").DataTable({
+		$("#reservation1").DataTable({
+			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
+		});
+		$("#reservation2").DataTable({
 			"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
 		});
 	});
@@ -231,10 +238,11 @@
 			leg.fromAirport = origin;
 			leg.toAirport = destination;
 			leg.flightDate = date;
-			session.setAttribute("leg1", leg);%>
+			session.setAttribute("leg1", leg);
+			session.setAttribute("randomPrices", list);%>
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
-						alert($('#rowNum').val());
+						//alert($('#rowNum').val());
 						$('#reservationConfirmation1').submit();
 
 					});
@@ -247,10 +255,12 @@
 			leg.flightDate = date;
 			leg2.flightDate = date;
 			session.setAttribute("leg1", leg);
-			session.setAttribute("leg2", leg2);%>
+			session.setAttribute("leg2", leg2);
+			session.setAttribute("randomPrices",list);%>
+			
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
-						alert($('#rowNum').val());
+						//alert($('#rowNum').val());
 						$('#reservationConfirmation2').submit();
 					});
 </script>

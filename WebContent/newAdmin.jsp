@@ -46,7 +46,7 @@
 		default :
 	%>
 	<script>
-		alert("Databse connection issue, failed to create account");
+		alert("Database connection issue, failed to create account");
 		window.location.href = "adminLogin.jsp";
 	</script>
 	<%

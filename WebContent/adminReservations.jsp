@@ -51,7 +51,7 @@
 			DbManager db = new DbManager();
 			Connection con = db.getConnection();
 			if (request.getParameter("val") != null) {
-				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
+				String query = "SELECT resNum,date, passengers,tFare,bFee,bFee+tFare FROM Customers NATURAL JOIN Owns NATURAL JOIN contain NATURAL JOIN Reservations WHERE Customers.email=\""
 						+ request.getParameter("val") + "\"";
 				Statement stmt = con.createStatement();
 				ResultSet rs = stmt.executeQuery(query);
@@ -60,12 +60,12 @@
 			<table id="reservationByEmail" class="display">
 				<thead>
 					<tr>
+						<th>Reservation Number</th>
 						<th>Reservation Date</th>
 						<th>Number Of Passengers</th>
-						<th>Customer Representative ID</th>
-						<th>Booking Fee</th>
 						<th>Travel Fare</th>
-						<th>Reservation Number</th>
+						<th>Booking Fee</th>
+						<th>Total Fare</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -92,7 +92,7 @@
 
 		<%
 			if (request.getParameter("flightNum") != null) {
-				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
+				String query = "SELECT resNum ,date, passengers,tFare,bFee,bFee+tFare FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
 						+ request.getParameter("flightNum") + "\" AND flights.airline=\""
 						+ request.getParameter("airlineID") + "\"";
 				Statement stmt = con.createStatement();
@@ -102,12 +102,12 @@
 			<table id="reservationByFlightNum" class="display">
 				<thead>
 					<tr>
-						<th>Reservation Date</th>
-						<th>Number Of Passengers</th>
-						<th>Customer Representative ID</th>
-						<th>Booking Fee</th>
-						<th>Travel Fare</th>
 						<th>Reservation Number</th>
+						<th>Reservation Date</th>
+						<th>Customer Representative ID</th>
+						<th>Travel Fare</th>
+						<th>Booking Fee</th>
+						<th>Total Fare</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -147,12 +147,12 @@
 		$('.searchByEmail').submit(function() {
 			$('#emailTable').show();
 			$('#flightsTable').hide();
-			return false;
+
 		});
 		$('.searchByFlight').submit(function() {
 			$('#emailTable').hide();
 			$('#flightsTable').show();
-			return false;
+
 		});
 	</script>
 </html>
