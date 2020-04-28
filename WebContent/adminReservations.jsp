@@ -15,8 +15,7 @@
 <title>List of Reservations</title>
 <link rel="stylesheet" type="text/css" href="css/adminHome.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<link rel="stylesheet" type="text/css"
-	href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" />
 </head>
 
 <body>
@@ -80,12 +79,9 @@
 						<td><%=rs.getString(i)%></td>
 						<%
 							}
+						}
 						%>
-						<td style="text-align: center">
-							<%
-								}
-							%>
-						
+					</tr>	
 				</tbody>
 			</table>
 
@@ -125,12 +121,9 @@
 						<td><%=rs.getString(i)%></td>
 						<%
 							}
+						}
 						%>
-						<td style="text-align: center">
-							<%
-								}
-							%>
-						
+					</tr>
 				</tbody>
 			</table>
 		</div>
@@ -138,11 +131,9 @@
 			}
 		%>
 	</section>
-	<script
-		src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-	<script type="text/javascript"
-		src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript">
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript">
 		$(document).ready(function() {
 			$("#reservationByEmail").DataTable({
 				"lengthMenu" : [ [ 10, 25, 50, -1 ], [ 10, 25, 50, "All" ] ]
@@ -156,10 +147,12 @@
 		$('.searchByEmail').submit(function() {
 			$('#emailTable').show();
 			$('#flightsTable').hide();
+			return false;
 		});
 		$('.searchByFlight').submit(function() {
 			$('#emailTable').hide();
 			$('#flightsTable').show();
+			return false;
 		});
 	</script>
 </html>
