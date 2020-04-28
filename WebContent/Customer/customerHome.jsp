@@ -10,46 +10,64 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <style>
 	html,body{
-		height: 100%;
+		height:100%;
 		margin: 0;
+		padding: 0;
 	}
-	.mySlides{
-		display:none;
+	
+	#slideshow{
+		background-image: url("../images/artur-tumasjan-KZSNMN4VxR8-unsplash.jpg");
+		z-index:-1;
+		position:absolute;
 		width:100%;
-		height: 95%;
+		height:100%;
+	}
+	
+	.mySlides{
+		display: none;
 		object-fit: cover;
 	}
+	
 </style>
 </head>
+
 <body>
-	<nav class="navbar">
-		<a class="top topSelected" href="customerHome.jsp">Home</a> <a
-			href="customerReservations.jsp">My Reservations</a> <a
-			href="customerMakeReservation.jsp">Make Reservation</a> <a
-			href="customerPersonalInformation.jsp">Personal Information</a> 
-		<a class="bot" href="../logout.jsp">Logout</a>
-	</nav>
 	
-	<img class="mySlides" src="../images/artur-tumasjan-KZSNMN4VxR8-unsplash.jpg">
-	<img class="mySlides" src="../images/belinda-fewings-DpwWav9DhKk-unsplash.jpg">
-	<img class="mySlides" src="../images/kelsey-knight-SFRw5GChoLA-unsplash.jpg">
-	<img class="mySlides" src="../images/ross-parmly-rf6ywHVkrlY-unsplash.jpg">
+		<nav class="navbar">
+			<a class="top topSelected" href="customerHome.jsp">Home</a> <a
+				href="customerReservations.jsp">My Reservations</a> <a
+				href="customerMakeReservation.jsp">Make Reservation</a> <a
+				href="customerPersonalInformation.jsp">Personal Information</a> 
+			<a class="bot" href="../logout.jsp">Logout</a>
+			<div id='slideshow'>
+				<img class="mySlides" src="../images/artur-tumasjan-KZSNMN4VxR8-unsplash.jpg">
+				<img class="mySlides" src="../images/belinda-fewings-DpwWav9DhKk-unsplash.jpg">
+				<img class="mySlides" src="../images/kelsey-knight-SFRw5GChoLA-unsplash.jpg">
+				<img class="mySlides" src="../images/ross-parmly-rf6ywHVkrlY-unsplash.jpg">
+			</div>
+		</nav>
+		
 </body>
 
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script>
-	var slideIndex = 0;
-	carousel();
+	$(document).ready(function(){
+		var x = Array();
+		var y = Array();
+		$(".mySlides").each(function() {
+		  x.push($(this).attr("src"));
+		});
+		var i = 1;
+		
+		setInterval(function () {
+			var url = x[i++];
+			$('#slideshow').fadeOut(1000, function () {
+				$('#slideshow').css('background-image','url("'+url+'")');
+				$('#slideshow').fadeIn(1000);
+			});
+			if(i==4) i=0;
+		}, 3000);
+	});
 	
-	function carousel() {
-	  var i;
-	  var x = document.getElementsByClassName("mySlides");
-	  for (i = 0; i < x.length; i++) {
-	    x[i].style.display = "none";
-	  }
-	  slideIndex++;
-	  if (slideIndex > x.length) {slideIndex = 1}
-	  x[slideIndex-1].style.display = "block";
-	  setTimeout(carousel, 2000); // Change image every 2 seconds
-	}
 </script>
 </html>

@@ -11,6 +11,8 @@
 <link rel="stylesheet" type="text/css" href="../css/customerHome.css">
 <link rel="stylesheet" type="text/css" href="../css/navBar.css">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css"/>
+
 </head>
 <body>
 	<nav class="navbar">
@@ -30,7 +32,7 @@
 	<%
 	while(res.next()){
 	%>
-	<div class="reservations">
+	<div>
 		<p>Date Purchased: <%=res.getString(1)%></p>
 		<p>Number of Passengers: <%=res.getString(2)%></p>
 		<p>Trip Type: <%=res.getString(3)%></p>
@@ -38,7 +40,7 @@
 		<p>Travel Fare: $<%=res.getString(5)%></p>
 	</div>
 	
-	<table>
+	<table class="reservations" class="display">
 		<thead>
 			<tr>
 				<th>Date</th>
@@ -74,6 +76,8 @@
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
 <script>
-
+	$(".reservations").DataTable({
+		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+	});
 </script>
 </html>
