@@ -53,20 +53,20 @@
 <script>
 	$(document).ready(function(){
 		var x = Array();
-		var y = Array();
 		$(".mySlides").each(function() {
 		  x.push($(this).attr("src"));
 		});
 		var i = 1;
-		
-		setInterval(function () {
-			var url = x[i++];
-			$('#slideshow').fadeOut(1000, function () {
-				$('#slideshow').css('background-image','url("'+url+'")');
-				$('#slideshow').fadeIn(1000);
-			});
-			if(i==4) i=0;
-		}, 3000);
+		setInterval(function(){
+			setTimeout(function(){
+				var url = x[i++];
+				$('#slideshow').fadeOut(2000, function () {
+					$('#slideshow').css('background-image','url("'+url+'")');
+					$('#slideshow').fadeIn(2000);
+				});
+				if(i==4) i=0;
+			}, 3000);
+		}, 8000);
 	});
 	
 </script>
