@@ -18,9 +18,9 @@
 	String email = request.getParameter("email");
 	try {
 		Statement stmt = con.createStatement();
-		stmt.executeUpdate("delete accounts,customers, legs, reservations from accounts natural join owns natural "
-				+"join customers natural join associated natural join contain natural join have natural"
-				+"join gotolegs natural join legs natural join reservations where customers.email=\""+email+"\"");
+		stmt.executeUpdate("delete accounts,customers,legs, reservations from accounts natural join owns natural " +
+				"join customers natural join associated natural join contain natural join have natural join gotolegs " + 
+				"natural join legs natural join reservations where customers.email=\""+email+"\"");
 		%>
 		<script>
 			window.location.href="adminHome.jsp";

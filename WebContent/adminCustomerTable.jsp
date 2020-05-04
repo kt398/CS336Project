@@ -36,7 +36,6 @@
 		DbManager db = new DbManager();
 		Results mvc = db.getMostValuableCustomer();
 		ResultSet valuedCustomer = mvc.getResultSet();
-		valuedCustomer.next();
 		if(valuedCustomer.next()){
 		%>
 		<h1>OUR MOST VALUABLE CUSTOMER!!!</h1>
@@ -136,6 +135,7 @@
 
     $('#deleteCustomerForm a').click(function(){
     	var values = $(this).closest("tr");  
+    	alert(values.find("td:eq(3)").text());
     	$('#deleteCustomerForm input').attr('value',values.find("td:eq(3)").text());
     	document.getElementById('deleteCustomerForm').submit();
     });

@@ -92,7 +92,7 @@
 
 		<%
 			if (request.getParameter("flightNum") != null) {
-				String query = "SELECT date, passengers, cRep,bFee,tFare,resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
+				String query = "select date, passengers, email, bFee, tFare, resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations NATURAL JOIN Accounts NATURAL JOIN Owns WHERE flights.flightNum=\""
 						+ request.getParameter("flightNum") + "\" AND flights.airline=\""
 						+ request.getParameter("airlineID") + "\"";
 				Statement stmt = con.createStatement();
@@ -104,7 +104,7 @@
 					<tr>
 						<th>Reservation Date</th>
 						<th>Number Of Passengers</th>
-						<th>Customer Representative ID</th>
+						<th>Customer Email</th>
 						<th>Booking Fee</th>
 						<th>Travel Fare</th>
 						<th>Reservation Number</th>
