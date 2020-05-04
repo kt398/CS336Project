@@ -28,12 +28,13 @@
 		String date = request.getParameter("date");
 		int numPassengers = Integer.parseInt(request.getParameter("numPassengers"));
 		boolean roundTrip = res.type.compareTo("roundTrip")==0;
-		
+		ArrayList<Integer> list=new ArrayList<Integer>(((ArrayList<Integer>)(session.getAttribute("randomPrices"))));
+		res.t_fare=res.t_fare+list.get(Integer.parseInt(request.getParameter("rowNumber"))-1);
 		if(request.getParameter("multipleLegs")==null){
 			Legs leg = (Legs)session.getAttribute("leg1");
 			Results prevLegInfo = db.getFlights(leg.flightDate,leg.fromAirport,leg.toAirport);
 			ResultSet rs = prevLegInfo.getResultSet();
-			rs.absolute(Integer.parseInt(request.getParameter("rowNumber")));
+			rs.absolute(Integer.parseInt(request.getParameter("rowNumber")));			
 			leg.flightNumber = rs.getInt(2);
 			leg.airline = rs.getString(1);
 			leg.departureTime = rs.getString(3);
@@ -51,7 +52,6 @@
 			leg1.departureTime = rs.getString(4);
 			leg1.arrivalTime = rs.getString(5);
 			res.legs.add(leg1);
-			
 			leg2.fromAirport = rs.getString(6);
 			leg2.toAirport = destination;
 			leg2.flightNumber = rs.getInt(8);

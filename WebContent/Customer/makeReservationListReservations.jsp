@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%@ page import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData"%>
+<%@ page import="test.*,java.sql.ResultSet,java.sql.ResultSetMetaData,java.util.ArrayList"%>
 
 
 <!DOCTYPE html>
@@ -23,6 +23,7 @@
 			class="bot" href="../logout.jsp">Logout</a>
 	</nav>
 	<%
+		ArrayList<Integer> list=new ArrayList<Integer>();
 		int numLegs = 1;//1 for 1,2 for 2,-1 for different date
 		int numPassengers = Integer.parseInt(request.getParameter("numPassengers"));
 		boolean isRoundTrip = false;
@@ -149,8 +150,9 @@
 						%>
 						<td>
 							<%
-								out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
-										res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+							list.add((int)(Math.random()*50)-25);
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100)+list.get(list.size()-1));
+							res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
 						<td style="text-align: center">
@@ -215,7 +217,8 @@
 						%>
 						<td>
 							<%
-							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
+							list.add((int)(Math.random()*50)-25);
+							out.print((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100)+list.get(list.size()-1));
 							res.t_fare = ((Math.floor((flightClass*numPassengers * rs.getInt(i) * dateMultiplier) / 100) * 100));
 							%>
 						</td>
@@ -263,12 +266,13 @@
 			leg.fromAirport = origin;
 			leg.toAirport = destination;
 			leg.flightDate = date;
-			session.setAttribute("leg1", leg);%>
+			session.setAttribute("leg1", leg);
+			session.setAttribute("randomPrices",list);%>
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
 						$('#reservationConfirmation').submit();
 					});
-
+	
 	$('#reservationConfirmation2 a')
 			.click(
 					function() {
@@ -277,7 +281,8 @@
 			leg.flightDate = date;
 			leg2.flightDate = date;
 			session.setAttribute("leg1", leg);
-			session.setAttribute("leg2", leg2);%>
+			session.setAttribute("leg2", leg2);
+			session.setAttribute("randomPrices",list);%>
 	$('#rowNum').val(
 								$(this).parent().closest("tr").index('tr'));
 						$('#reservationConfirmation2').submit();

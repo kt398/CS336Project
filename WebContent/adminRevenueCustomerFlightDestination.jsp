@@ -108,8 +108,13 @@
 
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(q1);
-			rs.next();
-			String airportCode = rs.getString(1);
+			String airportCode;
+			if(rs.next()){
+				airportCode = rs.getString(1);
+			}
+			else{
+				airportCode="";
+			}
 			String query = "select flightNum,airline,bFee,tFare from goTo natural Join goToLegs natural Join have natural join reservations where destinationAirportID=\""
 					+ airportCode + "\"";
 			rs = stmt.executeQuery(query);
