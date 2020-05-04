@@ -104,21 +104,41 @@
 		$('.box form').submit(
 				function() {
 					var today = new Date();
-					if (today.getMonth() + 1 < 10)
+					if (today.getMonth() + 1 < 10){
+						if(today.getDay()<10){
 						var date = today.getFullYear() + '-0'
+								+ (today.getMonth() + 1) + '-0'
+								+ today.getDate();
+						}
+						else{
+							var date = today.getFullYear() + '-0'
+							+ (today.getMonth() + 1) + '-'
+							+ today.getDate();
+						}
+					}
+					else{
+						if (today.getMonth() + 1 < 10){
+							if(today.getDay()<10){
+							var date = today.getFullYear() + '-'
+									+ (today.getMonth() + 1) + '-0'
+									+ today.getDate();
+							}
+							else{
+								var date = today.getFullYear() + '-'
 								+ (today.getMonth() + 1) + '-'
 								+ today.getDate();
-					else
-						var date = today.getFullYear() + '-'
-								+ (today.getMonth() + 1) + '-'
-								+ today.getDate();
+							}
+						}
+					}
 					if ($('.origin').val() == $('.destination').val()) {
 						alert('Origin and Destination are the same!');
 						return false;
 					} else if ($('.date').val() < date) {
+						//alert(date);
 						alert('Invalid Date Entry');
 						return false;
 					} else {
+						//alert(date);
 						$('.box form').submit();
 						return false;
 					}

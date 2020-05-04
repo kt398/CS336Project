@@ -42,7 +42,7 @@
 		DbManager db = new DbManager();
 		Results r = db.getFlights(date, origin, destination);
 		ResultSet rs = r.getResultSet();
-
+		System.out.println(date);
 		if (!rs.first()) {
 			numLegs = 2;
 			r.closeConnection();
@@ -51,28 +51,21 @@
 			rs.beforeFirst();
 		}
 		rs = r.getResultSet();
-		if (rs == null) {
+		if (!rs.first()) {
+			numLegs=1;
 			String dateOffset = db.offsetDate(date, 1);
+			System.out.println(dateOffset);
 			r = db.getFlights(dateOffset, origin, destination);
-
 			rs = r.getResultSet();
 			if (!rs.first()) {
 				r = db.getTwoLegFlights(dateOffset, origin, destination);
 				rs = r.getResultSet();
-				if (!rs.first()) {
-	%>
-	<script type="text/javascript">
-		alert('No flights available, one leg or two leg, the day chosen or the day before');
-	</script>
-	<%
-		} else {
-					rs.beforeFirst();
-					date = dateOffset;
-				}
 			} else {
 				rs.beforeFirst();
 				date = dateOffset;
 			}
+		} else{
+			rs.beforeFirst();
 		}
 
 		ResultSetMetaData rsmd = rs.getMetaData();

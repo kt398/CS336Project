@@ -352,7 +352,7 @@ public class DbManager {
 
 	public String offsetDate(String date, int offset) {
 		int year = Integer.parseInt(date.substring(0, 4));
-		int month = Integer.parseInt(date.substring(5, 7)) - 1;
+		int month = Integer.parseInt(date.substring(5, 7));
 		int day = Integer.parseInt(date.substring(8));
 		LocalDate date1 = LocalDate.of(year,month,day).minusDays(offset);
 		return date1.toString();
