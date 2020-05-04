@@ -32,14 +32,33 @@
 	<%
 	while(res.next()){
 	%>
-	<div>
-		<p>Date Purchased: <%=res.getString(1)%></p>
-		<p>Number of Passengers: <%=res.getString(2)%></p>
-		<p>Trip Type: <%=res.getString(3)%></p>
-		<p>Booking Fee: $<%=res.getString(4)%></p>
-		<p>Travel Fare: $<%=res.getString(5)%></p>
+	<div class="container">
+	<div class="floatLeft" >
+		<table class="info">
+  			<tr>
+    			<td>Date Purchased:</td>
+    			<td><%=res.getString(1)%></td>
+  			</tr>
+  			<tr>
+    			<td># Passengers: </td>
+    			<td><%=res.getString(2)%></td>
+  			</tr>
+  			<tr>
+    			<td>Trip Type: </td>
+    			<td><%=res.getString(3)%></td>
+  			</tr>
+ 			 <tr>
+    			<td>Booking Fee: </td>
+    			<td>$<%=res.getString(4)%></td>
+  			</tr>
+  			<tr>
+    			<td>Travel Fare</td>
+    			<td>$<%=res.getString(5)%></td>
+  			</tr>
+		</table>
+		
 	</div>
-	
+	<div class="floatRight">
 	<table class="reservations" class="display">
 		<thead>
 			<tr>
@@ -68,6 +87,8 @@
 		</tbody>
 		<%}%>
 	</table>
+	</div>
+	</div>
 	<%
 	}%> 
 </body>
@@ -75,9 +96,5 @@
 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script type="text/javascript" src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-<script>
-	$(".reservations").DataTable({
-		"lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-	});
-</script>
+
 </html>
