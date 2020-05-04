@@ -92,11 +92,7 @@
 
 		<%
 			if (request.getParameter("flightNum") != null) {
-<<<<<<< HEAD
-				String query = "select date, passengers, email, bFee, tFare, resNum FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations NATURAL JOIN Accounts NATURAL JOIN Owns WHERE flights.flightNum=\""
-=======
-				String query = "SELECT resNum ,date, passengers,tFare,bFee,bFee+tFare FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations WHERE flights.flightNum=\""
->>>>>>> branch 'master' of https://github.com/ShreyasBhise/CS336Project
+				String query = "select resNum, date, passengers, email, bFee, tFare, bFee+tFare FROM flights NATURAL JOIN associated NATURAL JOIN legs NATURAL JOIN have NATURAL JOIN reservations NATURAL JOIN Accounts NATURAL JOIN Owns WHERE flights.flightNum=\""
 						+ request.getParameter("flightNum") + "\" AND flights.airline=\""
 						+ request.getParameter("airlineID") + "\"";
 				Statement stmt = con.createStatement();
@@ -106,19 +102,12 @@
 			<table id="reservationByFlightNum" class="display">
 				<thead>
 					<tr>
-<<<<<<< HEAD
+						<th>Reservation Number</th>
 						<th>Reservation Date</th>
 						<th>Number Of Passengers</th>
 						<th>Customer Email</th>
 						<th>Booking Fee</th>
 						<th>Travel Fare</th>
-=======
->>>>>>> branch 'master' of https://github.com/ShreyasBhise/CS336Project
-						<th>Reservation Number</th>
-						<th>Reservation Date</th>
-						<th>Customer Representative ID</th>
-						<th>Travel Fare</th>
-						<th>Booking Fee</th>
 						<th>Total Fare</th>
 					</tr>
 				</thead>
