@@ -36,6 +36,7 @@
 		DbManager db = new DbManager();
 		Results mvc = db.getMostValuableCustomer();
 		ResultSet valuedCustomer = mvc.getResultSet();
+		//what is going on?
 		if(valuedCustomer.next()){
 		%>
 		<h1>OUR MOST VALUABLE CUSTOMER!!!</h1>

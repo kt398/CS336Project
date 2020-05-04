@@ -16,6 +16,7 @@
  	DbManager db = new DbManager();
 	Connection con = db.getConnection();
 	String email = request.getParameter("email");
+	System.out.println(email);
 	try {
 		Statement stmt = con.createStatement();
 		stmt.executeUpdate("delete accounts,customers,legs, reservations from accounts natural join owns natural " +
